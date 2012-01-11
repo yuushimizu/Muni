@@ -219,6 +219,35 @@ Lifegame = {};
         var game = makeGame();
         initializeCanvas(canvas, game);
         var context = canvas.getContext('2d');
+        var transform = {
+            x: 0,
+            y: 0,
+            rate: 1
+        };
+        var zoomContext = function(x, y, rate) {
+            transform.x = x;
+            transform.y = y;
+            transform.rate = rate;
+            var area = {
+                width: game.field.width / rate,
+                height: game.field.height / rate
+            };
+            var origin = {
+                x: x - area.width / 2,
+                y: y - area.height / 2
+            };
+            if (origin.x < 0) {
+                origin.x = 0;
+            } else if (origin.x + area.width >= game.field.width) {
+                origin.x = game.field.width - area.width;
+            }
+            if (origin.y < 0) {
+                origin.y = 0;
+            } else if (origin.y + area.height >= game.field.height) {
+                origin.y = game.field.height - area.height;
+            }
+            context.setTransform(rate, 0, 0, rate, -origin.x * rate, -origin.y * rate);
+        };
         var clearField = function() {
             context.clearRect(0, 0, game.field.width, game.field.height);
         };
@@ -245,13 +274,16 @@ Lifegame = {};
             context.stroke();
         };
         var drawGameInformation = function(game) {
+            context.save();
+            context.setTransform(1, 0, 0, 1, 0, 0);
             context.beginPath();
             context.fillStyle = 'rgb(255,255,255)';
-            var text = "Frame: " + game.frameCount + " Cells: " + game.cells.length;
+            var text = '(' + transform.x + ', ' + transform.y + ')' + ' x' + transform.rate + ' Frame: ' + game.frameCount + ' Cells: ' + game.cells.length;
             var x = 3;
             var y = 3;
             context.textBaseline = 'top';
             context.fillText(text, x, y);
+            context.restore();
         };
         var redraw = function(game) {
             clearField();
@@ -286,6 +318,15 @@ Lifegame = {};
             },
             changeDelay: function(newDelay) {
                 delay = newDelay;
+            },
+            zoom: function(x, y, rate) {
+                zoomContext(x, y, rate);
+            },
+            isZoomed: function() {
+                return transform.rate != 1;
+            },
+            resetZoom: function() {
+                zoomContext(0, 0, 1);
             }
         };
     };
