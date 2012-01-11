@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Lifegame</title>
+    <style>
+      body {
+        text-align: center;
+        background-image: url('./outer.png');
+      }
+      canvas {
+        background-image: url('./inner.png');
+        border: solid 1px #382108;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="view">Canvas required.</canvas>
+    <p>
+      <input id="stop-resume-button" type="button" value="Stop/Resume">
+      <input id="reset-button" type="button" value="Reset">
+    </p>
+    <script type="text/javascript" src="lifegame.js"></script>
+    <script type="text/javascript">
+      onload = function() {
+        var lifegame = Lifegame.run(document.getElementById('view'));
+        document.getElementById('stop-resume-button').onclick = function() {lifegame.toggleRunning()};
+        document.getElementById('reset-button').onclick = function() {lifegame.reset()};
+      };
+    </script>
+  <body>
+</html>
