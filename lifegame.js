@@ -24,121 +24,110 @@ Lifegame = {};
     };
     var randomBool = function() {
         return randomInt(0, 1) == 0;
-    }
+    };
+    var randomRadian = function() {
+        return Math.random() * Math.PI * 2;
+    };
     var randomPoint = function(minX, maxX, minY, maxY) {
         return {
             x: randomInt(minX, maxX),
             y: randomInt(minY, maxY)
         };
     };
-    var manhattanDiff = function(point1, point2) {
+    var manhattanDistance = function(source, destination) {
         return {
-            x: point1.x - point2.x,
-            y: point1.y - point2.y
+            x: destination.x - source.x,
+            y: destination.y - source.y
         };
     };
-    var moveStepFor = function(source, destination, totalStep) {
-        var diff = manhattanDiff(destination, source);
-        var distance = {
-            x: Math.abs(diff.x),
-            y: Math.abs(diff.y)
+    var distanceFromManhattanDistance = function(manhattanDistance) {
+        if (manhattanDistance.x == 0) return manhattanDistance.y;
+        if (manhattanDistance.y == 0) return manhattanDistance.x;
+        return Math.abs(manhattanDistance.x / Math.sin(Math.atan2(manhattanDistance.x, manhattanDistance.y)));
+    };
+    var pointsDistance = function(point1, point2) {
+        return distanceFromManhattanDistance(manhattanDistance(point1, point2));
+    };
+    var manhattanDistanceFromRadian = function(radian, distance) {
+        return {
+            x: Math.sin(radian) * distance,
+            y: Math.cos(radian) * distance
         };
-        var totalDistance = distance.x + distance.y;
-        var stepDistance;
-        if (distance.x == 0) {
-            stepDistance = {
-                x: 0,
-                y: totalStep <= distance.y ? totalStep : distance.y
-            };
+    }
+    var movedPointWithRadian = function(source, radian, distance) {
+        var md = manhattanDistanceFromRadian(radian, distance);
+        return {
+            x: source.x + md.x,
+            y: source.y + md.y
+        };
+    };
+    var movedPointForDestination = function(source, destination, movableDistance) {
+        var md = manhattanDistance(source, destination);
+        var distance = distanceFromManhattanDistance(md);
+        if (movableDistance >= distance) return destination;
+        if (source.x == destination.x) {
+            step = {x: 0, y: (source.y > destination.y ? -movableDistance : movableDistance)};
+        } else if (source.y == destination.y) {
+            step = {x: (source.x > destination.x ? -movableDistance : movableDistance), y: 0};
         } else {
-            stepDistance = {x: Math.floor(totalStep * distance.x / totalDistance)};
-            if (stepDistance.x > distance.x) {
-                stepDistance.x = distance.x;
-            }
-            stepDistance.y = totalStep - stepDistance.x;
-            if (stepDistance.y > distance.y) {
-                stepDistance.y = distance.y;
-                if (stepDistance.x < distance.x) {
-                    var restDistance = totalStep - stepDistance.y - stepDistance.x;
-                    if (distance.x - stepDistance.x <= restDistance) {
-                        stepDistance.x = distance.x;
-                    } else {
-                        stepDistance.x += restDistance;
-                    }
-                }
-            }
+            step = manhattanDistanceFromRadian(Math.atan2(md.x, md.y), movableDistance);
         }
         return {
-            x: diff.x > 0 ? stepDistance.x : -stepDistance.x,
-            y: diff.y > 0 ? stepDistance.y : -stepDistance.y
+            x: source.x + step.x,
+            y: source.y + step.y
         };
     }
-    var moveCell = function(cell, step, field) {
+    var moveCell = function(cell, destination, field) {
         oldPoint = {x: cell.x, y: cell.y};
-        cell.x += step.x;
-        cell.y += step.y;
-        if (cell.x < 0) {
-            cell.x = 0;
-        } else if (cell.x >= field.width) {
-            cell.x = field.width - 1;
-        }
-        if (cell.y < 0) {
-            cell.y = 0;
-        } else if (cell.y >= field.height) {
-            cell.y = field.height - 1;
-        }
-        return {x: Math.abs(cell.x - oldPoint.x), y: Math.abs(cell.y - oldPoint.y)};
+        cell.x = destination.x < 0 ? 0 : (destination.x > field.width ? field.width : destination.x);
+        cell.y = destination.y < 0 ? 0 : (destination.y > field.height ? field.height : destination.y);
+        return pointsDistance(oldPoint, cell);
     }
     var randomPointOnField = function(field) {
-        return randomPoint(0, field.width - 1, 0, field.height - 1);
+        return randomPoint(0, field.width, 0, field.height);
     }
     var movingMethod = {
         immovable: function() {
-            return function(cell, field) {
-                return {x: 0, y: 0};
+            return function(cell, game) {
+                return 0;
             };
         },
         randomDestination: function() {
             var destination;
-            var resetDestination = function(field) {
-                destination = randomPointOnField(field);
+            var resetDestination = function(game) {
+                destination = randomPointOnField(game.field);
             };
-            return function(cell, field) {
-                if (destination == undefined || (cell.x == destination.x && cell.y == destination.y)) resetDestination(field);
-                return moveCell(cell, moveStepFor(cell, destination, cell.step), field);
+            return function(cell, game) {
+                if (destination == undefined || (cell.x == destination.x && cell.y == destination.y)) resetDestination(game);
+                return moveCell(cell, movedPointForDestination(cell, destination, cell.movableDistance), game.field);
             };
         },
         bound: function() {
-            var rate = {x: randomInt(0, 20), y: randomInt(0, 20)};
-            if (rate.x == 0 && rate.y == 0) rate = {x: 1, y: 1};
-            var inversion = {x: randomBool(), y: randomBool()};
-            return function(cell, field) {
-                var step = {x: Math.floor(cell.step * rate.x / (rate.x + rate.y)),
-                            y: Math.floor(cell.step * rate.y / (rate.x + rate.y))};
-                var movedDistance = moveCell(cell,
-                                             {x: inversion.x ? -step.x : step.x,
-                                              y: inversion.y ? -step.y : step.y},
-                                             field);
-                if (cell.x <= 0 || cell.x >= field.width - 1) inversion.x = !inversion.x;
-                if (cell.y <= 0 || cell.y >= field.height - 1) inversion.y = !inversion.y;
-                return movedDistance;
+            var radian = randomRadian();
+            return function(cell, game) {
+                var destination = movedPointWithRadian(cell, radian, cell.movableDistance);
+                if (destination.x <= 0 || destination.x >= game.field.width) {
+                    radian = Math.PI * 2 - radian;
+                }
+                if (destination.y <= 0 || destination.y >= game.field.height) {
+                    radian = Math.PI - radian;
+                    while (radian < 0) radian += Math.PI * 2;
+                }
+                return moveCell(cell, destination, game.field);
             };
         },
-        chorochoro: function() {
-            return function(cell, field) {
-                var currentStep = randomInt(0, cell.step);
-                var step = {x: randomInt(0, cell.step)};
-                step.y = currentStep - step.x;
-                if (randomBool()) step.x = -step.x;
-                if (randomBool()) step.y = -step.y;
-                return moveCell(cell, step, field);
+        furafura: function() {
+            return function(cell, game) {
+                var currentDistance = Math.random() * cell.movableDistance;
+                var destination = movedPointWithRadian(cell, randomRadian(), currentDistance);
+                return moveCell(cell, destination, game.field);
             };
         }
     };
     var cellFrame = function(cell, game) {
         if (cell.vitality.current <= 0) return;
-        var movedDistance = cell.movingMethod.instance(cell, game.field);
-        cell.vitality.current -= (movedDistance.x + movedDistance.y);
+        var movedDistance = cell.movingMethod.instance(cell, game);
+        cell.vitality.current -= movedDistance;
         cell.vitality.current -= cell.fixedCost;
     };
     var cellsFrame = function(game) {
@@ -162,7 +151,7 @@ Lifegame = {};
         };
         Lifegame.game = game;
         var i;
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < 10; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
@@ -172,11 +161,11 @@ Lifegame = {};
                                  source: movingMethod.randomDestination,
                                  instance: movingMethod.randomDestination()
                              },
-                             step: 4,
+                             movableDistance: 4,
                              fixedCost: 8,
                              color: {red: 0, green: 0, blue: 169}});
         }
-        for (i = 0; i < 25; i++) {
+        for (i = 0; i < 10; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
@@ -186,7 +175,7 @@ Lifegame = {};
                                  source: movingMethod.bound,
                                  instance: movingMethod.bound()
                                  },
-                             step: 6,
+                             movableDistance: 6,
                              fixedCost: 3,
                              color: {red: 210, green: 210, blue: 210}});
         }
@@ -197,14 +186,14 @@ Lifegame = {};
                              size: 4,
                              vitality: {max: 2500, current: 2500},
                              movingMethod: {
-                                 source: movingMethod.chorochoro,
-                                 instance: movingMethod.chorochoro()
+                                 source: movingMethod.furafura,
+                                 instance: movingMethod.furafura()
                              },
-                             step: 1,
+                             movableDistance: 1,
                              fixedCost: 1,
                              color: {red: 255, green: 240, blue: 180}});
         }
-        for (i = 0; i < 50; i++) {
+        for (i = 0; i < 10; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
@@ -214,7 +203,7 @@ Lifegame = {};
                                  source: movingMethod.immovable,
                                  instance: movingMethod.immovable()
                              },
-                             step: 0,
+                             movableDistance: 0,
                              fixedCost: 2,
                              color: {red: 10, green: 197, blue: 120}});
         }
