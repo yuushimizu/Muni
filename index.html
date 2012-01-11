@@ -15,14 +15,24 @@
   <body>
     <canvas id="view">Canvas required.</canvas>
     <p>
-      <input id="stop-resume-button" type="button" value="Stop/Resume">
+      <input id="fast-button" type="button" value="Fast">
+      <input id="normal-button" type="button" value="Normal">
+      <input id="slow-button" type="button" value="Slow">
+      <input id="stop-button" type="button" value="Stop">
       <input id="reset-button" type="button" value="Reset">
     </p>
     <script type="text/javascript" src="lifegame.js"></script>
     <script type="text/javascript">
       onload = function() {
         var lifegame = Lifegame.run(document.getElementById('view'));
-        document.getElementById('stop-resume-button').onclick = function() {lifegame.toggleRunning()};
+        var changeDelay = function(delay) {
+          lifegame.changeDelay(delay);
+          lifegame.resume();
+        };
+        document.getElementById('fast-button').onclick = function() {changeDelay(10)};
+        document.getElementById('normal-button').onclick = function() {changeDelay(30)};
+        document.getElementById('slow-button').onclick = function() {changeDelay(100)};
+        document.getElementById('stop-button').onclick = function() {lifegame.stop()};
         document.getElementById('reset-button').onclick = function() {lifegame.reset()};
       };
     </script>

@@ -16,7 +16,6 @@ Lifegame = {};
         for (; i >= 0; --i) {
             if (fn(array[i])) {
                 array.splice(i, 1);
-                --i;
             }
         }
     };
@@ -94,6 +93,11 @@ Lifegame = {};
         return randomPoint(0, field.width - 1, 0, field.height - 1);
     }
     var movingMethod = {
+        immovable: function() {
+            return function(cell, field) {
+                return {x: 0, y: 0};
+            };
+        },
         randomDestination: function() {
             var destination;
             var resetDestination = function(field) {
@@ -110,7 +114,7 @@ Lifegame = {};
             var inversion = {x: randomBool(), y: randomBool()};
             return function(cell, field) {
                 var step = {x: Math.floor(cell.step * rate.x / (rate.x + rate.y)),
-                            y: Math.floor(cell.step * rate.y / (rate.y + rate.y))};
+                            y: Math.floor(cell.step * rate.y / (rate.x + rate.y))};
                 var movedDistance = moveCell(cell,
                                              {x: inversion.x ? -step.x : step.x,
                                               y: inversion.y ? -step.y : step.y},
@@ -132,46 +136,73 @@ Lifegame = {};
         }
     };
     var cellFrame = function(cell, game) {
-        if (cell.vitality.current < 0) return;
+        if (cell.vitality.current <= 0) return;
         var movedDistance = cell.movingMethod.instance(cell, game.field);
         cell.vitality.current -= (movedDistance.x + movedDistance.y);
+        cell.vitality.current -= cell.fixedCost;
     };
     var cellsFrame = function(game) {
         removeIf(function(cell) {return cell.vitality.current <= 0}, game.cells);
-        forEach(function(cell) {
-            cellFrame(cell, game);
-        }, game.cells);
+        forEach(function(cell) {cellFrame(cell, game)}, game.cells);
     };
     var configuration = {
         process: {
-            delay: 30
+            defaultDelay: 30
         },
         field: {
             width: 960,
             height: 480
-        },
-        color: {
-            cellBorder: 'rgba(0,0,0,0.8)'
         }
     };
     var makeGame = function() {
         var game = {
             field: configuration.field,
-            cells: []
+            cells: [],
+            frameCount: 0
         };
+        Lifegame.game = game;
         var i;
-        for (i = 0; i < 30; i++) {
+        for (i = 0; i < 15; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              size: 6,
-                             vitality: {max: 4000, current: 4000},
+                             vitality: {max: 10000, current: 10000},
                              movingMethod: {
                                  source: movingMethod.randomDestination,
                                  instance: movingMethod.randomDestination()
                              },
                              step: 4,
+                             fixedCost: 8,
                              color: {red: 0, green: 0, blue: 169}});
+        }
+        for (i = 0; i < 25; i++) {
+            var initialPoint = randomPointOnField(game.field);
+            game.cells.push({x: initialPoint.x,
+                             y: initialPoint.y,
+                             size: 3,
+                             vitality: {max: 7000, current: 7000},
+                             movingMethod: {
+                                 source: movingMethod.bound,
+                                 instance: movingMethod.bound()
+                                 },
+                             step: 6,
+                             fixedCost: 3,
+                             color: {red: 210, green: 210, blue: 210}});
+        }
+        for (i = 0; i < 10; i++) {
+            var initialPoint = randomPointOnField(game.field);
+            game.cells.push({x: initialPoint.x,
+                             y: initialPoint.y,
+                             size: 4,
+                             vitality: {max: 2500, current: 2500},
+                             movingMethod: {
+                                 source: movingMethod.chorochoro,
+                                 instance: movingMethod.chorochoro()
+                             },
+                             step: 1,
+                             fixedCost: 1,
+                             color: {red: 255, green: 240, blue: 180}});
         }
         for (i = 0; i < 50; i++) {
             var initialPoint = randomPointOnField(game.field);
@@ -180,24 +211,12 @@ Lifegame = {};
                              size: 3,
                              vitality: {max: 3000, current: 3000},
                              movingMethod: {
-                                 source: movingMethod.bound,
-                                 instance: movingMethod.bound()
-                                 },
-                             step: 6,
-                             color: {red: 210, green: 210, blue: 210}});
-        }
-        for (i = 0; i < 20; i++) {
-            var initialPoint = randomPointOnField(game.field);
-            game.cells.push({x: initialPoint.x,
-                                 y: initialPoint.y,
-                             size: 4,
-                             vitality: {max: 1500, current: 1500},
-                             movingMethod: {
-                                 source: movingMethod.chorochoro,
-                                 instance: movingMethod.chorochoro()
+                                 source: movingMethod.immovable,
+                                 instance: movingMethod.immovable()
                              },
-                             step: 1,
-                             color: {red: 255, green: 240, blue: 180}});
+                             step: 0,
+                             fixedCost: 2,
+                             color: {red: 10, green: 197, blue: 120}});
         }
         return game;
     };
@@ -215,36 +234,69 @@ Lifegame = {};
             context.clearRect(0, 0, game.field.width, game.field.height);
         };
         var cellColor = function(cell) {
-            if (cell.vitality.current <= 0) return 'rgba(0,0,0,1)';
-            return 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + (cell.vitality.current / cell.vitality.max) + ')';
-        }
+            var alpha = 0.1 + (cell.vitality.current / cell.vitality.max);
+            return 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + alpha + ')';
+        };
+        var setDrawingCellStyle = function(cell) {
+            if (cell.vitality.current <= 0) {
+                context.lineWidth = cell.size;
+                context.strokeStyle = 'rgba(0,0,0,0.9)';
+                context.fillStyle = 'rgba(0,0,0,0)';
+            } else {
+                context.lineWidth = 1;
+                context.strokeStyle = 'rgba(0,0,0,0.8)';
+                context.fillStyle = cellColor(cell);
+            }
+        };
         var drawCell = function(cell) {
             context.beginPath();
-            context.strokeStyle = configuration.color.cellBorder;
-            context.fillStyle = cellColor(cell);
+            setDrawingCellStyle(cell);
             context.arc(cell.x, cell.y, cell.size, 0, Math.PI * 2, false);
             context.fill();
             context.stroke();
         };
+        var drawGameInformation = function(game) {
+            context.beginPath();
+            context.fillStyle = 'rgb(255,255,255)';
+            var text = "Frame: " + game.frameCount + " Cells: " + game.cells.length;
+            var x = 3;
+            var y = 3;
+            context.textBaseline = 'top';
+            context.fillText(text, x, y);
+        };
         var redraw = function(game) {
             clearField();
             forEach(drawCell, game.cells);
+            drawGameInformation(game);
         };
         var running = true;
+        var delay = configuration.process.defaultDelay;
         var frame = function() {
             redraw(game);
             if (running) {
                 cellsFrame(game);
+                game.frameCount++;
+                setTimeout(frame, delay);
+            } else {
+                setTimeout(frame, 100);
             }
-            setTimeout(function() {frame()}, configuration.process.delay);
         };
         frame();
         return {
             toggleRunning: function() {
                 running = !running;
             },
+            stop: function() {
+                running = false;
+            },
+            resume: function() {
+                running = true;
+            },
             reset: function() {
                 game = makeGame();
+            },
+            changeDelay: function(newDelay) {
+                delay = newDelay;
             }
         };
     };
