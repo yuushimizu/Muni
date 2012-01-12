@@ -188,7 +188,7 @@ Lifegame = {};
                                  source: movingMethod.randomDestination,
                                  instance: movingMethod.randomDestination()
                              },
-                             movableDistance: 4,
+                             movableDistance: 2,
                              searchRange: 20,
                              fixedCost: 8,
                              color: {red: 0, green: 0, blue: 169}});
@@ -203,7 +203,7 @@ Lifegame = {};
                                  source: movingMethod.bound,
                                  instance: movingMethod.bound()
                                  },
-                             movableDistance: 6,
+                             movableDistance: 3,
                              searchRange: 10,
                              fixedCost: 3,
                              color: {red: 210, green: 210, blue: 210}});
@@ -218,7 +218,7 @@ Lifegame = {};
                                  source: movingMethod.furafura,
                                  instance: movingMethod.furafura()
                              },
-                             movableDistance: 1,
+                             movableDistance: 0.5,
                              searchRange: 30,
                              fixedCost: 1,
                              color: {red: 255, green: 240, blue: 180}});
@@ -242,7 +242,7 @@ Lifegame = {};
             var initialPoint = randomPointOnField(game.field);
             var tailMovingCell = function() {
                 return movingMethod.tail(function(cell) {
-                    return cell.lastMovedDistance != undefined && cell.lastMovedDistance > 3;
+                    return cell.lastMovedDistance != undefined && cell.lastMovedDistance > 1.5;
                 }, movingMethod.furafura());
             };
             game.cells.push({x: initialPoint.x,
@@ -253,7 +253,7 @@ Lifegame = {};
                                  source: tailMovingCell,
                                  instance: tailMovingCell()
                              },
-                             movableDistance: 3,
+                             movableDistance: 1.5,
                              searchRange: 80,
                              fixedCost: 4,
                              color: {red: 220, green: 80, blue: 220}});
