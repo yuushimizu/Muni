@@ -11,15 +11,23 @@ Lifegame = {};
         for (; i < l; ++i) if (array[i] == x) return i;
         return null;
     };
-    var filter = function(fn, array) {
+    var filtered = function(fn, array) {
         var result = [];
         forEach(function(e) {
             if (fn(e)) result.push(e);
         }, array);
         return result;
     };
-    var removeIf = function(fn, array) {
-        return filter(function(e) {return !fn(e)}, array);
+    var removed = function(fn, array) {
+        return filtered(function(e) {return !fn(e)}, array);
+    };
+    var sorted = function(fn, array) {
+        var result = [];
+        forEach(function(e) {
+            result.push(e);
+        }, array);
+        result.sort(fn);
+        return result;
     };
     var randomInt = function(min, max) {
         return min + Math.floor(Math.random() * (max - min + 1));
@@ -158,7 +166,7 @@ Lifegame = {};
         cell.vitality.current -= cell.fixedCost;
     };
     var cellsFrame = function(game) {
-        game.cells = removeIf(function(cell) {return cell.vitality.current <= 0}, game.cells);
+        game.cells = removed(function(cell) {return cell.vitality.current <= 0}, game.cells);
         forEach(function(cell) {cellFrame(cell, game)}, game.cells);
     };
     var configuration = {
@@ -324,7 +332,10 @@ Lifegame = {};
             context.fill();
             context.stroke();
         };
-        var drawGameInformation = function(game) {
+        var drawCells = function() {
+            forEach(drawCell, sorted(function(cell1, cell2) {return cell2.size - cell1.size}, game.cells));
+        }
+        var drawGameInformation = function() {
             context.save();
             context.setTransform(1, 0, 0, 1, 0, 0);
             context.beginPath();
@@ -338,8 +349,8 @@ Lifegame = {};
         };
         var redraw = function(game) {
             clearField();
-            forEach(drawCell, game.cells);
-            drawGameInformation(game);
+            drawCells();
+            drawGameInformation();
         };
         var running = true;
         var delay = configuration.process.defaultDelay;
