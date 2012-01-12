@@ -26,13 +26,13 @@
     <script type="text/javascript">
       onload = function() {
         var lifegame = Lifegame.run(document.getElementById('view'));
-        var changeDelay = function(delay) {
-          lifegame.changeDelay(delay);
+        var changeFPS = function(fps) {
+          lifegame.changeFPS(fps);
           lifegame.resume();
         };
-        document.getElementById('fast-button').onclick = function() {changeDelay(10)};
-        document.getElementById('normal-button').onclick = function() {changeDelay(30)};
-        document.getElementById('slow-button').onclick = function() {changeDelay(100)};
+        document.getElementById('fast-button').onclick = function() {changeFPS(60)};
+        document.getElementById('normal-button').onclick = function() {changeFPS(30)};
+        document.getElementById('slow-button').onclick = function() {changeFPS(10)};
         document.getElementById('stop-button').onclick = function() {lifegame.stop()};
         document.getElementById('reset-button').onclick = function() {lifegame.reset()};
         var zoomByMouseEvent = function(e) {

@@ -58,6 +58,10 @@ Lifegame = {};
     var pointsDistance = function(point1, point2) {
         return distanceFromManhattanDistance(manhattanDistance(point1, point2));
     };
+    var radianFromPoints = function(source, destination) {
+        var md = manhattanDistance(source, destination);
+        return Math.atan2(md.x, md.y);
+    };
     var manhattanDistanceFromRadian = function(radian, distance) {
         return {
             x: Math.sin(radian) * distance,
@@ -145,7 +149,7 @@ Lifegame = {};
                 return distance;
             };
         },
-        tail: function(isTarget, whenAlone) {
+        searchNearest: function(isTarget, whenFound, whenAlone) {
             return function(cell, game) {
                 var searchResults = cellsInRange(cell, cell.searchRange, game);
                 searchResults.sort(function(result1, result2) {return result1.distance - result2.distance});
@@ -153,12 +157,24 @@ Lifegame = {};
                 var l = searchResults.length;
                 for (; i < l; ++i) {
                     if (searchResults[i].cell == cell || !isTarget(searchResults[i].cell)) continue;
-                    return moveCell(cell,
-                                    movedPointForDestination(cell, searchResults[i].cell, cell.moveRange),
-                                    game.field);
+                    return whenFound(cell, searchResults[i].cell, game);
                 }
                 return whenAlone(cell, game);
             };
+        },
+        tail: function(isTarget, whenAlone) {
+            return movingMethod.searchNearest(isTarget, function(cell, target, game) {
+                return moveCell(cell,
+                                movedPointForDestination(cell, target, cell.moveRange),
+                                game.field);
+            }, whenAlone);
+        },
+        escape: function(isTarget, whenAlone) {
+            return movingMethod.searchNearest(isTarget, function(cell, target, game) {
+                return moveCell(cell,
+                                movedPointWithRadian(cell, radianFromPoints(target, cell), cell.moveRange),
+                                game.field);
+            }, whenAlone);
         }
     };
     var cellFrame = function(cell, game) {
@@ -174,7 +190,7 @@ Lifegame = {};
     };
     var configuration = {
         process: {
-            defaultDelay: 30
+            defaultTargetFPS: 30
         },
         field: {
             width: 960,
@@ -283,7 +299,7 @@ Lifegame = {};
                 var currentTime = (new Date).getTime();
                 var currentFrames = game.frameCount;
                 var frames = currentFrames - lastFrameCount;
-                frameRate = frames == 0 ? 0 : Math.floor(frames / ((currentTime - lastTime) / 1000));
+                frameRate = frames == 0 ? 0 : Math.round(frames / ((currentTime - lastTime) / 1000));
                 lastTime = currentTime;
                 lastFrameCount = currentFrames;
                 setTimeout(monitorFrameRate, 1000);
@@ -319,6 +335,9 @@ Lifegame = {};
                 origin.y = game.field.height - area.height;
             }
             context.setTransform(rate, 0, 0, rate, -origin.x * rate, -origin.y * rate);
+        };
+        var resetZoom = function() {
+            return zoomContext(0, 0, 1);
         };
         var clearField = function() {
             context.clearRect(0, 0, game.field.width, game.field.height);
@@ -368,13 +387,14 @@ Lifegame = {};
             drawGameInformation();
         };
         var running = true;
-        var delay = configuration.process.defaultDelay;
+        var targetFPS = configuration.process.defaultTargetFPS;
         var frame = function() {
+            var startTime = (new Date).getTime();
             redraw(game);
             if (running) {
                 cellsFrame(game);
                 game.frameCount++;
-                setTimeout(frame, delay);
+                setTimeout(frame, 1000 / targetFPS - ((new Date).getTime() - startTime));
             } else {
                 setTimeout(frame, 100);
             }
@@ -393,8 +413,8 @@ Lifegame = {};
             reset: function() {
                 game = makeGame();
             },
-            changeDelay: function(newDelay) {
-                delay = newDelay;
+            changeFPS: function(fps) {
+                targetFPS = fps;
             },
             zoom: function(x, y, rate) {
                 zoomContext(x, y, rate);
@@ -403,7 +423,7 @@ Lifegame = {};
                 return transform.rate != 1;
             },
             resetZoom: function() {
-                zoomContext(0, 0, 1);
+                resetZoom();
             }
         };
     };
