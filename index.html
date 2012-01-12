@@ -37,7 +37,7 @@
         document.getElementById('reset-button').onclick = function() {lifegame.reset()};
         var zoomByMouseEvent = function(e) {
           var targetRect = e.target.getBoundingClientRect();
-          lifegame.zoom(e.x - targetRect.left - e.target.clientLeft, e.y - targetRect.top - e.target.clientTop, 6);
+          lifegame.zoom(e.x - targetRect.left - e.target.clientLeft, e.y - targetRect.top - e.target.clientTop, 4);
         };
         var mouseDown = false;
         document.getElementById('view').onmousedown = function(e) {

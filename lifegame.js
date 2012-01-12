@@ -11,13 +11,15 @@ Lifegame = {};
         for (; i < l; ++i) if (array[i] == x) return i;
         return null;
     };
+    var filter = function(fn, array) {
+        var result = [];
+        forEach(function(e) {
+            if (fn(e)) result.push(e);
+        }, array);
+        return result;
+    };
     var removeIf = function(fn, array) {
-        var i = array.length - 1;
-        for (; i >= 0; --i) {
-            if (fn(array[i])) {
-                array.splice(i, 1);
-            }
-        }
+        return filter(function(e) {return !fn(e)}, array);
     };
     var randomInt = function(min, max) {
         return min + Math.floor(Math.random() * (max - min + 1));
@@ -53,7 +55,7 @@ Lifegame = {};
             x: Math.sin(radian) * distance,
             y: Math.cos(radian) * distance
         };
-    }
+    };
     var movedPointWithRadian = function(source, radian, distance) {
         var md = manhattanDistanceFromRadian(radian, distance);
         return {
@@ -76,16 +78,24 @@ Lifegame = {};
             x: source.x + step.x,
             y: source.y + step.y
         };
-    }
+    };
     var moveCell = function(cell, destination, field) {
         oldPoint = {x: cell.x, y: cell.y};
         cell.x = destination.x < 0 ? 0 : (destination.x > field.width ? field.width : destination.x);
         cell.y = destination.y < 0 ? 0 : (destination.y > field.height ? field.height : destination.y);
         return pointsDistance(oldPoint, cell);
-    }
+    };
     var randomPointOnField = function(field) {
         return randomPoint(0, field.width, 0, field.height);
-    }
+    };
+    var cellsInRange = function(point, range, game) {
+        var result = [];
+        forEach(function(other) {
+            var distance = pointsDistance(point, other) - other.size;
+            if (distance <= range) result.push({cell: other, distance: distance});
+        }, game.cells);
+        return result;
+    };
     var movingMethod = {
         immovable: function() {
             return function(cell, game) {
@@ -120,18 +130,35 @@ Lifegame = {};
             return function(cell, game) {
                 var currentDistance = Math.random() * cell.movableDistance;
                 var destination = movedPointWithRadian(cell, randomRadian(), currentDistance);
-                return moveCell(cell, destination, game.field);
+                var distance = moveCell(cell, destination, game.field);
+                return distance;
+            };
+        },
+        tail: function(isTarget, whenAlone) {
+            return function(cell, game) {
+                var searchResults = cellsInRange(cell, cell.searchRange, game);
+                searchResults.sort(function(result1, result2) {return result1.distance - result2.distance});
+                var i = 0;
+                var l = searchResults.length;
+                for (; i < l; ++i) {
+                    if (searchResults[i].cell == cell || !isTarget(searchResults[i].cell)) continue;
+                    return moveCell(cell,
+                                    movedPointForDestination(cell, searchResults[i].cell, cell.movableDistance),
+                                    game.field);
+                }
+                return whenAlone(cell, game);
             };
         }
     };
     var cellFrame = function(cell, game) {
         if (cell.vitality.current <= 0) return;
         var movedDistance = cell.movingMethod.instance(cell, game);
+        cell.lastMovedDistance = movedDistance;
         cell.vitality.current -= movedDistance;
         cell.vitality.current -= cell.fixedCost;
     };
     var cellsFrame = function(game) {
-        removeIf(function(cell) {return cell.vitality.current <= 0}, game.cells);
+        game.cells = removeIf(function(cell) {return cell.vitality.current <= 0}, game.cells);
         forEach(function(cell) {cellFrame(cell, game)}, game.cells);
     };
     var configuration = {
@@ -162,6 +189,7 @@ Lifegame = {};
                                  instance: movingMethod.randomDestination()
                              },
                              movableDistance: 4,
+                             searchRange: 20,
                              fixedCost: 8,
                              color: {red: 0, green: 0, blue: 169}});
         }
@@ -176,6 +204,7 @@ Lifegame = {};
                                  instance: movingMethod.bound()
                                  },
                              movableDistance: 6,
+                             searchRange: 10,
                              fixedCost: 3,
                              color: {red: 210, green: 210, blue: 210}});
         }
@@ -190,6 +219,7 @@ Lifegame = {};
                                  instance: movingMethod.furafura()
                              },
                              movableDistance: 1,
+                             searchRange: 30,
                              fixedCost: 1,
                              color: {red: 255, green: 240, blue: 180}});
         }
@@ -204,8 +234,29 @@ Lifegame = {};
                                  instance: movingMethod.immovable()
                              },
                              movableDistance: 0,
+                             searchRange: 100,
                              fixedCost: 2,
                              color: {red: 10, green: 197, blue: 120}});
+        }
+        for (i = 0; i < 5; i++) {
+            var initialPoint = randomPointOnField(game.field);
+            var tailMovingCell = function() {
+                return movingMethod.tail(function(cell) {
+                    return cell.lastMovedDistance != undefined && cell.lastMovedDistance > 3;
+                }, movingMethod.furafura());
+            };
+            game.cells.push({x: initialPoint.x,
+                             y: initialPoint.y,
+                             size: 3,
+                             vitality: {max: 8000, current: 8000},
+                             movingMethod: {
+                                 source: tailMovingCell,
+                                 instance: tailMovingCell()
+                             },
+                             movableDistance: 3,
+                             searchRange: 80,
+                             fixedCost: 4,
+                             color: {red: 220, green: 80, blue: 220}});
         }
         return game;
     };
@@ -278,7 +329,7 @@ Lifegame = {};
             context.setTransform(1, 0, 0, 1, 0, 0);
             context.beginPath();
             context.fillStyle = 'rgb(255,255,255)';
-            var text = '(' + transform.x + ', ' + transform.y + ')' + ' x' + transform.rate + ' Frame: ' + game.frameCount + ' Cells: ' + game.cells.length;
+            var text = 'x' + transform.rate + ' Frame: ' + game.frameCount + ' Cells: ' + game.cells.length;
             var x = 3;
             var y = 3;
             context.textBaseline = 'top';
