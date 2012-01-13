@@ -51,8 +51,8 @@ Lifegame = {};
         };
     };
     var distanceFromManhattanDistance = function(manhattanDistance) {
-        if (manhattanDistance.x == 0) return manhattanDistance.y;
-        if (manhattanDistance.y == 0) return manhattanDistance.x;
+        if (manhattanDistance.x == 0) return Math.abs(manhattanDistance.y);
+        if (manhattanDistance.y == 0) return Math.abs(manhattanDistance.x);
         return Math.abs(manhattanDistance.x / Math.sin(Math.atan2(manhattanDistance.x, manhattanDistance.y)));
     };
     var pointsDistance = function(point1, point2) {
@@ -91,7 +91,7 @@ Lifegame = {};
             y: source.y + step.y
         };
     };
-    var cellSize = function(cell) {
+    var cellRadius = function(cell) {
         return cell.vitality.max / 1000;
     };
     var moveCell = function(cell, destination, field) {
@@ -106,7 +106,7 @@ Lifegame = {};
     var cellsInRange = function(point, range, game) {
         var result = [];
         forEach(function(other) {
-            var distance = pointsDistance(point, other) - cellSize(other);
+            var distance = pointsDistance(point, other) - cellRadius(other);
             if (distance <= range) result.push({cell: other, distance: distance});
         }, game.cells);
         return result;
@@ -345,29 +345,32 @@ Lifegame = {};
         var cellAlpha = function(cell) {
             return 0.1 + (cell.vitality.current / cell.vitality.max);
         };
-        var cellColor = function(cell) {
-            return 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + cellAlpha(cell) + ')';
-        };
         var setDrawingCellStyle = function(cell) {
             if (cell.vitality.current <= 0) {
-                context.lineWidth = cellSize(cell);
+                context.lineWidth = cellRadius(cell);
                 context.strokeStyle = 'rgba(0,0,0,0.9)';
                 context.fillStyle = 'rgba(0,0,0,0)';
             } else {
                 context.lineWidth = cell.weight / 2;
-                context.strokeStyle = 'rgba(0,0,0,' + (cellAlpha(cell) + 0.5) + ')';
-                context.fillStyle = cellColor(cell);
+                var alpha = cellAlpha(cell);
+                context.strokeStyle = 'rgba(0,0,0,' + (alpha + 0.5) + ')';
+                var radius = cellRadius(cell);
+                var gradient = context.createLinearGradient(cell.x - radius, cell.y - radius, cell.x + radius, cell.y + radius);
+                gradient.addColorStop(0.3, 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + alpha + ')');
+                gradient.addColorStop(0.5, 'rgba(' + Math.floor(cell.color.red * 1.5) + ',' + Math.floor(cell.color.green * 1.5) + ',' + Math.floor(cell.color.blue * 1.5) + ',' + alpha + ')');
+                gradient.addColorStop(0.7, 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + alpha + ')');
+                context.fillStyle = gradient;
             }
         };
         var drawCell = function(cell) {
             context.beginPath();
             setDrawingCellStyle(cell);
-            context.arc(cell.x, cell.y, cellSize(cell), 0, Math.PI * 2, false);
+            context.arc(cell.x, cell.y, cellRadius(cell), 0, Math.PI * 2, false);
             context.fill();
             context.stroke();
         };
         var drawCells = function() {
-            forEach(drawCell, sorted(function(cell1, cell2) {return cellSize(cell2) - cellSize(cell1)}, game.cells));
+            forEach(drawCell, sorted(function(cell1, cell2) {return cellRadius(cell2) - cellRadius(cell1)}, game.cells));
         };
         var drawGameInformation = function() {
             context.save();
