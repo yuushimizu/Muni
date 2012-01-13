@@ -210,6 +210,25 @@ Lifegame = {};
                              searchRange: 40,
                              color: {red: 0, green: 0, blue: 169}});
         }
+        for (i = 0; i < 1; i++) {
+            var initialPoint = randomPointOnField(game.field);
+            var tailMovingCell = function() {
+                return movingMethod.tail(function(cell) {
+                    return cell.lastMovedDistance != undefined && cell.lastMovedDistance > 1.5;
+                }, movingMethod.randomDestination());
+            };
+            game.cells.push({x: initialPoint.x,
+                             y: initialPoint.y,
+                             vitality: {max: 80000, current: 80000},
+                             weight: 30,
+                             movingMethod: {
+                                 source: tailMovingCell,
+                                 instance: tailMovingCell()
+                             },
+                             moveRange: 1,
+                             searchRange: 100,
+                             color: {red: 200, green: 170, blue: 10}});
+        }
         for (i = 0; i < 10; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
