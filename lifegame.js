@@ -351,12 +351,7 @@ Lifegame = {};
                 context.lineWidth = cell.weight / 2;
                 var alpha = cellAlpha(cell);
                 context.strokeStyle = 'rgba(0,0,0,' + (alpha + 0.5) + ')';
-                var radius = cellRadius(cell);
-                var gradient = context.createLinearGradient(cell.x - radius, cell.y - radius, cell.x + radius, cell.y + radius);
-                gradient.addColorStop(0.3, 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + alpha + ')');
-                gradient.addColorStop(0.5, 'rgba(' + Math.floor(cell.color.red * 1.5) + ',' + Math.floor(cell.color.green * 1.5) + ',' + Math.floor(cell.color.blue * 1.5) + ',' + alpha + ')');
-                gradient.addColorStop(0.7, 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + alpha + ')');
-                context.fillStyle = gradient;
+                context.fillStyle = 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + alpha + ')';
             }
         };
         var drawCell = function(cell) {
