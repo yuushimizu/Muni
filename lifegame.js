@@ -188,18 +188,9 @@ Lifegame = {};
         game.cells = removed(function(cell) {return cell.vitality.current <= 0}, game.cells);
         forEach(function(cell) {cellFrame(cell, game)}, game.cells);
     };
-    var configuration = {
-        process: {
-            defaultTargetFPS: 30
-        },
-        field: {
-            width: 960,
-            height: 480
-        }
-    };
-    var makeGame = function() {
+    var makeGame = function(field) {
         var game = {
-            field: configuration.field,
+            field: field,
             cells: [],
             frameCount: 0
         };
@@ -282,15 +273,21 @@ Lifegame = {};
         }
         return game;
     };
-    var initializeCanvas = function(canvas, game) {
+    var changeGameField = function(game, field) {
+        game.field = field;
+        game.cells = removed(function(cell) {
+            return cell.x > field.width || cell.y > field.height;
+        }, game.cells);
+    };
+    var resetCanvasSize = function(canvas, game) {
         canvas.style.width = game.field.width + 'px';
         canvas.style.height = game.field.height + 'px';
         canvas.width = game.field.width;
         canvas.height = game.field.height;
     };
-    Lifegame.run = function(canvas) {
-        var game = makeGame();
-        initializeCanvas(canvas, game);
+    Lifegame.run = function(canvas, configuration) {
+        var game = makeGame(configuration.field);
+        resetCanvasSize(canvas, game);
         var frameRate = 0;
         var monitorFrameRate = (function() {
             var lastTime = (new Date).getTime();
@@ -390,7 +387,7 @@ Lifegame = {};
             drawGameInformation();
         };
         var running = true;
-        var targetFPS = configuration.process.defaultTargetFPS;
+        var targetFPS = configuration.fps;
         var frame = function() {
             var startTime = (new Date).getTime();
             redraw(game);
@@ -414,7 +411,11 @@ Lifegame = {};
                 running = true;
             },
             reset: function() {
-                game = makeGame();
+                game = makeGame(game.field);
+            },
+            changeField: function(field) {
+                changeGameField(game, field);
+                resetCanvasSize(canvas, game);
             },
             changeFPS: function(fps) {
                 targetFPS = fps;

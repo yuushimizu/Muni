@@ -16,23 +16,39 @@
   <body>
     <canvas id="view">Canvas required.</canvas>
     <p>
+      <input id="large-button" type="button" value="Large">
+      <input id="middle-button" type="button" value="Middle">
+      <input id="small-button" type="button" value="Small">
+      -
       <input id="fast-button" type="button" value="Fast">
       <input id="normal-button" type="button" value="Normal">
       <input id="slow-button" type="button" value="Slow">
       <input id="stop-button" type="button" value="Stop">
+      -
       <input id="reset-button" type="button" value="Reset">
     </p>
     <script type="text/javascript" src="lifegame.js"></script>
     <script type="text/javascript">
       onload = function() {
-        var lifegame = Lifegame.run(document.getElementById('view'));
-        var changeFPS = function(fps) {
-          lifegame.changeFPS(fps);
+        var fpss = {fast: 60, normal: 30, slow: 10};
+        var fields = {
+            large: {width: 960, height: 480},
+            middle: {width: 640, height: 480},
+            small: {width: 320, height: 240}};
+        var lifegame = Lifegame.run(document.getElementById('view'), {fps: fpss.normal, field: fields.large});
+        var changeField = function(key) {
+          lifegame.changeField(fields[key]);
+        }
+        document.getElementById('large-button').onclick = function() {changeField('large')};
+        document.getElementById('middle-button').onclick = function() {changeField('middle')};
+        document.getElementById('small-button').onclick = function() {changeField('small')};
+        var changeFPS = function(key) {
+          lifegame.changeFPS(fpss[key]);
           lifegame.resume();
         };
-        document.getElementById('fast-button').onclick = function() {changeFPS(60)};
-        document.getElementById('normal-button').onclick = function() {changeFPS(30)};
-        document.getElementById('slow-button').onclick = function() {changeFPS(10)};
+        document.getElementById('fast-button').onclick = function() {changeFPS('fast')};
+        document.getElementById('normal-button').onclick = function() {changeFPS('normal')};
+        document.getElementById('slow-button').onclick = function() {changeFPS('slow')};
         document.getElementById('stop-button').onclick = function() {lifegame.stop()};
         document.getElementById('reset-button').onclick = function() {lifegame.reset()};
         var zoomByMouseEvent = function(e) {
