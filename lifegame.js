@@ -32,6 +32,9 @@ Lifegame = {};
     var randomInt = function(min, max) {
         return min + Math.floor(Math.random() * (max - min + 1));
     };
+    var randomFetch = function(array) {
+        return array[randomInt(0, array.length - 1)];
+    };
     var randomBool = function() {
         return randomInt(0, 1) == 0;
     };
@@ -93,6 +96,9 @@ Lifegame = {};
     };
     var cellRadius = function(cell) {
         return cell.vitality.max / 1000;
+    };
+    var cellWeight = function(cell) {
+        return cellRadius(cell) * cell.density;
     };
     var moveCell = function(cell, destination, field) {
         oldPoint = {x: cell.x, y: cell.y};
@@ -177,16 +183,56 @@ Lifegame = {};
             }, whenAlone);
         }
     };
+    
     var cellFrame = function(cell, game) {
         if (cell.vitality.current <= 0) return;
         var movedDistance = cell.movingMethod.instance(cell, game);
         cell.lastMovedDistance = movedDistance;
-        cell.vitality.current -= movedDistance * cell.weight / 2;
-        cell.vitality.current -= cell.weight;
+        cell.vitality.current -= movedDistance * cellWeight(cell) / 5;
+        cell.vitality.current -= cellWeight(cell) / 10;
+        cell.message = Math.floor(cell.vitality.current) + '/' + Math.floor(cell.vitality.max);
     };
     var cellsFrame = function(game) {
         game.cells = removed(function(cell) {return cell.vitality.current <= 0}, game.cells);
         forEach(function(cell) {cellFrame(cell, game)}, game.cells);
+    };
+    var makeRandomCell = function(field) {
+        var initialPoint = randomPointOnField(field);
+        var vitality = 1000 + randomInt(1, 10) * randomInt(1, 100) * randomInt(1, 100);
+        var makeRandomMovingMethod = function() {
+            return randomFetch([
+                function() {return movingMethod.immovable},
+                function() {return movingMethod.randomDestination},
+                function() {return movingMethod.bound},
+                function() {return movingMethod.furafura},
+                function() {
+                    var whenAlone = makeRandomMovingMethod()();
+                    return function() {
+                        return movingMethod.tail(function(cell) {
+                            return cell.lastMovedDistance != undefined && cell.lastMovedDistance > 1.5;
+                        }, whenAlone);
+                    };
+                },
+                function() {
+                    var whenAlone = makeRandomMovingMethod()();
+                    return function() {
+                        return movingMethod.escape(function(cell) {
+                            return true;
+                        }, whenAlone);
+                    };
+                }])();
+        };
+        var moving = makeRandomMovingMethod();
+        var rgbRate = {red: Math.random(), green: Math.random(), blue: Math.random()};
+        if (rgbRate.red == 0 && rgbRate.green == 0 && rgbRate.blue == 0) rgbRate = {red: 1, green: 1, blue: 1};
+        return {x: initialPoint.x,
+                y: initialPoint.y,
+                vitality: {max: vitality, current: vitality},
+                density: 0.1 + Math.random() * 1.9,
+                movingMethod: {source: moving, instance: moving()},
+                moveRange: randomInt(0, 5),
+                searchRange: randomInt(0, 300),
+                rgbRate: rgbRate};
     };
     var makeGame = function(field) {
         var game = {
@@ -196,21 +242,21 @@ Lifegame = {};
         };
         Lifegame.game = game;
         var i;
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 8000, current: 8000},
-                             weight: 5,
+                             density: 1,
                              movingMethod: {
                                  source: movingMethod.randomDestination,
                                  instance: movingMethod.randomDestination()
                              },
                              moveRange: 2,
                              searchRange: 40,
-                             color: {red: 0, green: 0, blue: 169}});
+                             rgbRate: {red: 0, green: 0, blue: 1}});
         }
-        for (i = 0; i < 1; i++) {
+        for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
             var tailMovingCell = function() {
                 return movingMethod.tail(function(cell) {
@@ -220,58 +266,58 @@ Lifegame = {};
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 80000, current: 80000},
-                             weight: 30,
+                             density: 2,
                              movingMethod: {
                                  source: tailMovingCell,
                                  instance: tailMovingCell()
                              },
                              moveRange: 1,
                              searchRange: 100,
-                             color: {red: 200, green: 170, blue: 10}});
+                             rgbRate: {red: 3, green: 2, blue: 1}});
         }
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 4000, current: 4000},
-                             weight: 1,
+                             density: 0.2,
                              movingMethod: {
                                  source: movingMethod.bound,
                                  instance: movingMethod.bound()
                                  },
                              moveRange: 3,
                              searchRange: 20,
-                             color: {red: 210, green: 210, blue: 210}});
+                             rgbRate: {red: 1, green: 1, blue: 2}});
         }
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 3500, current: 3500},
-                             weight: 2,
+                             density: 1,
                              movingMethod: {
                                  source: movingMethod.furafura,
                                  instance: movingMethod.furafura()
                              },
                              moveRange: 0.5,
                              searchRange: 60,
-                             color: {red: 255, green: 240, blue: 180}});
+                             rgbRate: {red: 1, green: 1, blue: 0}});
         }
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 3000, current: 3000},
-                             weight: 2,
+                             density: 0.75,
                              movingMethod: {
                                  source: movingMethod.immovable,
                                  instance: movingMethod.immovable()
                              },
                              moveRange: 0,
                              searchRange: 200,
-                             color: {red: 10, green: 197, blue: 120}});
+                             rgbRate: {red: 0, green: 3, blue: 1}});
         }
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
             var tailMovingCell = function() {
                 return movingMethod.tail(function(cell) {
@@ -281,14 +327,17 @@ Lifegame = {};
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 5000, current: 5000},
-                             weight: 3,
+                             density: 0.8,
                              movingMethod: {
                                  source: tailMovingCell,
                                  instance: tailMovingCell()
                              },
                              moveRange: 1.5,
                              searchRange: 160,
-                             color: {red: 220, green: 80, blue: 220}});
+                             rgbRate: {red: 2, green: 1, blue: 2}});
+        }
+        for (i = 0; i < 40; i++) {
+            game.cells.push(makeRandomCell(game.field));
         }
         return game;
     };
@@ -361,24 +410,43 @@ Lifegame = {};
         var cellAlpha = function(cell) {
             return 0.1 + (cell.vitality.current / cell.vitality.max);
         };
-        var setDrawingCellStyle = function(cell) {
+        var drawCell = function(cell) {
+            var radius = cellRadius(cell);
             if (cell.vitality.current <= 0) {
-                context.lineWidth = cellRadius(cell);
+                context.beginPath();
+                context.lineWidth = radius;
                 context.strokeStyle = 'rgba(0,0,0,0.9)';
                 context.fillStyle = 'rgba(0,0,0,0)';
+                context.arc(cell.x, cell.y, radius, 0, Math.PI * 2, false);
+                context.closePath();
+                context.stroke();
             } else {
-                context.lineWidth = cell.weight / 2;
                 var alpha = cellAlpha(cell);
+                context.beginPath();
                 context.strokeStyle = 'rgba(0,0,0,' + (alpha + 0.5) + ')';
-                context.fillStyle = 'rgba(' + cell.color.red + ',' + cell.color.green + ',' + cell.color.blue + ',' + alpha + ')';
+                context.lineWidth = 1;
+                var rgbRateTotal = cell.rgbRate.red + cell.rgbRate.green + cell.rgbRate.blue;
+                var adjustColor = function(source) {
+                    var rated = Math.floor(255 * source / rgbRateTotal + 96);
+                    var adjusted = Math.floor(rated < 0 ? 0 : (rated > 255 ? 255 : rated) + 96 - (96 * ((cell.density - 1) * 1.5 + 1)));
+                    return adjusted < 0 ? 0 : (adjusted > 255 ? 255 : adjusted);
+                };
+                var ratedColor = {
+                    red: adjustColor(cell.rgbRate.red),
+                    green: adjustColor(cell.rgbRate.green),
+                    blue: adjustColor(cell.rgbRate.blue)};
+                context.fillStyle = 'rgba(' + ratedColor.red + ',' + ratedColor.green + ',' + ratedColor.blue + ',' + alpha + ')';
+                context.arc(cell.x, cell.y, radius, 0, Math.PI * 2, false);
+                context.closePath();
+                context.fill();
+                context.stroke();
+                context.fillStyle = 'rgb(255,255,255)';
+                if (cell.message != undefined && cell.message != "") {
+                    context.textBaseline = 'top';
+                    context.textAlign = 'center';
+                    context.fillText(cell.message, cell.x, cell.y + radius + 1);
+                }
             }
-        };
-        var drawCell = function(cell) {
-            context.beginPath();
-            setDrawingCellStyle(cell);
-            context.arc(cell.x, cell.y, cellRadius(cell), 0, Math.PI * 2, false);
-            context.fill();
-            context.stroke();
         };
         var drawCells = function() {
             forEach(drawCell, sorted(function(cell1, cell2) {return cellRadius(cell2) - cellRadius(cell1)}, game.cells));
@@ -386,12 +454,12 @@ Lifegame = {};
         var drawGameInformation = function() {
             context.save();
             context.setTransform(1, 0, 0, 1, 0, 0);
-            context.beginPath();
             context.fillStyle = 'rgb(255,255,255)';
             var text = 'Zoom: x' + transform.rate + ' Frame: ' + game.frameCount + ' Cells: ' + game.cells.length + ' FPS: ' + frameRate;
             var x = 3;
             var y = 3;
             context.textBaseline = 'top';
+            context.textAlign = 'left';
             context.fillText(text, x, y);
             context.restore();
         };
