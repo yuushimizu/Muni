@@ -215,6 +215,7 @@ Lifegame = {};
             };
         },
         moon: function(isTarget, radianIncrease, distance, whenAlone) {
+            var increase = radianIncrease;
             var radian = undefined;
             return movingMethod.searchNearest(isTarget, function(cell, target, game) {
                 var currentDistance = pointsDistance(target, cell);
@@ -227,9 +228,15 @@ Lifegame = {};
                     var destination = movedPointWithRadian(target, radian, distance);
                     var movedPoint = movedPointForDestination(cell, destination, cell.moveRange);
                     if (destination.x == movedPoint.x && destination.y == movedPoint.y) {
-                        radian += radianIncrease;
+                        radian += increase;
                     }
-                    return moveCell(cell, movedPoint, game.field);
+                    var oldPosition = {x: cell.x, y: cell.y};
+                    var movedDistance = moveCell(cell, movedPoint, game.field);
+                    if (oldPosition.x == cell.x || oldPosition.y == cell.y) {
+                        increase *= -1;
+                        radian += increase;
+                    }
+                    return movedDistance;
                 }
             }, whenAlone);
         },
@@ -295,12 +302,14 @@ Lifegame = {};
             moon.vitality.max *= 0.3;
             moon.vitality.current = moon.vitality.max;
             var radianIncrease = (0.01 + Math.random() * 0.5) * (randomBool() ? 1 : -1);
-            var distance = cellRadius(cell) * 2;
+            var radius = cellRadius(cell);
+            var distance = radius + cellRadius(moon) + Math.random() * radius * 2;
             var moving = function() {return movingMethod.moon(function(moon, target) {return target == cell}, radianIncrease, distance, movingMethod.circle())};
             moveCell(moon, movedPointWithRadian(cell, randomRadian(), distance), game.field);
             moon.movingMethod.source = moving;
             moon.movingMethod.instance = moving();
             moon.moveRange = (moon.moveRange + 0.5) * 2;
+            moon.searchRange = game.field.width > game.field.height ? game.field.width : game.field.height;
             moon.specialActions = [];
             moon.event = 'born';
             moon.parent = cell;
@@ -432,7 +441,7 @@ Lifegame = {};
                 density: 0.1 + Math.random() * 1.9,
                 movingMethod: {source: moving, instance: moving()},
                 specialActions: actions,
-                moveRange: randomInt(0, 2) * randomInt(0, 2) + randomInt(0, 1),
+                moveRange: 0.01 + randomInt(0, 2) * randomInt(0, 2) + randomInt(0, 1),
                 searchRange: randomInt(0, 300),
                 rgbRate: rgbRate};
     };
@@ -674,9 +683,9 @@ Lifegame = {};
                 context.closePath();
                 context.fill();
                 context.stroke();
-                context.fillStyle = 'rgb(255,255,255)';
             }
             if (cell.message != undefined && cell.message != "") {
+                context.fillStyle = 'rgba(255,255,255,1)';
                 context.textBaseline = 'top';
                 context.textAlign = 'center';
                 context.fillText(cell.message, cell.x, cell.y + radius + 1);
