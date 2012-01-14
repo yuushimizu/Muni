@@ -158,6 +158,21 @@ Lifegame = {};
                 return moveCell(cell, destination, game.field);
             };
         },
+        circle: function() {
+            var radian = randomRadian();
+            var increase = Math.random() / 2;
+            if (randomBool()) increase = -increase;
+            return function(cell, game) {
+                var destination = movedPointWithRadian(cell, radian, cell.moveRange);
+                radian += increase;
+                if (radian > Math.PI * 2) {
+                    radian -= Math.PI * 2
+                } else if (radian < 0) {
+                    radian += Math.PI * 2;
+                }
+                return moveCell(cell, destination, game.field);
+            };
+        },
         chorochoro: function() {
             return function(cell, game) {
                 var currentDistance = Math.random() * cell.moveRange;
@@ -215,6 +230,7 @@ Lifegame = {};
                 hittingCell.knockedPosition = movedPointWithRadian(knockedPositionBase, radianFromPoints(cell, knockedPositionBase), damage / 100);
                 if (hittingCell.vitality.current <= 0) {
                     cell.vitality.current += hittingCells[i].cell.vitality.max / 2;
+                    cell.event = 'healed';
                     if (cell.vitality.current > cell.vitality.max) cell.vitality.current = cell.vitality.max;
                 }
             }
@@ -273,6 +289,7 @@ Lifegame = {};
                 function() {return movingMethod.randomDestination},
                 function() {return movingMethod.furafura},
                 function() {return movingMethod.bound},
+                function() {return movingMethod.circle},
                 function() {return movingMethod.chorochoro},
                 function() {
                     var whenAlone = makeRandomMovingMethod()();
@@ -323,8 +340,8 @@ Lifegame = {};
                              vitality: {max: 8000, current: 8000},
                              density: 1,
                              movingMethod: {
-                                 source: movingMethod.furafura,
-                                 instance: movingMethod.furafura()
+                                 source: movingMethod.circle,
+                                 instance: movingMethod.circle()
                              },
                              moveRange: 2,
                              searchRange: 40,
@@ -509,6 +526,9 @@ Lifegame = {};
                 if (cell.event == 'damaged') {
                     context.strokeStyle = 'rgba(196,0,0,1)';
                     context.lineWidth = 2;
+                } else if (cell.event == 'healed') {
+                    context.strokeStyle = 'rgba(0, 196, 196, 0.8)';
+                    context.lineWidth = 3;
                 } else {
                     context.strokeStyle = 'rgba(0,0,0,' + (alpha + 0.5) + ')';
                     context.lineWidth = 1;
