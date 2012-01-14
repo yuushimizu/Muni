@@ -1,10 +1,22 @@
 Lifegame = {};
 (function() {
+    var copyObject = function(obj) {
+        var result = {};
+        for (var key in obj) result[key] = obj[key];
+        return result;
+    };
     var forEach = function(fn, array) {
         var i = 0;
         var l = array.length;
         for (; i < l; ++i) fn(array[i]);
     };
+    var copyArray = function(array) {
+        var result = [];
+        forEach(function(e) {
+            result.push(e);
+        }, array);
+        return result;
+    }
     var indexOf = function(x, array) {
         var i = 0;
         var l = array.length;
@@ -41,6 +53,11 @@ Lifegame = {};
     var randomRadian = function() {
         return Math.random() * Math.PI * 2;
     };
+    var fixRadian = function(radian) {
+        while (radian < 0) radian += Math.PI * 2;
+        while (radian > Math.PI * 2) radian -= Math.PI * 2;
+        return radian;
+    };
     var randomPoint = function(minX, maxX, minY, maxY) {
         return {
             x: randomInt(minX, maxX),
@@ -63,7 +80,7 @@ Lifegame = {};
     };
     var radianFromPoints = function(source, destination) {
         var md = manhattanDistance(source, destination);
-        return Math.atan2(md.x, md.y);
+        return fixRadian(Math.atan2(md.x, md.y));
     };
     var manhattanDistanceFromRadian = function(radian, distance) {
         return {
@@ -117,6 +134,14 @@ Lifegame = {};
         }, game.cells);
         return result;
     };
+    var cellType = function(cell) {
+        var rgbRate = cell.rgbRate;
+        var type = rgbRate.red > rgbRate.blue ? 'red' : 'blue';
+        return rgbRate[type] > rgbRate.green ? type : 'green';
+    };
+    var isEatingTarget = function(cell, other) {
+        return cellType(cell) != cellType(other);
+    };
     var movingMethod = {
         immovable: function() {
             return function(cell, game) {
@@ -164,12 +189,7 @@ Lifegame = {};
             if (randomBool()) increase = -increase;
             return function(cell, game) {
                 var destination = movedPointWithRadian(cell, radian, cell.moveRange);
-                radian += increase;
-                if (radian > Math.PI * 2) {
-                    radian -= Math.PI * 2
-                } else if (radian < 0) {
-                    radian += Math.PI * 2;
-                }
+                radian = fixRadian(radian + increase);
                 return moveCell(cell, destination, game.field);
             };
         },
@@ -194,6 +214,25 @@ Lifegame = {};
                 return whenAlone(cell, game);
             };
         },
+        moon: function(isTarget, radianIncrease, distance, whenAlone) {
+            var radian = undefined;
+            return movingMethod.searchNearest(isTarget, function(cell, target, game) {
+                var currentDistance = pointsDistance(target, cell);
+                if (currentDistance - cell.moveRange > distance) {
+                    radian = radianFromPoints(target, cell);
+                    return moveCell(cell, movedPointForDestination(cell, target, cell.moveRange), game.field);
+                } else {
+                    var currentRadian = radianFromPoints(target, cell);
+                    if (radian == undefined) radian = currentRadian;
+                    var destination = movedPointWithRadian(target, radian, distance);
+                    var movedPoint = movedPointForDestination(cell, destination, cell.moveRange);
+                    if (destination.x == movedPoint.x && destination.y == movedPoint.y) {
+                        radian += radianIncrease;
+                    }
+                    return moveCell(cell, movedPoint, game.field);
+                }
+            }, whenAlone);
+        },
         tail: function(isTarget, whenAlone) {
             return movingMethod.searchNearest(isTarget, function(cell, target, game) {
                 return moveCell(cell,
@@ -209,6 +248,79 @@ Lifegame = {};
             }, whenAlone);
         }
     };
+    var copyCell = function(cell) {
+        var copy = copyObject(cell);
+        copy.vitality = copyObject(cell.vitality);
+        copy.movingMethod = copyObject(cell.movingMethod);
+        copy.movingMethod.instance = copy.movingMethod.source();
+        copy.specialActions = copyArray(cell.specialActions);
+        copy.rgbRate = copyObject(cell.rgbRate);
+        return copy;
+    };
+    var specialActions = {
+        multiply: function(cell, game) {
+            if (randomInt(0, 500) != 0) return;
+            var cost = cell.vitality.max * 0.2;
+            if (cell.vitality.current < cost) return;
+            cell.vitality.current -= cost;
+            var child = copyCell(cell);
+            var radius = cellRadius(cell);
+            moveCell(child, movedPointWithRadian(cell, randomRadian(), radius * 2 + Math.random() * radius), game.field);
+            child.event = 'born';
+            child.parent = cell;
+            game.cells.push(child);
+        },
+        shot: function(cell, game) {
+            if (randomInt(0, 500) != 0) return;
+            var cost = cell.vitality.max / 1000;
+            if (cell.vitality.current < cost) return;
+            cell.vitality.current -= cost;
+            var shot = copyCell(cell);
+            shot.vitality.max *= 0.1;
+            shot.vitality.current = shot.vitality.max * 0.1;
+            shot.movingMethod.source = movingMethod.bound;
+            shot.movingMethod.instance = movingMethod.bound();
+            shot.moveRange = 2 + shot.moveRange / 2;
+            shot.specialActions = [];
+            shot.event = 'born';
+            shot.parent = cell;
+            game.cells.push(shot);
+        },
+        makeMoon: function(cell, game) {
+            if (randomInt(0, 1000) != 0) return;
+            var cost = cell.vitality.max / 10;
+            if (cell.vitality.current < cost) return;
+            cell.vitality.current -= cost;
+            var moon = copyCell(cell);
+            moon.vitality.max *= 0.3;
+            moon.vitality.current = moon.vitality.max;
+            var radianIncrease = (0.01 + Math.random() * 0.5) * (randomBool() ? 1 : -1);
+            var distance = cellRadius(cell) * 2;
+            var moving = function() {return movingMethod.moon(function(moon, target) {return target == cell}, radianIncrease, distance, movingMethod.circle())};
+            moveCell(moon, movedPointWithRadian(cell, randomRadian(), distance), game.field);
+            moon.movingMethod.source = moving;
+            moon.movingMethod.instance = moving();
+            moon.moveRange = (moon.moveRange + 0.5) * 2;
+            moon.specialActions = [];
+            moon.event = 'born';
+            moon.parent = cell;
+            game.cells.push(moon);
+        },
+        split: function(cell, game) {
+            if (randomInt(0, 500) != 0) return;
+            if (cell.vitality.max / 50) return;
+            cell.vitality.current /= 2;
+            cell.vitality.max /= 2;
+            var parts = [copyCell(cell), copyCell(cell)];
+            cell.vitality.current = 0;
+            var distance = cellWeight(cell) / 2;
+            forEach(function(part) {
+                part.event = 'born';
+                moveCell(part, movedPointWithRadian(part, randomRadian(), distance), game.field);
+                game.cells.push(part);
+            }, parts);
+        }
+    };
     var cellMovingFrame = function(cell, game) {
         var movedDistance = cell.movingMethod.instance(cell, game);
         cell.lastMovedDistance = movedDistance;
@@ -220,7 +332,7 @@ Lifegame = {};
         var l = hittingCells.length;
         for (; i < l; ++i) {
             var hittingCell = hittingCells[i].cell;
-            if (hittingCell == cell || hittingCell.vitality.current <= 0) continue;
+            if (hittingCell == cell || !isEatingTarget(cell, hittingCell) || hittingCell.vitality.current <= 0) continue;
             var damage = cell.density * ((cell.lastMovedDistance == undefined ? 0 : cell.lastMovedDistance) + 1) * 100;
             damage -= damage * hittingCell.density / 10;
             if (damage > 0) {
@@ -229,7 +341,7 @@ Lifegame = {};
                 knockedPositionBase = hittingCell.knockedPosition == undefined ? hittingCell : hittingCell.knockedPosition;
                 hittingCell.knockedPosition = movedPointWithRadian(knockedPositionBase, radianFromPoints(cell, knockedPositionBase), damage / 100);
                 if (hittingCell.vitality.current <= 0) {
-                    cell.vitality.current += hittingCells[i].cell.vitality.max / 2;
+                    cell.vitality.current += hittingCells[i].cell.vitality.max;
                     cell.event = 'healed';
                     if (cell.vitality.current > cell.vitality.max) cell.vitality.current = cell.vitality.max;
                 }
@@ -244,13 +356,18 @@ Lifegame = {};
         }, game.cells);
         forEach(function(cell) {
             cellEatingFrame(cell, game);
-            cell.message = Math.floor(cell.vitality.current / 10) + '/' + Math.floor(cell.vitality.max / 10);
+            cell.message = Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10);
         }, game.cells);
         forEach(function(cell) {
             if (cell.knockedPosition != undefined) {
                 moveCell(cell, cell.knockedPosition, game.field);
                 cell.knockedPosition = undefined;
             }
+        }, game.cells);
+        forEach(function(cell) {
+            forEach(function(action) {
+                action(cell, game);
+            }, cell.specialActions);
         }, game.cells);
     };
     var makeRandomCell = function(field) {
@@ -262,6 +379,7 @@ Lifegame = {};
                     // all
                     return true;
                 },
+                isEatingTarget,
                 function(cell, other) {
                     // faster than me.
                     return other.lastMovedDistance != undefined && (cell.lastMovedDistance == undefined || cell.lastMovedDistance < other.lastMovedDistance);
@@ -305,6 +423,7 @@ Lifegame = {};
                 }])();
         };
         var moving = makeRandomMovingMethod();
+        var actions = filtered(randomBool, [specialActions.multiply, specialActions.shot, specialActions.makeMoon, specialActions.split]);
         var rgbRate = {red: Math.random(), green: Math.random(), blue: Math.random()};
         if (rgbRate.red == 0 && rgbRate.green == 0 && rgbRate.blue == 0) rgbRate = {red: 1, green: 1, blue: 1};
         return {x: initialPoint.x,
@@ -312,6 +431,7 @@ Lifegame = {};
                 vitality: {max: vitality, current: vitality},
                 density: 0.1 + Math.random() * 1.9,
                 movingMethod: {source: moving, instance: moving()},
+                specialActions: actions,
                 moveRange: randomInt(0, 2) * randomInt(0, 2) + randomInt(0, 1),
                 searchRange: randomInt(0, 300),
                 rgbRate: rgbRate};
@@ -319,7 +439,7 @@ Lifegame = {};
     var gameFrame = function(game) {
         cellsFrame(game);
         game.frameCount++;
-        if (randomInt(0, game.cells.length) == 0) {
+        if (randomInt(0, game.cells.length * 2) == 0) {
             var newCell = makeRandomCell(game.field);
             newCell.event = 'born';
             game.cells.push(newCell);
@@ -343,6 +463,7 @@ Lifegame = {};
                                  source: movingMethod.circle,
                                  instance: movingMethod.circle()
                              },
+                             specialActions: [specialActions.makeChild],
                              moveRange: 2,
                              searchRange: 40,
                              rgbRate: {red: 0, green: 0, blue: 1}});
@@ -362,6 +483,7 @@ Lifegame = {};
                                  source: tailMovingCell,
                                  instance: tailMovingCell()
                              },
+                             specialActions: [],
                              moveRange: 1,
                              searchRange: 100,
                              rgbRate: {red: 3, green: 2, blue: 1}});
@@ -375,7 +497,8 @@ Lifegame = {};
                              movingMethod: {
                                  source: movingMethod.bound,
                                  instance: movingMethod.bound()
-                                 },
+                             },
+                             specialActions: [],
                              moveRange: 3,
                              searchRange: 20,
                              rgbRate: {red: 1, green: 1, blue: 2}});
@@ -390,6 +513,7 @@ Lifegame = {};
                                  source: movingMethod.chorochoro,
                                  instance: movingMethod.chorochoro()
                              },
+                             specialActions: [],
                              moveRange: 0.5,
                              searchRange: 60,
                              rgbRate: {red: 1, green: 1, blue: 0}});
@@ -404,6 +528,7 @@ Lifegame = {};
                                  source: movingMethod.immovable,
                                  instance: movingMethod.immovable()
                              },
+                             specialActions: [],
                              moveRange: 0,
                              searchRange: 200,
                              rgbRate: {red: 0, green: 3, blue: 1}});
@@ -423,6 +548,7 @@ Lifegame = {};
                                  source: tailMovingCell,
                                  instance: tailMovingCell()
                              },
+                             specialActions: [],
                              moveRange: 1.5,
                              searchRange: 160,
                              rgbRate: {red: 2, green: 1, blue: 2}});
