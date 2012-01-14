@@ -123,15 +123,26 @@ Lifegame = {};
                 return 0;
             };
         },
-        randomDestination: function() {
+        toDestination: function(nextDestination) {
             var destination;
-            var resetDestination = function(game) {
-                destination = randomPointOnField(game.field);
-            };
             return function(cell, game) {
-                if (destination == undefined || (cell.x == destination.x && cell.y == destination.y)) resetDestination(game);
+                if (destination == undefined || (cell.x == destination.x && cell.y == destination.y)) destination = nextDestination(cell, game);
                 return moveCell(cell, movedPointForDestination(cell, destination, cell.moveRange), game.field);
             };
+        },
+        randomDestination: function() {
+            return movingMethod.toDestination(function(cell, game) {
+                return randomPointOnField(game.field);
+            });
+        },
+        furafura: function() {
+            return movingMethod.toDestination(function(cell, game) {
+                var destination = movedPointWithRadian(cell, randomRadian(), Math.random() * cellRadius(cell) * 10);
+                return {
+                    x: destination.x < 0 ? 0 : (destination.x > game.field.width ? game.field.width : destination.x),
+                    y: destination.y < 0 ? 0 : (destination.y > game.field.height ? game.field.height : destination.y)
+                };
+            });
         },
         bound: function() {
             var radian = randomRadian();
@@ -147,7 +158,7 @@ Lifegame = {};
                 return moveCell(cell, destination, game.field);
             };
         },
-        furafura: function() {
+        chorochoro: function() {
             return function(cell, game) {
                 var currentDistance = Math.random() * cell.moveRange;
                 var destination = movedPointWithRadian(cell, randomRadian(), currentDistance);
@@ -162,7 +173,7 @@ Lifegame = {};
                 var i = 0;
                 var l = searchResults.length;
                 for (; i < l; ++i) {
-                    if (searchResults[i].cell == cell || !isTarget(searchResults[i].cell)) continue;
+                    if (searchResults[i].cell == cell || !isTarget(cell, searchResults[i].cell)) continue;
                     return whenFound(cell, searchResults[i].cell, game);
                 }
                 return whenAlone(cell, game);
@@ -183,43 +194,96 @@ Lifegame = {};
             }, whenAlone);
         }
     };
-    
-    var cellFrame = function(cell, game) {
-        cell.event = null;
-        if (cell.vitality.current <= 0) return;
+    var cellMovingFrame = function(cell, game) {
         var movedDistance = cell.movingMethod.instance(cell, game);
         cell.lastMovedDistance = movedDistance;
-        cell.vitality.current -= movedDistance * cellWeight(cell) / 5;
-        cell.vitality.current -= cellWeight(cell) / 10;
-        cell.message = Math.floor(cell.vitality.current) + '/' + Math.floor(cell.vitality.max);
+        cell.vitality.current -= movedDistance * cellWeight(cell) / 5 + cellWeight(cell) / 10;
+    };
+    var cellEatingFrame = function(cell, game) {
+        var hittingCells = cellsInRange(cell, cellRadius(cell), game);
+        var i = 0;
+        var l = hittingCells.length;
+        for (; i < l; ++i) {
+            var hittingCell = hittingCells[i].cell;
+            if (hittingCell == cell || hittingCell.vitality.current <= 0) continue;
+            var damage = cell.density * ((cell.lastMovedDistance == undefined ? 0 : cell.lastMovedDistance) + 1) * 100;
+            damage -= damage * hittingCell.density / 10;
+            if (damage > 0) {
+                hittingCell.vitality.current -= damage;
+                hittingCell.event = 'damaged';
+                knockedPositionBase = hittingCell.knockedPosition == undefined ? hittingCell : hittingCell.knockedPosition;
+                hittingCell.knockedPosition = movedPointWithRadian(knockedPositionBase, radianFromPoints(cell, knockedPositionBase), damage / 100);
+                if (hittingCell.vitality.current <= 0) {
+                    cell.vitality.current += hittingCells[i].cell.vitality.max / 2;
+                    if (cell.vitality.current > cell.vitality.max) cell.vitality.current = cell.vitality.max;
+                }
+            }
+        }
     };
     var cellsFrame = function(game) {
         game.cells = removed(function(cell) {return cell.vitality.current <= 0}, game.cells);
-        forEach(function(cell) {cellFrame(cell, game)}, game.cells);
+        forEach(function(cell) {
+            cell.event = undefined;
+            cellMovingFrame(cell, game);
+        }, game.cells);
+        forEach(function(cell) {
+            cellEatingFrame(cell, game);
+            cell.message = Math.floor(cell.vitality.current / 10) + '/' + Math.floor(cell.vitality.max / 10);
+        }, game.cells);
+        forEach(function(cell) {
+            if (cell.knockedPosition != undefined) {
+                moveCell(cell, cell.knockedPosition, game.field);
+                cell.knockedPosition = undefined;
+            }
+        }, game.cells);
     };
     var makeRandomCell = function(field) {
         var initialPoint = randomPointOnField(field);
         var vitality = 1000 + randomInt(1, 10) * randomInt(1, 100) * randomInt(1, 100);
+        var makeRandomTargetFunction = function() {
+            return randomFetch([
+                function(cell, other) {
+                    // all
+                    return true;
+                },
+                function(cell, other) {
+                    // faster than me.
+                    return other.lastMovedDistance != undefined && (cell.lastMovedDistance == undefined || cell.lastMovedDistance < other.lastMovedDistance);
+                },
+                function(cell, other) {
+                    // slower than me.
+                    return cell.lastMovedDistance != undefined && (other.lastMovedDistance == undefined || cell.lastMovedDistance >= other.lastMovedDistance);
+                },
+                function(cell, other) {
+                    // larger than me.
+                    return cellRadius(cell) < cellRadius(other);
+                },
+                function(cell, other) {
+                    // smaller than me.
+                    return cellRadius(cell) >= cellRadius(other);
+                },
+                function(cell, other) {
+                    // unmoved.
+                    return cell.lastMovedDistance != undefined || cell.lastMovedDistance == 0;
+                }]);
+        };
         var makeRandomMovingMethod = function() {
             return randomFetch([
                 function() {return movingMethod.immovable},
                 function() {return movingMethod.randomDestination},
-                function() {return movingMethod.bound},
                 function() {return movingMethod.furafura},
+                function() {return movingMethod.bound},
+                function() {return movingMethod.chorochoro},
                 function() {
                     var whenAlone = makeRandomMovingMethod()();
                     return function() {
-                        return movingMethod.tail(function(cell) {
-                            return cell.lastMovedDistance != undefined && cell.lastMovedDistance > 1.5;
-                        }, whenAlone);
+                        return movingMethod.tail(makeRandomTargetFunction(), whenAlone);
                     };
                 },
                 function() {
                     var whenAlone = makeRandomMovingMethod()();
                     return function() {
-                        return movingMethod.escape(function(cell) {
-                            return true;
-                        }, whenAlone);
+                        return movingMethod.escape(makeRandomTargetFunction(), whenAlone);
                     };
                 }])();
         };
@@ -231,7 +295,7 @@ Lifegame = {};
                 vitality: {max: vitality, current: vitality},
                 density: 0.1 + Math.random() * 1.9,
                 movingMethod: {source: moving, instance: moving()},
-                moveRange: randomInt(0, 5),
+                moveRange: randomInt(0, 2) * randomInt(0, 2) + randomInt(0, 1),
                 searchRange: randomInt(0, 300),
                 rgbRate: rgbRate};
     };
@@ -259,8 +323,8 @@ Lifegame = {};
                              vitality: {max: 8000, current: 8000},
                              density: 1,
                              movingMethod: {
-                                 source: movingMethod.randomDestination,
-                                 instance: movingMethod.randomDestination()
+                                 source: movingMethod.furafura,
+                                 instance: movingMethod.furafura()
                              },
                              moveRange: 2,
                              searchRange: 40,
@@ -306,8 +370,8 @@ Lifegame = {};
                              vitality: {max: 3500, current: 3500},
                              density: 1,
                              movingMethod: {
-                                 source: movingMethod.furafura,
-                                 instance: movingMethod.furafura()
+                                 source: movingMethod.chorochoro,
+                                 instance: movingMethod.chorochoro()
                              },
                              moveRange: 0.5,
                              searchRange: 60,
@@ -332,7 +396,7 @@ Lifegame = {};
             var tailMovingCell = function() {
                 return movingMethod.tail(function(cell) {
                     return cell.lastMovedDistance != undefined && cell.lastMovedDistance > 1.5;
-                }, movingMethod.furafura());
+                }, movingMethod.chorochoro());
             };
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
@@ -442,8 +506,13 @@ Lifegame = {};
             } else {
                 var alpha = cellAlpha(cell);
                 context.beginPath();
-                context.strokeStyle = 'rgba(0,0,0,' + (alpha + 0.5) + ')';
-                context.lineWidth = 1;
+                if (cell.event == 'damaged') {
+                    context.strokeStyle = 'rgba(196,0,0,1)';
+                    context.lineWidth = 2;
+                } else {
+                    context.strokeStyle = 'rgba(0,0,0,' + (alpha + 0.5) + ')';
+                    context.lineWidth = 1;
+                }
                 var rgbRateTotal = cell.rgbRate.red + cell.rgbRate.green + cell.rgbRate.blue;
                 var adjustColor = function(source) {
                     var rated = Math.floor(255 * source / rgbRateTotal + 96);
