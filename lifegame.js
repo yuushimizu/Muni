@@ -235,13 +235,14 @@ Lifegame = {};
             var radian = undefined;
             return movingMethod.searchNearest(isTarget, function(cell, target, game) {
                 var currentDistance = pointsDistance(target, cell);
-                if (currentDistance - cell.moveRange > distance) {
+                var destinationDistance = cellRadius(target) + distance;
+                if (currentDistance - cell.moveRange > destinationDistance) {
                     radian = radianFromPoints(target, cell);
                     return moveCell(cell, movedPointForDestination(cell, target, cell.moveRange), game.field);
                 } else {
                     var currentRadian = radianFromPoints(target, cell);
                     if (radian == undefined) radian = currentRadian;
-                    var destination = movedPointWithRadian(target, radian, distance);
+                    var destination = movedPointWithRadian(target, radian, destinationDistance);
                     var movedPoint = movedPointForDestination(cell, destination, cell.moveRange);
                     if (destination.x == movedPoint.x && destination.y == movedPoint.y) {
                         radian += increase;
@@ -319,9 +320,9 @@ Lifegame = {};
             moon.vitality.current = moon.vitality.max;
             var radianIncrease = (0.01 + Math.random() * 0.5) * (randomBool() ? 1 : -1);
             var radius = cellRadius(cell);
-            var distance = radius + cellRadius(moon) + Math.random() * radius * 2;
+            var distance = cellRadius(moon) + Math.random() * radius * 2;
             var moving = function() {return movingMethod.moon(function(moon, target) {return target == cell}, radianIncrease, distance, movingMethod.circle())};
-            moveCell(moon, movedPointWithRadian(cell, randomRadian(), distance), game.field);
+            moveCell(moon, movedPointWithRadian(cell, randomRadian(), radius + distance), game.field);
             moon.movingMethod.source = moving;
             moon.movingMethod.instance = moving();
             moon.moveRange = (moon.moveRange + 0.5) * 2;
