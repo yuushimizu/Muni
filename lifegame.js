@@ -5,16 +5,11 @@ Lifegame = {};
         for (var key in obj) result[key] = obj[key];
         return result;
     };
-    var forEach = function(fn, array) {
-        var i = 0;
-        var l = array.length;
-        for (; i < l; ++i) fn(array[i]);
-    };
     var copyArray = function(array) {
         var result = [];
-        forEach(function(e) {
-            result.push(e);
-        }, array);
+        for (var i = 0, l = array.length; i < l; ++i) {
+            result.push(array[i]);
+        }
         return result;
     }
     var indexOf = function(x, array) {
@@ -25,19 +20,13 @@ Lifegame = {};
     };
     var filtered = function(fn, array) {
         var result = [];
-        forEach(function(e) {
-            if (fn(e)) result.push(e);
-        }, array);
+        for (var i = 0, l = array.length; i < l; ++i) {
+            if (fn(array[i])) result.push(array[i]);
+        }
         return result;
     };
-    var removed = function(fn, array) {
-        return filtered(function(e) {return !fn(e)}, array);
-    };
     var sorted = function(fn, array) {
-        var result = [];
-        forEach(function(e) {
-            result.push(e);
-        }, array);
+        var result = copyArray(array);
         result.sort(fn);
         return result;
     };
@@ -128,16 +117,43 @@ Lifegame = {};
     };
     var cellsInRange = function(point, range, game) {
         var result = [];
-        forEach(function(other) {
+        var cells = game.cells;
+        for (var i = 0, l = cells.length; i < l; ++i) {
+            var other = cells[i];
             var distance = pointsDistance(point, other) - cellRadius(other);
             if (distance <= range) result.push({cell: other, distance: distance});
-        }, game.cells);
+        }
         return result;
     };
     var cellType = function(cell) {
         var rgbRate = cell.rgbRate;
-        var type = rgbRate.red > rgbRate.blue ? 'red' : 'blue';
-        return rgbRate[type] > rgbRate.green ? type : 'green';
+        var total = rgbRate.red + rgbRate.green + rgbRate.blue;
+        var adjusted = {
+            red: rgbRate.red / total,
+            green: rgbRate.green / total,
+            blue: rgbRate.blue / total
+        };
+        if (adjusted.red >= 0.33) {
+            if (adjusted.green >= 0.33) {
+                if (adjusted.blue >= 0.33) {
+                    return 'gray';
+                } else {
+                    return 'yellow';
+                }
+            } else if (adjusted.blue >= 0.33) {
+                return 'purple';
+            } else {
+                return 'red';
+            }
+        } else if (adjusted.green >= 0.33) {
+            if (adjusted.blue >= 0.33) {
+                return 'teal';
+            } else {
+                return 'green';
+            }
+        } else {
+            return 'blue';
+        }
     };
     var isEatingTarget = function(cell, other) {
         return cellType(cell) != cellType(other);
@@ -272,13 +288,13 @@ Lifegame = {};
             cell.vitality.current -= cost;
             var child = copyCell(cell);
             var radius = cellRadius(cell);
-            moveCell(child, movedPointWithRadian(cell, randomRadian(), radius * 2 + Math.random() * radius), game.field);
+            moveCell(child, movedPointWithRadian(cell, randomRadian(), radius * 2 + Math.random() * radius * 2), game.field);
             child.event = 'born';
             child.parent = cell;
             game.cells.push(child);
         },
         shot: function(cell, game) {
-            if (randomInt(0, 500) != 0) return;
+            if (randomInt(0, 1000) != 0) return;
             var cost = cell.vitality.max / 1000;
             if (cell.vitality.current < cost) return;
             cell.vitality.current -= cost;
@@ -317,17 +333,20 @@ Lifegame = {};
         },
         split: function(cell, game) {
             if (randomInt(0, 500) != 0) return;
-            if (cell.vitality.max / 50) return;
+            if (cell.vitality.max < 5000) {
+                return;
+            }
             cell.vitality.current /= 2;
             cell.vitality.max /= 2;
             var parts = [copyCell(cell), copyCell(cell)];
             cell.vitality.current = 0;
             var distance = cellWeight(cell) / 2;
-            forEach(function(part) {
+            for (var i = 0, l = parts.length; i < l; ++i) {
+                var part = parts[i];
                 part.event = 'born';
                 moveCell(part, movedPointWithRadian(part, randomRadian(), distance), game.field);
                 game.cells.push(part);
-            }, parts);
+            }
         }
     };
     var cellMovingFrame = function(cell, game) {
@@ -358,26 +377,30 @@ Lifegame = {};
         }
     };
     var cellsFrame = function(game) {
-        game.cells = removed(function(cell) {return cell.vitality.current <= 0}, game.cells);
-        forEach(function(cell) {
+        game.cells = filtered(function(cell) {return cell.vitality.current > 0}, game.cells);
+        for (var i = 0, l = game.cells.length; i < l; ++i) {
+            var cell = game.cells[i];
             cell.event = undefined;
             cellMovingFrame(cell, game);
-        }, game.cells);
-        forEach(function(cell) {
+        }
+        for (var i = 0, l = game.cells.length; i < l; ++i) {
+            var cell = game.cells[i];
             cellEatingFrame(cell, game);
-            cell.message = Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10);
-        }, game.cells);
-        forEach(function(cell) {
+            cell.message = cellType(cell) + ' ' + Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10);
+        }
+        for (var i = 0, l = game.cells.length; i < l; ++i) {
+            var cell = game.cells[i];
             if (cell.knockedPosition != undefined) {
                 moveCell(cell, cell.knockedPosition, game.field);
                 cell.knockedPosition = undefined;
             }
-        }, game.cells);
-        forEach(function(cell) {
-            forEach(function(action) {
-                action(cell, game);
-            }, cell.specialActions);
-        }, game.cells);
+        }
+        for (var i = 0, l = game.cells.length; i < l; ++i) {
+            var cell = game.cells[i];
+            for (var actionIndex = 0, actionCount = cell.specialActions.length; actionIndex < actionCount; ++actionIndex) {
+                cell.specialActions[actionIndex](cell, game);
+            }
+        }
     };
     var makeRandomCell = function(field) {
         var initialPoint = randomPointOnField(field);
@@ -389,6 +412,10 @@ Lifegame = {};
                     return true;
                 },
                 isEatingTarget,
+                function(cell, other) {
+                    // not eating target.
+                    return !isEatingTarget(cell, other);
+                },
                 function(cell, other) {
                     // faster than me.
                     return other.lastMovedDistance != undefined && (cell.lastMovedDistance == undefined || cell.lastMovedDistance < other.lastMovedDistance);
@@ -418,6 +445,12 @@ Lifegame = {};
                 function() {return movingMethod.bound},
                 function() {return movingMethod.circle},
                 function() {return movingMethod.chorochoro},
+                function() {
+                    var whenAlone = makeRandomMovingMethod()();
+                    return function() {
+                        return movingMethod.moon(makeRandomTargetFunction(), Math.random() / 2, Math.random() * 10, whenAlone);
+                    };
+                },
                 function() {
                     var whenAlone = makeRandomMovingMethod()();
                     return function() {
@@ -495,7 +528,7 @@ Lifegame = {};
                              specialActions: [],
                              moveRange: 1,
                              searchRange: 100,
-                             rgbRate: {red: 3, green: 2, blue: 1}});
+                             rgbRate: {red: 1, green: 0.5, blue: 0.3}});
         }
         for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
@@ -510,7 +543,7 @@ Lifegame = {};
                              specialActions: [],
                              moveRange: 3,
                              searchRange: 20,
-                             rgbRate: {red: 1, green: 1, blue: 2}});
+                             rgbRate: {red: 0.5, green: 0.5, blue: 1}});
         }
         for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
@@ -540,7 +573,7 @@ Lifegame = {};
                              specialActions: [],
                              moveRange: 0,
                              searchRange: 200,
-                             rgbRate: {red: 0, green: 3, blue: 1}});
+                             rgbRate: {red: 0, green: 1, blue: 0.3}});
         }
         for (i = 0; i < 0; i++) {
             var initialPoint = randomPointOnField(game.field);
@@ -560,7 +593,7 @@ Lifegame = {};
                              specialActions: [],
                              moveRange: 1.5,
                              searchRange: 160,
-                             rgbRate: {red: 2, green: 1, blue: 2}});
+                             rgbRate: {red: 1, green: 0.5, blue: 1}});
         }
         for (i = 0; i < 0; i++) {
             game.cells.push(makeRandomCell(game.field));
@@ -569,8 +602,8 @@ Lifegame = {};
     };
     var changeGameField = function(game, field) {
         game.field = field;
-        game.cells = removed(function(cell) {
-            return cell.x > field.width || cell.y > field.height;
+        game.cells = filtered(function(cell) {
+            return cell.x < field.width && cell.y < field.height;
         }, game.cells);
     };
     var resetCanvasSize = function(canvas, game) {
@@ -671,7 +704,7 @@ Lifegame = {};
                 var rgbRateTotal = cell.rgbRate.red + cell.rgbRate.green + cell.rgbRate.blue;
                 var adjustColor = function(source) {
                     var rated = Math.floor(255 * source / rgbRateTotal + 96);
-                    var adjusted = Math.floor(rated < 0 ? 0 : (rated > 255 ? 255 : rated) + 96 - (96 * ((cell.density - 1) * 1.5 + 1)));
+                    var adjusted = Math.floor(rated < 0 ? 0 : (rated > 255 ? 255 : rated) + 80 - (96 * cell.density));
                     return adjusted < 0 ? 0 : (adjusted > 255 ? 255 : adjusted);
                 };
                 var ratedColor = {
@@ -692,7 +725,8 @@ Lifegame = {};
             }
         };
         var drawCells = function() {
-            forEach(drawCell, sorted(function(cell1, cell2) {return cellRadius(cell2) - cellRadius(cell1)}, game.cells));
+            var sortedCells = sorted(function(cell1, cell2) {return cellRadius(cell2) - cellRadius(cell1)}, game.cells);
+            for (var i = 0, l = sortedCells.length; i < l; ++i) drawCell(sortedCells[i]);
         };
         var drawGameInformation = function() {
             context.save();
