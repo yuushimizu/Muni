@@ -34,7 +34,7 @@
         var fields = {
             large: {width: 960, height: 480},
             middle: {width: 640, height: 480},
-            small: {width: 320, height: 240}};
+            small: {width: 480, height: 320}};
         var lifegame = Lifegame.run(document.getElementById('view'), {fps: fpss.normal, field: fields.large});
         var changeField = function(key) {
           lifegame.changeField(fields[key]);

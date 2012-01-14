@@ -185,6 +185,7 @@ Lifegame = {};
     };
     
     var cellFrame = function(cell, game) {
+        cell.event = null;
         if (cell.vitality.current <= 0) return;
         var movedDistance = cell.movingMethod.instance(cell, game);
         cell.lastMovedDistance = movedDistance;
@@ -233,6 +234,15 @@ Lifegame = {};
                 moveRange: randomInt(0, 5),
                 searchRange: randomInt(0, 300),
                 rgbRate: rgbRate};
+    };
+    var gameFrame = function(game) {
+        cellsFrame(game);
+        game.frameCount++;
+        if (randomInt(0, game.cells.length) == 0) {
+            var newCell = makeRandomCell(game.field);
+            newCell.event = 'born';
+            game.cells.push(newCell);
+        }
     };
     var makeGame = function(field) {
         var game = {
@@ -336,7 +346,7 @@ Lifegame = {};
                              searchRange: 160,
                              rgbRate: {red: 2, green: 1, blue: 2}});
         }
-        for (i = 0; i < 40; i++) {
+        for (i = 0; i < 0; i++) {
             game.cells.push(makeRandomCell(game.field));
         }
         return game;
@@ -412,7 +422,16 @@ Lifegame = {};
         };
         var drawCell = function(cell) {
             var radius = cellRadius(cell);
-            if (cell.vitality.current <= 0) {
+            if (cell.event != undefined && cell.event == 'born') {
+                context.beginPath();
+                context.strokeStyle = 'rgba(255,255,255,0.5)';
+                context.lineWidth = radius;
+                context.fillStyle = 'rgba(255, 255, 255, 255)';
+                context.arc(cell.x, cell.y, radius, 0, Math.PI * 2, false);
+                context.closePath();
+                context.fill();
+                context.stroke();
+            } else if (cell.vitality.current <= 0) {
                 context.beginPath();
                 context.lineWidth = radius;
                 context.strokeStyle = 'rgba(0,0,0,0.9)';
@@ -441,11 +460,11 @@ Lifegame = {};
                 context.fill();
                 context.stroke();
                 context.fillStyle = 'rgb(255,255,255)';
-                if (cell.message != undefined && cell.message != "") {
-                    context.textBaseline = 'top';
-                    context.textAlign = 'center';
-                    context.fillText(cell.message, cell.x, cell.y + radius + 1);
-                }
+            }
+            if (cell.message != undefined && cell.message != "") {
+                context.textBaseline = 'top';
+                context.textAlign = 'center';
+                context.fillText(cell.message, cell.x, cell.y + radius + 1);
             }
         };
         var drawCells = function() {
@@ -474,8 +493,7 @@ Lifegame = {};
             var startTime = (new Date).getTime();
             redraw(game);
             if (running) {
-                cellsFrame(game);
-                game.frameCount++;
+                gameFrame(game);
                 setTimeout(frame, 1000 / targetFPS - ((new Date).getTime() - startTime));
             } else {
                 setTimeout(frame, 100);
