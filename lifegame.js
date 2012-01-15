@@ -247,9 +247,8 @@ Lifegame = {};
                     if (destination.x == movedPoint.x && destination.y == movedPoint.y) {
                         radian += increase;
                     }
-                    var oldPosition = {x: cell.x, y: cell.y};
                     var movedDistance = moveCell(cell, movedPoint, game.field);
-                    if (oldPosition.x == cell.x || oldPosition.y == cell.y) {
+                    if (movedPoint.x != cell.x || movedPoint.y != cell.y) {
                         increase *= -1;
                         radian += increase;
                     }
@@ -362,7 +361,7 @@ Lifegame = {};
         for (; i < l; ++i) {
             var hittingCell = hittingCells[i].cell;
             if (hittingCell == cell || !isEatingTarget(cell, hittingCell) || hittingCell.vitality.current <= 0) continue;
-            var damage = cell.density * ((cell.lastMovedDistance == undefined ? 0 : cell.lastMovedDistance) + 1) * 100;
+            var damage = (1 + cell.density) * ((cell.lastMovedDistance == undefined ? 0 : cell.lastMovedDistance) + 1) * 100;
             damage -= damage * hittingCell.density / 10;
             if (damage > 0) {
                 hittingCell.vitality.current -= damage;
@@ -387,7 +386,7 @@ Lifegame = {};
         for (var i = 0, l = game.cells.length; i < l; ++i) {
             var cell = game.cells[i];
             cellEatingFrame(cell, game);
-            cell.message = cellType(cell) + ' ' + Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10);
+            cell.message = cellType(cell) + ' ' + Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10) + ' (' + (Math.floor(cell.density * 100)  / 100) + ')';
         }
         for (var i = 0, l = game.cells.length; i < l; ++i) {
             var cell = game.cells[i];
@@ -472,7 +471,7 @@ Lifegame = {};
         return {x: initialPoint.x,
                 y: initialPoint.y,
                 vitality: {max: vitality, current: vitality},
-                density: 0.1 + Math.random() * 1.9,
+                density: 0.1 + Math.random() * 0.9,
                 movingMethod: {source: moving, instance: moving()},
                 specialActions: actions,
                 moveRange: 0.01 + randomInt(0, 2) * randomInt(0, 2) + randomInt(0, 1),
@@ -501,7 +500,7 @@ Lifegame = {};
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 8000, current: 8000},
-                             density: 1,
+                             density: 0.5,
                              movingMethod: {
                                  source: movingMethod.circle,
                                  instance: movingMethod.circle()
@@ -521,7 +520,7 @@ Lifegame = {};
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 80000, current: 80000},
-                             density: 2,
+                             density: 0.99,
                              movingMethod: {
                                  source: tailMovingCell,
                                  instance: tailMovingCell()
@@ -536,7 +535,7 @@ Lifegame = {};
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 4000, current: 4000},
-                             density: 0.2,
+                             density: 0.1,
                              movingMethod: {
                                  source: movingMethod.bound,
                                  instance: movingMethod.bound()
@@ -551,7 +550,7 @@ Lifegame = {};
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 3500, current: 3500},
-                             density: 1,
+                             density: 0.99,
                              movingMethod: {
                                  source: movingMethod.chorochoro,
                                  instance: movingMethod.chorochoro()
@@ -566,7 +565,7 @@ Lifegame = {};
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 3000, current: 3000},
-                             density: 0.75,
+                             density: 0.33,
                              movingMethod: {
                                  source: movingMethod.immovable,
                                  instance: movingMethod.immovable()
@@ -586,7 +585,7 @@ Lifegame = {};
             game.cells.push({x: initialPoint.x,
                              y: initialPoint.y,
                              vitality: {max: 5000, current: 5000},
-                             density: 0.8,
+                             density: 0.4,
                              movingMethod: {
                                  source: tailMovingCell,
                                  instance: tailMovingCell()
@@ -704,8 +703,8 @@ Lifegame = {};
                 }
                 var rgbRateTotal = cell.rgbRate.red + cell.rgbRate.green + cell.rgbRate.blue;
                 var adjustColor = function(source) {
-                    var rated = Math.floor(255 * source / rgbRateTotal + 96);
-                    var adjusted = Math.floor(rated < 0 ? 0 : (rated > 255 ? 255 : rated) + 80 - (96 * cell.density));
+                    var rated = Math.floor(180 * 3 * source / rgbRateTotal);
+                    var adjusted = Math.floor((rated < 0 ? 0 : (rated > 255 ? 255 : rated))  + 64 - (128 * cell.density));
                     return adjusted < 0 ? 0 : (adjusted > 255 ? 255 : adjusted);
                 };
                 var ratedColor = {
