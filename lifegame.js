@@ -252,20 +252,25 @@ Lifegame = {};
             green: rgbRate.green / total,
             blue: rgbRate.blue / total
         };
-        if (adjusted.red >= 0.33) {
-            if (adjusted.green >= 0.33) {
-                if (adjusted.blue >= 0.33) {
+        var has = {
+            red: adjusted.red >= 0.32,
+            green: adjusted.green >= 0.32,
+            blue: adjusted.blue >= 0.32
+        };
+        if (has.red) {
+            if (has.green) {
+                if (has.blue) {
                     return 'gray';
                 } else {
                     return 'yellow';
                 }
-            } else if (adjusted.blue >= 0.33) {
+            } else if (has.blue) {
                 return 'purple';
             } else {
                 return 'red';
             }
-        } else if (adjusted.green >= 0.33) {
-            if (adjusted.blue >= 0.33) {
+        } else if (has.green) {
+            if (has.blue) {
                 return 'teal';
             } else {
                 return 'green';
