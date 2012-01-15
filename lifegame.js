@@ -304,8 +304,8 @@ Lifegame = {};
             return movingMethod.toDestination(function(cell, game) {
                 var destination = movedPointWithRadian(cell, randomRadian(), Math.random() * cellRadius(cell) * 10);
                 return {
-                    x: destination.x < 0 ? 0 : (destination.x > game.field.width ? game.field.width : destination.x),
-                    y: destination.y < 0 ? 0 : (destination.y > game.field.height ? game.field.height : destination.y)
+                    x: destination.x < 0 ? 0 : (destination.x > game.field.width - fieldLimitGap ? game.field.width - fieldLimitGap : destination.x),
+                    y: destination.y < 0 ? 0 : (destination.y > game.field.height - fieldLimitGap ? game.field.height - fieldLimitGap : destination.y)
                 };
             });
         },
@@ -313,10 +313,10 @@ Lifegame = {};
             var radian = randomRadian();
             return function(cell, game) {
                 var destination = movedPointWithRadian(cell, radian, cell.moveRange);
-                if (destination.x <= 0 || destination.x >= game.field.width) {
+                if (destination.x <= 0 || destination.x >= game.field.width - fieldLimitGap) {
                     radian = Math.PI * 2 - radian;
                 }
-                if (destination.y <= 0 || destination.y >= game.field.height) {
+                if (destination.y <= 0 || destination.y >= game.field.height - fieldLimitGap) {
                     radian = Math.PI - radian;
                     while (radian < 0) radian += Math.PI * 2;
                 }
@@ -492,12 +492,29 @@ Lifegame = {};
                 hittingCell.event = 'damaged';
                 knockedPositionBase = hittingCell.knockedPosition == undefined ? hittingCell : hittingCell.knockedPosition;
                 hittingCell.knockedPosition = movedPointWithRadian(knockedPositionBase, radianFromPoints(cell, knockedPositionBase), damage / 100);
-                if (hittingCell.vitality.current <= 0) {
-                    cell.vitality.current += hittingCells[i].cell.vitality.max;
-                    cell.event = 'healed';
-                    if (cell.vitality.current > cell.vitality.max) cell.vitality.current = cell.vitality.max;
-                }
             }
+        }
+    };
+    var cellDied = function(cell, game) {
+        var healRange = cellRadius(cell) * 3;
+        var healTargets = cellsInRange(cell, healRange, game);
+        var total = 0;
+        for (var i = 0, l = healTargets.length; i < l; ++i) {
+            if (!isEatingTarget(healTargets[i].cell, cell)) continue;
+            total += healRange - healTargets[i].distance;
+        }
+        var restVitality = cell.vitality.max;
+        for (var i = 0, l = healTargets.length; i < l; ++i) {
+            if (!isEatingTarget(healTargets[i].cell, cell)) continue;
+            var target = healTargets[i];
+            var targetCell = target.cell;
+            var rate = healRange - target.distance;
+            var healVitality = restVitality * rate / total;
+            total -= rate;
+            if (healVitality > targetCell.vitality.max - targetCell.vitality.current) healVitality = targetCell.vitality.max - targetCell.vitality.current;
+            targetCell.vitality.current += healVitality;
+            restVitality -= healVitality;
+            targetCell.event = 'healed';
         }
     };
     var cellsFrame = function(game) {
@@ -518,10 +535,7 @@ Lifegame = {};
         }
         for (var i = 0, l = game.cells.length; i < l; ++i) {
             var cell = game.cells[i];
-            if (cell.knockedPosition != undefined) {
-                moveCell(cell, cell.knockedPosition, game);
-                cell.knockedPosition = undefined;
-            }
+            if (cell.vitality.current <= 0) cellDied(cell, game);
         }
         for (var i = 0, l = game.cells.length; i < l; ++i) {
             var cell = game.cells[i];
@@ -529,10 +543,17 @@ Lifegame = {};
                 cell.specialActions[actionIndex](cell, game);
             }
         }
+        for (var i = 0, l = game.cells.length; i < l; ++i) {
+            var cell = game.cells[i];
+            if (cell.knockedPosition != undefined) {
+                moveCell(cell, cell.knockedPosition, game);
+                cell.knockedPosition = undefined;
+            }
+        }
     };
     var makeRandomCell = function(field) {
         var initialPoint = randomPointOnField(field);
-        var vitality = 1000 + randomInt(1, 10) * randomInt(1, 100) * randomInt(1, 100);
+        var vitality = 2000 + randomInt(1, 10) * randomInt(1, 100) * randomInt(1, 100);
         var makeRandomTargetFunction = function() {
             return randomFetch([
                 function(cell, other) {
