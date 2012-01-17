@@ -225,17 +225,30 @@ Lifegame = {};
         var index = indexOf(cell, game.cells);
         if (index != null) game.cells.splice(index, 1);
     };
-    var cellsInRange = function(point, range, game) {
-        var spacialIndexKeys = cellsSpacialIndexKeysInCircle(point, range, game);
+    var cellsInSpacialIndex = function(keys, game) {
         var cells = [];
-        for (var keyIndex = 0, keyCount = spacialIndexKeys.length; keyIndex < keyCount; ++keyIndex) {
-            var key = spacialIndexKeys[keyIndex];
+        for (var keyIndex = 0, keyCount = keys.length; keyIndex < keyCount; ++keyIndex) {
+            var key = keys[keyIndex];
             var grid = game.cellsSpacialIndex.grids[key.x][key.y];
             for (var cellIndex = 0, cellCount = grid.length; cellIndex < cellCount; ++cellIndex) {
                 var cell = grid[cellIndex];
                 if (indexOf(cell, cells) == null) cells.push(cell);
             }
         }
+        return cells;
+    }
+    var hittingCells = function(cell, game) {
+        if (cell.spacialIndexKeys == undefined) return [];
+        var cells = cellsInSpacialIndex(cell.spacialIndexKeys, game);
+        var radius = cellRadius(cell);
+        for (var i = cells.length - 1; i >= 0; --i) {
+            var target = cells[i];
+            if (pointsDistance(cell, target) > radius + cellRadius(target)) cells.splice(i, 1);
+        }
+        return cells;
+    };
+    var cellsInRange = function(point, range, game) {
+        var cells = cellsInSpacialIndex(cellsSpacialIndexKeysInCircle(point, range, game), game);
         var result = [];
         for (var i = 0, l = cells.length; i < l; ++i) {
             var other = cells[i];
@@ -478,12 +491,10 @@ Lifegame = {};
         cell.lastMovedDistance = movedDistance;
         cell.vitality.current -= movedDistance * cellWeight(cell) / 5 + cellWeight(cell) / 10;
     };
-    var cellEatingFrame = function(cell, game) {
-        var hittingCells = cellsInRange(cell, cellRadius(cell), game);
-        var i = 0;
-        var l = hittingCells.length;
-        for (; i < l; ++i) {
-            var hittingCell = hittingCells[i].cell;
+    var cellHittingFrame = function(cell, game) {
+        var cells = hittingCells(cell, game);
+        for (var i = 0, l = cells.length; i < l; ++i) {
+            var hittingCell = cells[i];
             if (hittingCell == cell || !isEatingTarget(cell, hittingCell) || hittingCell.vitality.current <= 0) continue;
             var damage = (1 + cell.density) * ((cell.lastMovedDistance == undefined ? 0 : cell.lastMovedDistance) + 1) * 100;
             damage -= damage * hittingCell.density / 10;
@@ -530,7 +541,7 @@ Lifegame = {};
         }
         for (var i = 0, l = game.cells.length; i < l; ++i) {
             var cell = game.cells[i];
-            cellEatingFrame(cell, game);
+            cellHittingFrame(cell, game);
             cell.message = cellType(cell) + ' ' + Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10) + ' (' + (Math.floor(cell.density * 100)  / 100) + ')';
         }
         for (var i = 0, l = game.cells.length; i < l; ++i) {
