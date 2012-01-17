@@ -826,6 +826,7 @@ Lifegame = {};
             };
         })();
         monitorFrameRate();
+        var showCellInfo = false;
         var context = canvas.getContext('2d');
         var transform = {
             x: 0,
@@ -913,12 +914,15 @@ Lifegame = {};
                 context.fill();
                 context.stroke();
             }
-            cell.message = cellType(cell) + ' ' + Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10) + ' (' + (Math.floor(cell.density * 100)  / 100) + ')';
-            if (cell.message != undefined && cell.message != "") {
+            var message = cell.message;
+            if (showCellInfo) {
+                message = (message != undefined ? message + ' ' : '') + cellType(cell) + ' ' + Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10) + ' (' + (Math.floor(cell.density * 100)  / 100) + ')';
+            }
+            if (message != undefined && message != '') {
                 context.fillStyle = 'rgba(255,255,255,1)';
                 context.textBaseline = 'top';
                 context.textAlign = 'center';
-                context.fillText(cell.message, cell.x, cell.y + radius + 1);
+                context.fillText(message, cell.x, cell.y + radius + 1);
             }
         };
         var drawCells = function() {
@@ -985,6 +989,9 @@ Lifegame = {};
             },
             resetZoom: function() {
                 resetZoom();
+            },
+            toggleCellInfo: function() {
+                showCellInfo = !showCellInfo;
             }
         };
     };
