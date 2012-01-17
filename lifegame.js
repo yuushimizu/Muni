@@ -216,6 +216,8 @@ Lifegame = {};
         return randomPoint(0, field.width, 0, field.height);
     };
     var addCellToGame = function(cell, game) {
+        cell.id = game.nextCellID;
+        game.nextCellID += 1;
         game.cells.push(cell);
         removeCellFromSpacialIndex(cell, game);
         addCellToSpacialIndex(cell, game);
@@ -237,15 +239,32 @@ Lifegame = {};
         }
         return cells;
     }
-    var hittingCells = function(cell, game) {
-        if (cell.spacialIndexKeys == undefined) return [];
-        var cells = cellsInSpacialIndex(cell.spacialIndexKeys, game);
-        var radius = cellRadius(cell);
-        for (var i = cells.length - 1; i >= 0; --i) {
-            var target = cells[i];
-            if (pointsDistance(cell, target) > radius + cellRadius(target)) cells.splice(i, 1);
+    var hittingCells = function(game) {
+        var result = [];
+        var hittingMap = {};
+        var gridCount = game.cellsSpacialIndex.split;
+        for (var xKey = 0; xKey < gridCount; ++xKey) {
+            for (var yKey = 0; yKey < gridCount; ++yKey) {
+                var grid = game.cellsSpacialIndex.grids[xKey][yKey];
+                var cellCount = grid.length;
+                for (var cellIndex1 = 0; cellIndex1 < cellCount; ++cellIndex1) {
+                    var cell1 = grid[cellIndex1];
+                    if (hittingMap[cell1.id] == undefined) hittingMap[cell1.id] = {};
+                    var currentMap = hittingMap[cell1.id];
+                    var radius1 = cellRadius(cell1);
+                    for (var cellIndex2 = 0; cellIndex2 < cellCount; ++cellIndex2) {
+                        var cell2 = grid[cellIndex2];
+                        if (cell1.id >= cell2.id) continue;
+                        if (currentMap[cell2.id] != undefined) continue;
+                        if (pointsDistance(cell1, cell2) <= radius1 + cellRadius(cell2)) {
+                            currentMap[cell2.id] = cell2;
+                            result.push({cell1: cell1, cell2: cell2});
+                        }
+                    }
+                }
+            }
         }
-        return cells;
+        return result;
     };
     var cellsInRange = function(point, range, game) {
         var cells = cellsInSpacialIndex(cellsSpacialIndexKeysInCircle(point, range, game), game);
@@ -424,11 +443,11 @@ Lifegame = {};
             if (cell.vitality.current < cost) return;
             cell.vitality.current -= cost;
             var child = copyCell(cell);
+            addCellToGame(child, game);
             var radius = cellRadius(cell);
             moveCell(child, movedPointWithRadian(cell, randomRadian(), radius * 2 + Math.random() * radius * 2), game);
             child.event = 'born';
             child.parent = cell;
-            addCellToGame(child, game);
         },
         shot: function(cell, game) {
             if (randomInt(0, 1000) != 0) return;
@@ -436,6 +455,7 @@ Lifegame = {};
             if (cell.vitality.current < cost) return;
             cell.vitality.current -= cost;
             var shot = copyCell(cell);
+            addCellToGame(shot, game);
             shot.vitality.max *= 0.1;
             shot.vitality.current = shot.vitality.max * 0.1;
             shot.movingMethod.source = movingMethod.bound;
@@ -444,7 +464,6 @@ Lifegame = {};
             shot.specialActions = [];
             shot.event = 'born';
             shot.parent = cell;
-            addCellToGame(shot, game);
         },
         makeMoon: function(cell, game) {
             if (randomInt(0, 1000) != 0) return;
@@ -452,6 +471,7 @@ Lifegame = {};
             if (cell.vitality.current < cost) return;
             cell.vitality.current -= cost;
             var moon = copyCell(cell);
+            addCellToGame(moon, game);
             moon.vitality.max *= 0.3;
             moon.vitality.current = moon.vitality.max;
             var radianIncrease = randomFloat(0.01, 0.5) * (randomBool() ? 1 : -1);
@@ -466,7 +486,6 @@ Lifegame = {};
             moon.specialActions = [];
             moon.event = 'born';
             moon.parent = cell;
-            addCellToGame(moon, game);
         },
         split: function(cell, game) {
             if (randomInt(0, 500) != 0) return;
@@ -480,9 +499,9 @@ Lifegame = {};
             var distance = cellWeight(cell) / 2;
             for (var i = 0, l = parts.length; i < l; ++i) {
                 var part = parts[i];
+                addCellToGame(part, game);
                 part.event = 'born';
                 moveCell(part, movedPointWithRadian(part, randomRadian(), distance), game);
-                addCellToGame(part, game);
             }
         }
     };
@@ -491,19 +510,24 @@ Lifegame = {};
         cell.lastMovedDistance = movedDistance;
         cell.vitality.current -= movedDistance * cellWeight(cell) / 5 + cellWeight(cell) / 10;
     };
-    var cellHittingFrame = function(cell, game) {
-        var cells = hittingCells(cell, game);
-        for (var i = 0, l = cells.length; i < l; ++i) {
-            var hittingCell = cells[i];
-            if (hittingCell == cell || !isEatingTarget(cell, hittingCell) || hittingCell.vitality.current <= 0) continue;
-            var damage = (1 + cell.density) * ((cell.lastMovedDistance == undefined ? 0 : cell.lastMovedDistance) + 1) * 100;
-            damage -= damage * hittingCell.density / 10;
-            if (damage > 0) {
-                hittingCell.vitality.current -= damage;
-                hittingCell.event = 'damaged';
-                knockedPositionBase = hittingCell.knockedPosition == undefined ? hittingCell : hittingCell.knockedPosition;
-                hittingCell.knockedPosition = movedPointWithRadian(knockedPositionBase, radianFromPoints(cell, knockedPositionBase), damage / 100);
-            }
+    var applyHitting = function(cell, target) {
+        if (!isEatingTarget(cell, target)) return;
+        var damage = (1 + cell.density) * ((cell.lastMovedDistance == undefined ? 0 : cell.lastMovedDistance) + 1) * 100;
+        damage -= damage * target.density / 10;
+        if (damage > 0) {
+            target.vitality.current -= damage;
+            target.event = 'damaged';
+            knockedPositionBase = target.knockedPosition == undefined ? target : target.knockedPosition;
+            target.knockedPosition = movedPointWithRadian(knockedPositionBase, radianFromPoints(cell, knockedPositionBase), damage / 100);
+        }
+    };
+    var cellsHittingFrame = function(game) {
+        var hittings = hittingCells(game);
+        for (var i = 0, l = hittings.length; i < l; ++i) {
+            var cell1 = hittings[i].cell1;
+            var cell2 = hittings[i].cell2;
+            applyHitting(cell1, cell2);
+            applyHitting(cell2, cell1);
         }
     };
     var cellDied = function(cell, game) {
@@ -539,11 +563,7 @@ Lifegame = {};
             cell.event = undefined;
             cellMovingFrame(cell, game);
         }
-        for (var i = 0, l = game.cells.length; i < l; ++i) {
-            var cell = game.cells[i];
-            cellHittingFrame(cell, game);
-            cell.message = cellType(cell) + ' ' + Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10) + ' (' + (Math.floor(cell.density * 100)  / 100) + ')';
-        }
+        cellsHittingFrame(game);
         for (var i = 0, l = game.cells.length; i < l; ++i) {
             var cell = game.cells[i];
             if (cell.vitality.current <= 0) cellDied(cell, game);
@@ -664,6 +684,7 @@ Lifegame = {};
         var game = {
             field: field,
             cells: [],
+            nextCellID: 1,
             cellsSpacialIndex: makeSpacialIndex(field, 6),
             frameCount: 0
         };
@@ -892,6 +913,7 @@ Lifegame = {};
                 context.fill();
                 context.stroke();
             }
+            cell.message = cellType(cell) + ' ' + Math.ceil(cell.vitality.current / 10) + '/' + Math.ceil(cell.vitality.max / 10) + ' (' + (Math.floor(cell.density * 100)  / 100) + ')';
             if (cell.message != undefined && cell.message != "") {
                 context.fillStyle = 'rgba(255,255,255,1)';
                 context.textBaseline = 'top';
