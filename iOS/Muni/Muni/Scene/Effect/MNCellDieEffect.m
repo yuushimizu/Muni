@@ -10,7 +10,7 @@
 
 @implementation MNCellDieEffect
 
-- (id)initWithCell:(MNCell *)cell withResources:(MNGLResources *)resources {
+- (id)initWithCell:(id<MNCell>)cell withResources:(MNGLResources *)resources {
 	if (self = [super initWithCenter:cell.center]) {
 		_initialRadius = cell.radius;
 		_sprite = [[JZGLSprite alloc] initWithTexture:resources.cellEffectDieTexture];

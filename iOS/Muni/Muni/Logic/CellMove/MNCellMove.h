@@ -7,15 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MNBaseCell.h"
+#import "MNCell.h"
+#import "MNEnvironment.h"
 
 @interface MNCellMove : NSObject {
-	MNBaseCell *_cell;
+	id<MNCell> _cell;
+	id<MNEnvironment> _environment;
 }
 
-@property (readonly) MNBaseCell *cell;
+@property (readonly) id<MNCell> cell;
+@property (readonly) id<MNEnvironment> environment;
 
-- (id)initWithCell:(MNBaseCell *)cell;
-- (CGPoint)movedPoint;
+- (id)initWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment;
+- (CGPoint)pointMoved;
 
 @end

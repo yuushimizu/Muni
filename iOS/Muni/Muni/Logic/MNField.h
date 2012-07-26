@@ -8,19 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "MNUtility.h"
-#import "MNBaseField.h"
-#import "MNCell.h"
 
-@interface MNField : MNBaseField {
-	NSMutableArray *_cells;
-	int _maxCellCount;
-	double _incidence;
+@interface MNField : NSObject {
+	CGSize _size;
 }
 
-@property (readonly) NSArray *cells;
+@property (readonly) CGSize size;
 
-- (id)initWithSize:(CGSize)size withMaxCellCount:(int)maxCellCount;
-
-- (void)sendFrame;
+- (id)initWithSize:(CGSize)size;
 
 @end

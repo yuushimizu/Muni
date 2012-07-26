@@ -8,7 +8,7 @@
 
 #import "MNFieldScene.h"
 
-static CGRect rectFromCell(const MNCell *cell) {
+static CGRect rectFromCell(id<MNCell> cell) {
 	const double radius = cell.radius;
 	return CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2);
 }
@@ -25,12 +25,12 @@ static CGRect rectFromCell(const MNCell *cell) {
 - (id)initWithSize:(CGSize)size {
 	if (self = [super init]) {
 		_resources = [[MNGLResources alloc] init];
-		_field = [[MNField alloc] initWithSize:size withMaxCellCount:kMNMaxCells];
+		_environment = [[MNStandardEnvironment alloc] initWithSize:size withMaxCellCount:kMNMaxCells];
 		[self setupBackground:size];
 		for (int i = 0; i < kMNMaxCells; ++i) {
 			_cellSprites[i] = [[JZGLSprite alloc] init];
 		}
-		_effects = [NSMutableSet set];
+		_effects = [NSMutableArray array];
 	}
 	return self;
 }
@@ -45,14 +45,14 @@ static CGRect rectFromCell(const MNCell *cell) {
 }
 
 - (void)sendFrame {
-	for (MNCell *cell in _field.cells) {
+	for (id<MNCell> cell in _environment.cells) {
 		if ([cell eventOccurred:kMNCellEventBorned]) {
 			[_effects addObject:[[MNCellBornEffect alloc] initWithCell:cell withResources:_resources]];
 		} else if ([cell eventOccurred:kMNCellEventDied]) {
 			[_effects addObject:[[MNCellDieEffect alloc] initWithCell:cell withResources:_resources]];
 		}
 	}
-	[_field sendFrame];
+	[_environment sendFrame];
 	[self sendEffectFrame];
 }
 
@@ -74,7 +74,7 @@ static CGRect rectFromCell(const MNCell *cell) {
 - (void)draw {
 	[self drawBackground];
 	int i = 0;
-	for (MNCell *cell in _field.cells) {
+	for (id<MNCell> cell in _environment.cells) {
 		const JZGLSprite *cellSprite = _cellSprites[i];
 		[cellSprite setColor:cell.color];
 		[cellSprite setTexture:[_resources cellTexture:cell.type]];

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MNCellMove.h"
+#import "MNCell.h"
 
 @interface MNCellMoveRandomWalk : MNCellMove {
 	CGPoint _destination;

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JZScene.h"
+#import "MNStandardEnvironment.h"
 #import "MNField.h"
 #import "MNGLResources.h"
 #import "JZGLSprite.h"
@@ -18,13 +19,13 @@
 #define kMNMaxCells 50
 
 @interface MNFieldScene : NSObject<JZScene> {
-	MNField *_field;
+	MNStandardEnvironment *_environment;
 	MNGLResources *_resources;
 	JZGLSprite *_backgroundSprite;
 	int _xBackgroundTileCount;
 	int _yBackgroundTileCount;
 	JZGLSprite *_cellSprites[kMNMaxCells];
-	NSMutableSet *_effects;
+	NSMutableArray *_effects;
 }
 
 - (id)initWithSize:(CGSize)size;

@@ -11,15 +11,17 @@
 @implementation MNCellMove
 
 @synthesize cell = _cell;
+@synthesize environment = _environment;
 
-- (id)initWithCell:(MNBaseCell *)cell {
+- (id)initWithCell:(id<MNCell>)cell withEnvironment:(id)environment {
 	if (self = [super init]) {
 		_cell = cell;
+		_environment = environment;
 	}
 	return self;
 }
 
-- (CGPoint)movedPoint {
+- (CGPoint)pointMoved {
 	return _cell.center;
 }
 

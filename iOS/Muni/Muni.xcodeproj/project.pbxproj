@@ -23,7 +23,7 @@
 		CA8BF7F715BC8C1A00B7B572 /* MNMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BF7F515BC8C1A00B7B572 /* MNMainViewController.m */; };
 		CA8BF7F815BC8C1A00B7B572 /* MNMainViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA8BF7F615BC8C1A00B7B572 /* MNMainViewController_iPad.xib */; };
 		CA8BF7FD15BC8C7D00B7B572 /* MNMainViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA8BF7FB15BC8C7D00B7B572 /* MNMainViewController_iPhone.xib */; };
-		CA8BF80415BC8FC900B7B572 /* MNCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BF80315BC8FC900B7B572 /* MNCell.m */; };
+		CA8BF80415BC8FC900B7B572 /* MNStandardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BF80315BC8FC900B7B572 /* MNStandardCell.m */; };
 		CA8BF80A15BC90A600B7B572 /* MNField.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BF80915BC90A600B7B572 /* MNField.m */; };
 		CA8BF80F15BC941E00B7B572 /* JZGLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BF80E15BC941E00B7B572 /* JZGLTexture.m */; };
 		CAA99D4615C05127002B85D2 /* Cell1EffectBorn.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D4415C05127002B85D2 /* Cell1EffectBorn.png */; };
@@ -36,13 +36,11 @@
 		CAA99D6015C078D7002B85D2 /* MNUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D5F15C078D7002B85D2 /* MNUtility.m */; };
 		CAA99D6315C07E62002B85D2 /* Cell1EffectDie.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */; };
 		CAA99D6415C07E62002B85D2 /* Cell1EffectDie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */; };
-		CAA99D6715C07EE8002B85D2 /* MNCellDieEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D6615C07EE8002B85D2 /* MNCellDieEffect.m */; };
-		CAA99D6A15C0BD71002B85D2 /* MNBaseField.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D6915C0BD71002B85D2 /* MNBaseField.m */; };
-		CAA99D6F15C0C0FA002B85D2 /* MNBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D6E15C0C0FA002B85D2 /* MNBaseCell.m */; };
 		CAA99D7215C0C57E002B85D2 /* MNCellMoveRandomWalk.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D7115C0C57E002B85D2 /* MNCellMoveRandomWalk.m */; };
 		CAA99D7515C0C5ED002B85D2 /* MNCellMove.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D7415C0C5ED002B85D2 /* MNCellMove.m */; };
 		CAA99D7C15C11648002B85D2 /* MNPointIntervalByPoints.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D7B15C11648002B85D2 /* MNPointIntervalByPoints.m */; };
 		CAA99D7F15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D7E15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m */; };
+		CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */; };
 		CAF14AB615BC957C000AD7A8 /* Cell1.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AB415BC957C000AD7A8 /* Cell1.png */; };
 		CAF14AB715BC957C000AD7A8 /* Cell1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AB515BC957C000AD7A8 /* Cell1@2x.png */; };
 		CAF14ABC15BC95F9000AD7A8 /* MNGLResources.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF14ABB15BC95F9000AD7A8 /* MNGLResources.m */; };
@@ -55,6 +53,10 @@
 		CAF14AE315BE6C34000AD7A8 /* MNSceneDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF14AE215BE6C34000AD7A8 /* MNSceneDirector.m */; };
 		CAF14AEB15BEB2AC000AD7A8 /* Background1.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AE915BEB2AC000AD7A8 /* Background1.png */; };
 		CAF14AEC15BEB2AC000AD7A8 /* Background1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AEA15BEB2AC000AD7A8 /* Background1@2x.png */; };
+		CAF4F96415C1BCE30018353B /* MNSpatialIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96315C1BCE30018353B /* MNSpatialIndex.m */; };
+		CAF4F96715C1BD020018353B /* MNCellDieEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96615C1BD020018353B /* MNCellDieEffect.m */; };
+		CAF4F96F15C1D2DC0018353B /* MNCellDieEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96615C1BD020018353B /* MNCellDieEffect.m */; };
+		CAF4F97915C1DA920018353B /* MNCellHittingEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,8 +92,8 @@
 		CA8BF7F515BC8C1A00B7B572 /* MNMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNMainViewController.m; path = UI/MNMainViewController.m; sourceTree = "<group>"; };
 		CA8BF7F615BC8C1A00B7B572 /* MNMainViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MNMainViewController_iPad.xib; path = UI/MNMainViewController_iPad.xib; sourceTree = "<group>"; };
 		CA8BF7FB15BC8C7D00B7B572 /* MNMainViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MNMainViewController_iPhone.xib; path = UI/MNMainViewController_iPhone.xib; sourceTree = "<group>"; };
-		CA8BF80215BC8FC900B7B572 /* MNCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCell.h; path = Logic/MNCell.h; sourceTree = "<group>"; };
-		CA8BF80315BC8FC900B7B572 /* MNCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCell.m; path = Logic/MNCell.m; sourceTree = "<group>"; };
+		CA8BF80215BC8FC900B7B572 /* MNStandardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNStandardCell.h; path = Logic/MNStandardCell.h; sourceTree = "<group>"; };
+		CA8BF80315BC8FC900B7B572 /* MNStandardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNStandardCell.m; path = Logic/MNStandardCell.m; sourceTree = "<group>"; };
 		CA8BF80815BC90A600B7B572 /* MNField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNField.h; path = Logic/MNField.h; sourceTree = "<group>"; };
 		CA8BF80915BC90A600B7B572 /* MNField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNField.m; path = Logic/MNField.m; sourceTree = "<group>"; };
 		CA8BF80D15BC941E00B7B572 /* JZGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JZGLTexture.h; path = Juiz/OpenGLES/JZGLTexture.h; sourceTree = "<group>"; };
@@ -108,12 +110,7 @@
 		CAA99D5F15C078D7002B85D2 /* MNUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNUtility.m; path = Utility/MNUtility.m; sourceTree = "<group>"; };
 		CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell1EffectDie.png; path = ../images/Cell1EffectDie.png; sourceTree = "<group>"; };
 		CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell1EffectDie@2x.png"; path = "../images/Cell1EffectDie@2x.png"; sourceTree = "<group>"; };
-		CAA99D6515C07EE8002B85D2 /* MNCellDieEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCellDieEffect.h; sourceTree = "<group>"; };
-		CAA99D6615C07EE8002B85D2 /* MNCellDieEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCellDieEffect.m; sourceTree = "<group>"; };
-		CAA99D6815C0BD71002B85D2 /* MNBaseField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNBaseField.h; path = Logic/MNBaseField.h; sourceTree = "<group>"; };
-		CAA99D6915C0BD71002B85D2 /* MNBaseField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNBaseField.m; path = Logic/MNBaseField.m; sourceTree = "<group>"; };
-		CAA99D6D15C0C0FA002B85D2 /* MNBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNBaseCell.h; path = Logic/MNBaseCell.h; sourceTree = "<group>"; };
-		CAA99D6E15C0C0FA002B85D2 /* MNBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNBaseCell.m; path = Logic/MNBaseCell.m; sourceTree = "<group>"; };
+		CAA99D6D15C0C0FA002B85D2 /* MNCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCell.h; path = Logic/MNCell.h; sourceTree = "<group>"; };
 		CAA99D7015C0C57E002B85D2 /* MNCellMoveRandomWalk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveRandomWalk.h; path = Logic/CellMove/MNCellMoveRandomWalk.h; sourceTree = "<group>"; };
 		CAA99D7115C0C57E002B85D2 /* MNCellMoveRandomWalk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveRandomWalk.m; path = Logic/CellMove/MNCellMoveRandomWalk.m; sourceTree = "<group>"; };
 		CAA99D7315C0C5EC002B85D2 /* MNCellMove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMove.h; path = Logic/CellMove/MNCellMove.h; sourceTree = "<group>"; };
@@ -123,6 +120,9 @@
 		CAA99D7B15C11648002B85D2 /* MNPointIntervalByPoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNPointIntervalByPoints.m; path = Utility/MNPointIntervalByPoints.m; sourceTree = "<group>"; };
 		CAA99D7D15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNPointIntervalByRadianAndDistance.h; path = Utility/MNPointIntervalByRadianAndDistance.h; sourceTree = "<group>"; };
 		CAA99D7E15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNPointIntervalByRadianAndDistance.m; path = Utility/MNPointIntervalByRadianAndDistance.m; sourceTree = "<group>"; };
+		CAA99D8715C1AFCF002B85D2 /* MNStandardEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNStandardEnvironment.h; path = Logic/MNStandardEnvironment.h; sourceTree = "<group>"; };
+		CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNStandardEnvironment.m; path = Logic/MNStandardEnvironment.m; sourceTree = "<group>"; };
+		CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNEnvironment.h; path = Logic/MNEnvironment.h; sourceTree = "<group>"; };
 		CAF14AB415BC957C000AD7A8 /* Cell1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell1.png; path = ../images/Cell1.png; sourceTree = "<group>"; };
 		CAF14AB515BC957C000AD7A8 /* Cell1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell1@2x.png"; path = "../images/Cell1@2x.png"; sourceTree = "<group>"; };
 		CAF14ABA15BC95F9000AD7A8 /* MNGLResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNGLResources.h; path = UI/OpenGLES/MNGLResources.h; sourceTree = "<group>"; };
@@ -145,6 +145,12 @@
 		CAF14AE215BE6C34000AD7A8 /* MNSceneDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNSceneDirector.m; path = Scene/MNSceneDirector.m; sourceTree = "<group>"; };
 		CAF14AE915BEB2AC000AD7A8 /* Background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background1.png; path = ../images/Background1.png; sourceTree = "<group>"; };
 		CAF14AEA15BEB2AC000AD7A8 /* Background1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background1@2x.png"; path = "../images/Background1@2x.png"; sourceTree = "<group>"; };
+		CAF4F96215C1BCE30018353B /* MNSpatialIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNSpatialIndex.h; path = Utility/MNSpatialIndex.h; sourceTree = "<group>"; };
+		CAF4F96315C1BCE30018353B /* MNSpatialIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNSpatialIndex.m; path = Utility/MNSpatialIndex.m; sourceTree = "<group>"; };
+		CAF4F96515C1BD020018353B /* MNCellDieEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellDieEffect.h; path = Scene/Effect/MNCellDieEffect.h; sourceTree = "<group>"; };
+		CAF4F96615C1BD020018353B /* MNCellDieEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellDieEffect.m; path = Scene/Effect/MNCellDieEffect.m; sourceTree = "<group>"; };
+		CAF4F97715C1DA920018353B /* MNCellHittingEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellHittingEffect.h; path = Logic/MNCellHittingEffect.h; sourceTree = "<group>"; };
+		CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellHittingEffect.m; path = Logic/MNCellHittingEffect.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,14 +273,16 @@
 			isa = PBXGroup;
 			children = (
 				CAA99D6B15C0C01B002B85D2 /* CellMove */,
-				CA8BF80215BC8FC900B7B572 /* MNCell.h */,
-				CA8BF80315BC8FC900B7B572 /* MNCell.m */,
+				CA8BF80215BC8FC900B7B572 /* MNStandardCell.h */,
+				CA8BF80315BC8FC900B7B572 /* MNStandardCell.m */,
 				CA8BF80815BC90A600B7B572 /* MNField.h */,
 				CA8BF80915BC90A600B7B572 /* MNField.m */,
-				CAA99D6815C0BD71002B85D2 /* MNBaseField.h */,
-				CAA99D6915C0BD71002B85D2 /* MNBaseField.m */,
-				CAA99D6D15C0C0FA002B85D2 /* MNBaseCell.h */,
-				CAA99D6E15C0C0FA002B85D2 /* MNBaseCell.m */,
+				CAA99D6D15C0C0FA002B85D2 /* MNCell.h */,
+				CAA99D8715C1AFCF002B85D2 /* MNStandardEnvironment.h */,
+				CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */,
+				CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */,
+				CAF4F97715C1DA920018353B /* MNCellHittingEffect.h */,
+				CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -325,12 +333,12 @@
 		CAA99D4B15C05CB8002B85D2 /* Effect */ = {
 			isa = PBXGroup;
 			children = (
+				CAF4F96515C1BD020018353B /* MNCellDieEffect.h */,
+				CAF4F96615C1BD020018353B /* MNCellDieEffect.m */,
 				CAA99D4C15C05CE6002B85D2 /* MNEffect.h */,
 				CAA99D4D15C05CE6002B85D2 /* MNEffect.m */,
 				CAA99D4F15C05CFA002B85D2 /* MNCellBornEffect.h */,
 				CAA99D5015C05CFA002B85D2 /* MNCellBornEffect.m */,
-				CAA99D6515C07EE8002B85D2 /* MNCellDieEffect.h */,
-				CAA99D6615C07EE8002B85D2 /* MNCellDieEffect.m */,
 			);
 			name = Effect;
 			sourceTree = "<group>";
@@ -345,6 +353,8 @@
 				CAA99D7B15C11648002B85D2 /* MNPointIntervalByPoints.m */,
 				CAA99D7D15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.h */,
 				CAA99D7E15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m */,
+				CAF4F96215C1BCE30018353B /* MNSpatialIndex.h */,
+				CAF4F96315C1BCE30018353B /* MNSpatialIndex.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -517,11 +527,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAF4F96F15C1D2DC0018353B /* MNCellDieEffect.m in Sources */,
 				CAA99D5815C06A17002B85D2 /* MNEffect.m in Sources */,
 				CA8BF7C915BC8B2900B7B572 /* main.m in Sources */,
 				CA8BF7CD15BC8B2900B7B572 /* MNAppDelegate.m in Sources */,
 				CA8BF7F715BC8C1A00B7B572 /* MNMainViewController.m in Sources */,
-				CA8BF80415BC8FC900B7B572 /* MNCell.m in Sources */,
+				CA8BF80415BC8FC900B7B572 /* MNStandardCell.m in Sources */,
 				CA8BF80A15BC90A600B7B572 /* MNField.m in Sources */,
 				CA8BF80F15BC941E00B7B572 /* JZGLTexture.m in Sources */,
 				CAF14ABC15BC95F9000AD7A8 /* MNGLResources.m in Sources */,
@@ -534,13 +545,13 @@
 				CAF14AE315BE6C34000AD7A8 /* MNSceneDirector.m in Sources */,
 				CAA99D5115C05CFA002B85D2 /* MNCellBornEffect.m in Sources */,
 				CAA99D6015C078D7002B85D2 /* MNUtility.m in Sources */,
-				CAA99D6715C07EE8002B85D2 /* MNCellDieEffect.m in Sources */,
-				CAA99D6A15C0BD71002B85D2 /* MNBaseField.m in Sources */,
-				CAA99D6F15C0C0FA002B85D2 /* MNBaseCell.m in Sources */,
 				CAA99D7215C0C57E002B85D2 /* MNCellMoveRandomWalk.m in Sources */,
 				CAA99D7515C0C5ED002B85D2 /* MNCellMove.m in Sources */,
 				CAA99D7C15C11648002B85D2 /* MNPointIntervalByPoints.m in Sources */,
 				CAA99D7F15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m in Sources */,
+				CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */,
+				CAF4F96415C1BCE30018353B /* MNSpatialIndex.m in Sources */,
+				CAF4F97915C1DA920018353B /* MNCellHittingEffect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +561,7 @@
 			files = (
 				CA8BF7E215BC8B2900B7B572 /* MuniTests.m in Sources */,
 				CAA99D4E15C05CE6002B85D2 /* MNEffect.m in Sources */,
+				CAF4F96715C1BD020018353B /* MNCellDieEffect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,6 @@
 	JZGLSprite *_sprite;
 }
 
-- (id)initWithCell:(MNCell *)cell withResources:(MNGLResources *)resources;
+- (id)initWithCell:(id<MNCell>)cell withResources:(MNGLResources *)resources;
 
 @end
