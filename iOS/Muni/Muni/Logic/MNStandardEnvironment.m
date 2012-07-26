@@ -26,7 +26,7 @@
 
 - (void)addCellToSpatialIndex:(id<MNCell>)cell {
 	double radius = cell.radius;
-	[_spatialIndex addObject:cell forRect:CGRectMake(cell.center.x - radius, cell.center.x + radius, cell.center.y - radius, cell.center.y + radius)];
+	[_spatialIndex addObject:cell forRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
 }
 
 - (void)updateSpatialIndexFor:(id<MNCell>)cell {
@@ -57,29 +57,17 @@
 	}
 }
 
-- (NSArray *)cellsHittedWith:(id<MNCell>)cell {
-	NSMutableArray *cells = [NSMutableArray array];
-	double radius = cell.radius;
-	for (id<MNCell> candidateCell in [_spatialIndex objectsPiledWith:cell]) {
-		if (cell != candidateCell
-			&& candidateCell.living
-			&& [[MNPointIntervalByPoints alloc] initWithSource:cell.center withDestination:candidateCell.center].distance <= radius + candidateCell.radius) {
-			[cells addObject:candidateCell];
-		}
-	}
-	return cells;
-}
-
 - (NSArray *)detectCellsHitting {
 	NSMutableArray *cellHittingEffects = [NSMutableArray array];
-	for (id<MNCell> cell in _cells) {
-		if (cell.living) {
-			double radius = cell.radius;
-			double weight = cell.weight;
-			for (id<MNCell> cellHitted in [self cellsHittedWith:cell]) {
-				MNPointIntervalByPoints *interval = [[MNPointIntervalByPoints alloc] initWithSource:cellHitted.center withDestination:cell.center];
-				double moveDistance = (radius + cellHitted.radius - interval.distance) * (weight / (weight + cellHitted.weight));
-				[cellHittingEffects addObject:[[MNCellHittingEffect alloc] initWithCell:cell withMoveRadian:interval.radian withMoveDistance:moveDistance]];
+	for (MNSpatialIndexPile *pile in [_spatialIndex piles]) {
+		id<MNCell> cell1 = pile.object1;
+		id<MNCell> cell2 = pile.object2;
+		if (cell1.living && cell2.living) {
+			MNPointIntervalByPoints *interval = [[MNPointIntervalByPoints alloc] initWithSource:cell1.center withDestination:cell2.center];
+			double piledDistance = cell1.radius + cell2.radius - interval.distance;
+			if (piledDistance > 0) {
+				[cellHittingEffects addObject:[[MNCellHittingEffect alloc] initWithCell:cell1 withMoveRadian:MNInvertRadian(interval.radian) withMoveDistance:piledDistance * (cell1.weight / (cell1.weight + cell2.weight))]];
+				[cellHittingEffects addObject:[[MNCellHittingEffect alloc] initWithCell:cell2 withMoveRadian:interval.radian withMoveDistance:piledDistance * (cell2.weight / (cell2.weight + cell1.weight))]];
 			}
 		}
 	}

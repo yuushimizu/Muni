@@ -58,6 +58,7 @@
 		CAF4F96F15C1D2DC0018353B /* MNCellDieEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96615C1BD020018353B /* MNCellDieEffect.m */; };
 		CAF4F97915C1DA920018353B /* MNCellHittingEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */; };
 		CAF4F97C15C1E3170018353B /* MNCellMoveImmovable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */; };
+		CAF4F97F15C1E9F80018353B /* MNSpatialIndexPile.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97E15C1E9F80018353B /* MNSpatialIndexPile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +155,8 @@
 		CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellHittingEffect.m; path = Logic/MNCellHittingEffect.m; sourceTree = "<group>"; };
 		CAF4F97A15C1E3160018353B /* MNCellMoveImmovable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveImmovable.h; path = Logic/CellMove/MNCellMoveImmovable.h; sourceTree = "<group>"; };
 		CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveImmovable.m; path = Logic/CellMove/MNCellMoveImmovable.m; sourceTree = "<group>"; };
+		CAF4F97D15C1E9F80018353B /* MNSpatialIndexPile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNSpatialIndexPile.h; path = Utility/MNSpatialIndexPile.h; sourceTree = "<group>"; };
+		CAF4F97E15C1E9F80018353B /* MNSpatialIndexPile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNSpatialIndexPile.m; path = Utility/MNSpatialIndexPile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +361,8 @@
 				CAA99D7E15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m */,
 				CAF4F96215C1BCE30018353B /* MNSpatialIndex.h */,
 				CAF4F96315C1BCE30018353B /* MNSpatialIndex.m */,
+				CAF4F97D15C1E9F80018353B /* MNSpatialIndexPile.h */,
+				CAF4F97E15C1E9F80018353B /* MNSpatialIndexPile.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -558,6 +563,7 @@
 				CAF4F96415C1BCE30018353B /* MNSpatialIndex.m in Sources */,
 				CAF4F97915C1DA920018353B /* MNCellHittingEffect.m in Sources */,
 				CAF4F97C15C1E3170018353B /* MNCellMoveImmovable.m in Sources */,
+				CAF4F97F15C1E9F80018353B /* MNSpatialIndexPile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

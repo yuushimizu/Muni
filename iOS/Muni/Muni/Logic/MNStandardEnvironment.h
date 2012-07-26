@@ -10,6 +10,7 @@
 #import "MNEnvironment.h"
 #import "MNStandardCell.h"
 #import "MNSpatialIndex.h"
+#import "MNSpatialIndexPile.h"
 #import "MNPointIntervalByPoints.h"
 #import "MNCellHittingEffect.h"
 

@@ -17,3 +17,4 @@ UIColor *MNRandomColor(void);
 CGPoint MNMovedPoint(CGPoint start, double radian, double distance);
 CGPoint MNMovedPointToDestination(CGPoint start, CGPoint destination, double distance);
 double MNDiagonalFromSize(CGSize size);
+double MNInvertRadian(double radian);

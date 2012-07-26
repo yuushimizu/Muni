@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MNSpatialIndexPile.h"
 
 @interface MNSpatialIndex : NSObject {
 	CGSize _blockSize;
@@ -25,5 +26,6 @@
 - (void)removeObject:(id)object;
 - (NSSet *)objectsForKeyPoints:(NSArray *)keyPoints;
 - (NSSet *)objectsPiledWith:(id)object;
+- (NSArray *)piles;
 
 @end

@@ -88,4 +88,27 @@
 	return [NSSet set];
 }
 
+- (NSArray *)piles {
+	NSMutableArray *piles = [NSMutableArray array];
+	for (int x = 0; x < _blockCount.width; ++x) {
+		for (int y = 0; y < _blockCount.height; ++y) {
+			NSArray *objectsInBlock = [[_objects objectAtIndex:x * _blockCount.width + y] allObjects];
+			for (id object1 in objectsInBlock) {
+				for (id object2 in objectsInBlock) {
+					if (object1 >= object2) continue;
+					BOOL alreadyAdded = NO;
+					for (MNSpatialIndexPile *pile in piles) {
+						if (pile.object1 == object1 && pile.object2 == object2) {
+							alreadyAdded = YES;
+								break;
+						}
+					}
+					if (!alreadyAdded) [piles addObject:[[MNSpatialIndexPile alloc] initWithObject1:object1 withObject2:object2]];
+				}
+			}
+		}
+	}
+	return piles;
+}
+
 @end

@@ -38,3 +38,7 @@ CGPoint MNMovedPointToDestination(CGPoint start, CGPoint destination, double mov
 double MNDiagonalFromSize(CGSize size) {
 	return [[MNPointIntervalByPoints alloc] initWithSource:CGPointMake(0, 0) withDestination:CGPointMake(size.width, size.height)].distance;
 }
+
+double MNInvertRadian(double radian) {
+	return radian < M_PI ? radian + M_PI : radian - M_PI;
+}
