@@ -11,6 +11,7 @@
 #import "MNCell.h"
 #import "MNCellMove.h"
 #import "MNCellMoveRandomWalk.h"
+#import "MNCellMoveImmovable.h"
 
 @interface MNStandardCell : NSObject<MNCell> {
 	int _type;

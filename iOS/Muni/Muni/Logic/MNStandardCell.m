@@ -27,6 +27,15 @@
 	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 2);
 }
 
+- (MNCellMove *)randomMove:(id<MNEnvironment>)environment {
+	int type = MNRandomInt(0, 2);
+	if (type == 0) {
+		return [[MNCellMoveRandomWalk alloc] initWithCell:self withEnvironment:environment];
+	} else {
+		return [[MNCellMoveImmovable alloc] initWithCell:self withEnvironment:environment];
+	}
+}
+
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
 		_type = MNRandomInt(0, kMNCellTypeCount);
@@ -37,7 +46,7 @@
 		_sight = MNRandomDouble(1, MNDiagonalFromSize(environment.field.size));
 		_center = MNRandomPointInSize(environment.field.size);
 		_eventBits = kMNCellEventBorned;
-		_move = [[MNCellMoveRandomWalk alloc] initWithCell:self withEnvironment:environment];
+		_move = [self randomMove:environment];
 	}
 	return self;
 }

@@ -57,6 +57,7 @@
 		CAF4F96715C1BD020018353B /* MNCellDieEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96615C1BD020018353B /* MNCellDieEffect.m */; };
 		CAF4F96F15C1D2DC0018353B /* MNCellDieEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96615C1BD020018353B /* MNCellDieEffect.m */; };
 		CAF4F97915C1DA920018353B /* MNCellHittingEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */; };
+		CAF4F97C15C1E3170018353B /* MNCellMoveImmovable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,8 @@
 		CAF4F96615C1BD020018353B /* MNCellDieEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellDieEffect.m; path = Scene/Effect/MNCellDieEffect.m; sourceTree = "<group>"; };
 		CAF4F97715C1DA920018353B /* MNCellHittingEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellHittingEffect.h; path = Logic/MNCellHittingEffect.h; sourceTree = "<group>"; };
 		CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellHittingEffect.m; path = Logic/MNCellHittingEffect.m; sourceTree = "<group>"; };
+		CAF4F97A15C1E3160018353B /* MNCellMoveImmovable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveImmovable.h; path = Logic/CellMove/MNCellMoveImmovable.h; sourceTree = "<group>"; };
+		CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveImmovable.m; path = Logic/CellMove/MNCellMoveImmovable.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +369,8 @@
 				CAA99D7115C0C57E002B85D2 /* MNCellMoveRandomWalk.m */,
 				CAA99D7315C0C5EC002B85D2 /* MNCellMove.h */,
 				CAA99D7415C0C5ED002B85D2 /* MNCellMove.m */,
+				CAF4F97A15C1E3160018353B /* MNCellMoveImmovable.h */,
+				CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */,
 			);
 			name = CellMove;
 			sourceTree = "<group>";
@@ -552,6 +557,7 @@
 				CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */,
 				CAF4F96415C1BCE30018353B /* MNSpatialIndex.m in Sources */,
 				CAF4F97915C1DA920018353B /* MNCellHittingEffect.m in Sources */,
+				CAF4F97C15C1E3170018353B /* MNCellMoveImmovable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
