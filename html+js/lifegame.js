@@ -536,15 +536,14 @@ Lifegame = {};
         cell.vitality.current -= movedDistance * cellWeight(cell) / 5 + cellWeight(cell) / 10;
     };
     var applyHitting = function(cell, target) {
-        if (!isEatingTarget(cell, target)) return;
         var damage = (1 + cell.density) * ((cell.lastMovedDistance == undefined ? 0 : cell.lastMovedDistance) + 1) * 100;
-        damage -= damage * target.density / 10;
-        if (damage > 0) {
+        if (isEatingTarget(cell, target)) {
+            damage -= damage * target.density / 10;
             target.vitality.current -= damage;
             target.event = 'damaged';
-            knockedPositionBase = target.knockedPosition == undefined ? target : target.knockedPosition;
-            target.knockedPosition = movedPointWithRadian(knockedPositionBase, radianFromPoints(cell, knockedPositionBase), damage / 100);
         }
+        knockedPositionBase = target.knockedPosition == undefined ? target : target.knockedPosition;
+        target.knockedPosition = movedPointWithRadian(knockedPositionBase, radianFromPoints(cell, knockedPositionBase), damage / 100);
     };
     var cellsHittingFrame = function(game) {
         var hittings = hittingCells(game);
