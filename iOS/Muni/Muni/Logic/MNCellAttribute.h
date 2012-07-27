@@ -12,6 +12,7 @@
 	double _red;
 	double _green;
 	double _blue;
+	double _max;
 }
 
 @property (readonly) double red;

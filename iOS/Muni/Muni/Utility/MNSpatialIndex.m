@@ -40,7 +40,7 @@
 	[_objectKeyPoints setObject:keyPoints forKey:[NSValue valueWithNonretainedObject:object]];
 }
 
-- (void)addObject:(id)object forRect:(CGRect)rect {
+- (NSArray *)keyPointsFromRect:(CGRect)rect {
 	int leftKey = rect.origin.x / _blockSize.width;
 	if (leftKey < 0) leftKey = 0;
 	int rightKey = (rect.origin.x + rect.size.width) / _blockSize.width;
@@ -55,7 +55,11 @@
 			[keyPoints addObject:[NSValue valueWithCGPoint:CGPointMake(x, y)]];
 		}
 	}
-	[self addObject:object forKeyPoints:keyPoints];
+	return keyPoints;
+}
+
+- (void)addObject:(id)object forRect:(CGRect)rect {
+	[self addObject:object forKeyPoints:[self keyPointsFromRect:rect]];
 }
 
 - (void)removeObject:(id)object {
@@ -78,6 +82,10 @@
 		}
 	}
 	return objects;
+}
+
+- (NSSet *)objectsForRect:(CGRect)rect {
+	return [self objectsForKeyPoints:[self keyPointsFromRect:rect]];
 }
 
 - (NSSet *)objectsPiledWith:(id)object {

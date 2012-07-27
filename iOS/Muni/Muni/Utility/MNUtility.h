@@ -14,6 +14,7 @@ double MNRandomDouble(double min, double limit);
 int MNRandomInt(int min, int limit);
 CGPoint MNRandomPointInSize(CGSize size);
 UIColor *MNRandomColor(void);
+double MNRandomRadian(void);
 CGPoint MNMovedPoint(CGPoint start, double radian, double distance);
 CGPoint MNMovedPointToDestination(CGPoint start, CGPoint destination, double distance);
 double MNDiagonalFromSize(CGSize size);

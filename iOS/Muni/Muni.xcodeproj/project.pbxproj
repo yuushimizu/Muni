@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA02DC7315C21D470070B1F5 /* MNCellMoveTailTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC7215C21D470070B1F5 /* MNCellMoveTailTarget.m */; };
+		CA02DC7915C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC7815C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m */; };
+		CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.m */; };
 		CA8BF7BD15BC8B2900B7B572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */; };
 		CA8BF7BF15BC8B2900B7B572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */; };
 		CA8BF7C115BC8B2900B7B572 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7C015BC8B2900B7B572 /* CoreGraphics.framework */; };
@@ -60,6 +63,7 @@
 		CAF4F97C15C1E3170018353B /* MNCellMoveImmovable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */; };
 		CAF4F97F15C1E9F80018353B /* MNSpatialIndexPile.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97E15C1E9F80018353B /* MNSpatialIndexPile.m */; };
 		CAF4F98215C20D7A0018353B /* MNCellAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F98115C20D790018353B /* MNCellAttribute.m */; };
+		CAF4F98515C213A10018353B /* MNCellMovePuruPuru.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F98415C213A00018353B /* MNCellMovePuruPuru.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +77,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA02DC7115C21D470070B1F5 /* MNCellMoveTailTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveTailTarget.h; path = Logic/CellMove/MNCellMoveTailTarget.h; sourceTree = "<group>"; };
+		CA02DC7215C21D470070B1F5 /* MNCellMoveTailTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveTailTarget.m; path = Logic/CellMove/MNCellMoveTailTarget.m; sourceTree = "<group>"; };
+		CA02DC7615C21DF80070B1F5 /* MNCellTargetCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNCellTargetCondition.h; path = Logic/CellTargetCondition/MNCellTargetCondition.h; sourceTree = "<group>"; };
+		CA02DC7715C21E5F0070B1F5 /* MNCellTargetConditionEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellTargetConditionEnemy.h; path = Logic/CellTargetCondition/MNCellTargetConditionEnemy.h; sourceTree = "<group>"; };
+		CA02DC7815C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellTargetConditionEnemy.m; path = Logic/CellTargetCondition/MNCellTargetConditionEnemy.m; sourceTree = "<group>"; };
+		CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellScanningResult.h; path = Logic/MNCellScanningResult.h; sourceTree = "<group>"; };
+		CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellScanningResult.m; path = Logic/MNCellScanningResult.m; sourceTree = "<group>"; };
 		CA8BF7B815BC8B2900B7B572 /* Muni.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muni.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -160,6 +171,8 @@
 		CAF4F97E15C1E9F80018353B /* MNSpatialIndexPile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNSpatialIndexPile.m; path = Utility/MNSpatialIndexPile.m; sourceTree = "<group>"; };
 		CAF4F98015C20D790018353B /* MNCellAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellAttribute.h; path = Logic/MNCellAttribute.h; sourceTree = "<group>"; };
 		CAF4F98115C20D790018353B /* MNCellAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellAttribute.m; path = Logic/MNCellAttribute.m; sourceTree = "<group>"; };
+		CAF4F98315C213A00018353B /* MNCellMovePuruPuru.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMovePuruPuru.h; path = Logic/CellMove/MNCellMovePuruPuru.h; sourceTree = "<group>"; };
+		CAF4F98415C213A00018353B /* MNCellMovePuruPuru.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMovePuruPuru.m; path = Logic/CellMove/MNCellMovePuruPuru.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +201,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA02DC7515C21DC20070B1F5 /* CellTargetCondition */ = {
+			isa = PBXGroup;
+			children = (
+				CA02DC7615C21DF80070B1F5 /* MNCellTargetCondition.h */,
+				CA02DC7715C21E5F0070B1F5 /* MNCellTargetConditionEnemy.h */,
+				CA02DC7815C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m */,
+			);
+			name = CellTargetCondition;
+			sourceTree = "<group>";
+		};
 		CA8BF7AD15BC8B2800B7B572 = {
 			isa = PBXGroup;
 			children = (
@@ -281,6 +304,7 @@
 		CA8BF7FE15BC8DD400B7B572 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				CA02DC7515C21DC20070B1F5 /* CellTargetCondition */,
 				CAA99D6B15C0C01B002B85D2 /* CellMove */,
 				CA8BF80215BC8FC900B7B572 /* MNStandardCell.h */,
 				CA8BF80315BC8FC900B7B572 /* MNStandardCell.m */,
@@ -294,6 +318,8 @@
 				CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */,
 				CAF4F98015C20D790018353B /* MNCellAttribute.h */,
 				CAF4F98115C20D790018353B /* MNCellAttribute.m */,
+				CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */,
+				CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.m */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -381,6 +407,10 @@
 				CAA99D7415C0C5ED002B85D2 /* MNCellMove.m */,
 				CAF4F97A15C1E3160018353B /* MNCellMoveImmovable.h */,
 				CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */,
+				CAF4F98315C213A00018353B /* MNCellMovePuruPuru.h */,
+				CAF4F98415C213A00018353B /* MNCellMovePuruPuru.m */,
+				CA02DC7115C21D470070B1F5 /* MNCellMoveTailTarget.h */,
+				CA02DC7215C21D470070B1F5 /* MNCellMoveTailTarget.m */,
 			);
 			name = CellMove;
 			sourceTree = "<group>";
@@ -570,6 +600,10 @@
 				CAF4F97C15C1E3170018353B /* MNCellMoveImmovable.m in Sources */,
 				CAF4F97F15C1E9F80018353B /* MNSpatialIndexPile.m in Sources */,
 				CAF4F98215C20D7A0018353B /* MNCellAttribute.m in Sources */,
+				CAF4F98515C213A10018353B /* MNCellMovePuruPuru.m in Sources */,
+				CA02DC7315C21D470070B1F5 /* MNCellMoveTailTarget.m in Sources */,
+				CA02DC7915C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m in Sources */,
+				CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

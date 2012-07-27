@@ -72,23 +72,23 @@ static CGRect rectFromCell(id<MNCell> cell) {
 }
 
 - (void)setCellSpriteColor:(JZGLSprite *)sprite withCell:(id<MNCell>)cell {
-	double red = cell.attribute.red;
-	double green = cell.attribute.green;
-	double blue = cell.attribute.blue;
-	double max = MAX(red, MAX(green, blue));
-	double redRate = red / max;
-	double greenRate = green / max;
-	double blueRate = blue / max;
-	if (cell.density < 0.5) {
-		redRate += (1.0 - redRate) * (0.5 - cell.density);
-		greenRate += (1.0 - greenRate) * (0.5 - cell.density);
-		blueRate += (1.0 - blueRate) * (0.5 - cell.density);
+	if ([cell eventOccurred:kMNCellEventDamaged]) {
+		[sprite setColorWithRed:1.0 withGreen:1.0 withBlue:1.0 withAlpha:1.0];
 	} else {
-		redRate *= 1.5 - cell.density;
-		greenRate *= 1.5 - cell.density;
-		blueRate *= 1.5 - cell.density;
+		double red = cell.attribute.red;
+		double green = cell.attribute.green;
+		double blue = cell.attribute.blue;
+		if (cell.density < 0.5) {
+			red += (1.0 - red) * (0.5 - cell.density);
+			green += (1.0 - green) * (0.5 - cell.density);
+			blue += (1.0 - blue) * (0.5 - cell.density);
+		} else {
+			red *= 1.5 - cell.density;
+			green *= 1.5 - cell.density;
+			blue *= 1.5 - cell.density;
+		}
+		[sprite setColorWithRed:red withGreen:green withBlue:blue withAlpha:1.0];
 	}
-	[sprite setColorWithRed:redRate withGreen:greenRate withBlue:blueRate withAlpha:1.0];
 }
 
 - (void)draw {

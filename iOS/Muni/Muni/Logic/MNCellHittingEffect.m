@@ -13,12 +13,14 @@
 @synthesize cell = _cell;
 @synthesize moveRadian = _moveRadian;
 @synthesize moveDistance = _moveDistance;
+@synthesize damage = _damage;
 
-- (id)initWithCell:(id<MNCell>)cell withMoveRadian:(double)moveRadian withMoveDistance:(double)moveDistance {
+- (id)initWithCell:(id<MNCell>)cell withMoveRadian:(double)moveRadian withMoveDistance:(double)moveDistance withDamage:(double)damage {
 	if (self = [super init]) {
 		_cell = cell;
 		_moveRadian = moveRadian;
 		_moveDistance = moveDistance;
+		_damage = damage;
 	}
 	return self;
 }

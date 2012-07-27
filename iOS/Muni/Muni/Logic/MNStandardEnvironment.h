@@ -13,6 +13,7 @@
 #import "MNSpatialIndexPile.h"
 #import "MNPointIntervalByPoints.h"
 #import "MNCellHittingEffect.h"
+#import "MNCellScanningResult.h"
 
 @interface MNStandardEnvironment : NSObject<MNEnvironment> {
 	MNField *_field;

@@ -25,6 +25,7 @@
 - (void)addObject:(id)object forRect:(CGRect)rect;
 - (void)removeObject:(id)object;
 - (NSSet *)objectsForKeyPoints:(NSArray *)keyPoints;
+- (NSSet *)objectsForRect:(CGRect)rect;
 - (NSSet *)objectsPiledWith:(id)object;
 - (NSArray *)piles;
 

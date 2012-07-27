@@ -9,12 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "MNUtility.h"
 #import "MNCell.h"
+#import "MNEnvironment.h"
 #import "MNCellAttribute.h"
 #import "MNCellMove.h"
 #import "MNCellMoveRandomWalk.h"
+#import "MNCellMovePuruPuru.h"
 #import "MNCellMoveImmovable.h"
+#import "MNCellMoveTailTarget.h"
 
 @interface MNStandardCell : NSObject<MNCell> {
+	id<MNEnvironment> _environment;
 	int _type;
 	double _maxEnergy;
 	double _energy;
