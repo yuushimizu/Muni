@@ -59,6 +59,7 @@
 		CAF4F97915C1DA920018353B /* MNCellHittingEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */; };
 		CAF4F97C15C1E3170018353B /* MNCellMoveImmovable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */; };
 		CAF4F97F15C1E9F80018353B /* MNSpatialIndexPile.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F97E15C1E9F80018353B /* MNSpatialIndexPile.m */; };
+		CAF4F98215C20D7A0018353B /* MNCellAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F98115C20D790018353B /* MNCellAttribute.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +158,8 @@
 		CAF4F97B15C1E3160018353B /* MNCellMoveImmovable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveImmovable.m; path = Logic/CellMove/MNCellMoveImmovable.m; sourceTree = "<group>"; };
 		CAF4F97D15C1E9F80018353B /* MNSpatialIndexPile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNSpatialIndexPile.h; path = Utility/MNSpatialIndexPile.h; sourceTree = "<group>"; };
 		CAF4F97E15C1E9F80018353B /* MNSpatialIndexPile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNSpatialIndexPile.m; path = Utility/MNSpatialIndexPile.m; sourceTree = "<group>"; };
+		CAF4F98015C20D790018353B /* MNCellAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellAttribute.h; path = Logic/MNCellAttribute.h; sourceTree = "<group>"; };
+		CAF4F98115C20D790018353B /* MNCellAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellAttribute.m; path = Logic/MNCellAttribute.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +292,8 @@
 				CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */,
 				CAF4F97715C1DA920018353B /* MNCellHittingEffect.h */,
 				CAF4F97815C1DA920018353B /* MNCellHittingEffect.m */,
+				CAF4F98015C20D790018353B /* MNCellAttribute.h */,
+				CAF4F98115C20D790018353B /* MNCellAttribute.m */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -564,6 +569,7 @@
 				CAF4F97915C1DA920018353B /* MNCellHittingEffect.m in Sources */,
 				CAF4F97C15C1E3170018353B /* MNCellMoveImmovable.m in Sources */,
 				CAF4F97F15C1E9F80018353B /* MNSpatialIndexPile.m in Sources */,
+				CAF4F98215C20D7A0018353B /* MNCellAttribute.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

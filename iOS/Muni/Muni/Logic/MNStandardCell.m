@@ -14,7 +14,7 @@
 @synthesize maxEnergy = _maxEnergy;
 @synthesize energy = _energy;
 @synthesize density = _density;
-@synthesize color = _color;
+@synthesize attribute = _attribute;
 @synthesize speed = _speed;
 @synthesize sight = _sight;
 @synthesize center = _center;
@@ -25,6 +25,10 @@
 
 - (double)randomSpeed {
 	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 2);
+}
+
+- (MNCellAttribute *)randomAttribute {
+	return [[MNCellAttribute alloc] initWithRed:MNRandomDouble(0, 1) withGreen:MNRandomDouble(0, 1) withBlue:MNRandomDouble(0, 1)];
 }
 
 - (MNCellMove *)randomMove:(id<MNEnvironment>)environment {
@@ -41,7 +45,7 @@
 		_type = MNRandomInt(0, kMNCellTypeCount);
 		_energy = _maxEnergy = [self randomEnergy];
 		_density = MNRandomDouble(0.2, 1.0);
-		_color = MNRandomColor();
+		_attribute = [self randomAttribute];
 		_speed = [self randomSpeed];
 		_sight = MNRandomDouble(1, MNDiagonalFromSize(environment.field.size));
 		_center = MNRandomPointInSize(environment.field.size);

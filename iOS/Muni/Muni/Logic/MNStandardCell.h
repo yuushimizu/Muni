@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MNUtility.h"
 #import "MNCell.h"
+#import "MNCellAttribute.h"
 #import "MNCellMove.h"
 #import "MNCellMoveRandomWalk.h"
 #import "MNCellMoveImmovable.h"
@@ -18,7 +19,7 @@
 	double _maxEnergy;
 	double _energy;
 	double _density;
-	UIColor *_color;
+	MNCellAttribute *_attribute;
 	double _speed;
 	double _sight;
 	CGPoint _center;

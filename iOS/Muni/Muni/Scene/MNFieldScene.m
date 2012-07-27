@@ -71,15 +71,35 @@ static CGRect rectFromCell(id<MNCell> cell) {
 	for (MNEffect *effect in _effects) [effect draw];
 }
 
+- (void)setCellSpriteColor:(JZGLSprite *)sprite withCell:(id<MNCell>)cell {
+	double red = cell.attribute.red;
+	double green = cell.attribute.green;
+	double blue = cell.attribute.blue;
+	double max = MAX(red, MAX(green, blue));
+	double redRate = red / max;
+	double greenRate = green / max;
+	double blueRate = blue / max;
+	if (cell.density < 0.5) {
+		redRate += (1.0 - redRate) * (0.5 - cell.density);
+		greenRate += (1.0 - greenRate) * (0.5 - cell.density);
+		blueRate += (1.0 - blueRate) * (0.5 - cell.density);
+	} else {
+		redRate *= 1.5 - cell.density;
+		greenRate *= 1.5 - cell.density;
+		blueRate *= 1.5 - cell.density;
+	}
+	[sprite setColorWithRed:redRate withGreen:greenRate withBlue:blueRate withAlpha:1.0];
+}
+
 - (void)draw {
 	[self drawBackground];
 	int i = 0;
 	for (id<MNCell> cell in _environment.cells) {
-		const JZGLSprite *cellSprite = _cellSprites[i];
-		[cellSprite setColor:cell.color];
+		JZGLSprite *cellSprite = _cellSprites[i];
+		[self setCellSpriteColor:cellSprite withCell:cell];
 		[cellSprite setTexture:[_resources cellTexture:cell.type]];
 		[cellSprite drawToRect:rectFromCell(cell)];
-		i++;
+		i += 1;
 	}
 	[self drawEffects];
 }

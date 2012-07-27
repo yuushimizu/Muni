@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MNUtility.h"
+#import "MNCellAttribute.h"
 
 #define kMNCellTypeCount 2
 
@@ -22,7 +23,7 @@
 @property (readonly) double radius;
 @property (readonly) double density;
 @property (readonly) double weight;
-@property (readonly) UIColor *color;
+@property (readonly) MNCellAttribute *attribute;
 @property (readonly) double speed;
 @property (readonly) double sight;
 @property (readonly) BOOL living;
