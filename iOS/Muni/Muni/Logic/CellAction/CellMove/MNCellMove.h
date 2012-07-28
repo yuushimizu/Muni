@@ -7,16 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MNCellAction.h"
+#import "MNCell.h"
 
-@protocol MNCell;
+@interface MNCellMove : MNCellAction;
 
-@interface MNCellMove : NSObject {
-	id<MNCell> _cell;
-}
-
-@property (readonly) id<MNCell> cell;
-
-- (id)initWithCell:(id<MNCell>)cell;
 - (CGPoint)pointMoved;
 
 @end

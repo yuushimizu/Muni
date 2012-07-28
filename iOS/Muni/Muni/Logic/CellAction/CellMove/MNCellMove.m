@@ -10,17 +10,12 @@
 
 @implementation MNCellMove
 
-@synthesize cell = _cell;
-
-- (id)initWithCell:(id<MNCell>)cell {
-	if (self = [super init]) {
-		_cell = cell;
-	}
-	return self;
+- (CGPoint)pointMoved {
+	return self.cell.center;
 }
 
-- (CGPoint)pointMoved {
-	return CGPointMake(0, 0);
+- (void)sendFrame {
+	[self.cell moveTo:[self pointMoved]];
 }
 
 @end

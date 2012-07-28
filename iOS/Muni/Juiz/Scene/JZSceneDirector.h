@@ -11,6 +11,7 @@
 #import "JZGLView.h"
 
 @interface JZSceneDirector : NSObject {
+	int _targetFPS;
 	id<JZScene> _currentScene;
 	id<JZScene> _nextScene;
 	JZGLView *_glView;
@@ -20,6 +21,7 @@
 	NSDate *_dateLastFrame;
 }
 
+- (id)initWithGLView:(JZGLView *)glView withScene:(id<JZScene>)scene withTargetFPS:(int)targetFPS;
 - (id)initWithGLView:(JZGLView *)glView withScene:(id<JZScene>)scene;
 - (void)changeSceneTo:(id<JZScene>)scene;
 - (void)start;

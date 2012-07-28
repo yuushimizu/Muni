@@ -11,13 +11,13 @@
 #import "MNCell.h"
 #import "MNEnvironment.h"
 #import "MNCellAttribute.h"
+#import "MNCellAction.h"
+#import "MNCellActionMultiply.h"
 #import "MNCellMove.h"
 #import "MNCellMoveRandomWalk.h"
 #import "MNCellMovePuruPuru.h"
 #import "MNCellMoveImmovable.h"
 #import "MNCellMoveTailTarget.h"
-#import "MNCellAction.h"
-#import "MNCellActionMultiply.h"
 
 @interface MNStandardCell : NSObject<MNCell> {
 	id<MNEnvironment> _environment;
@@ -31,13 +31,10 @@
 	CGPoint _center;
 	int _eventBits;
 	int _previousEventBits;
-	Class _moveClass;
-	MNCellMove *_move;
 	NSArray *_actionClasses;
 	NSArray *_actions;
 }
 
-@property (readonly) Class moveClass;
 @property (readonly) NSArray *actionClasses;
 
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment;

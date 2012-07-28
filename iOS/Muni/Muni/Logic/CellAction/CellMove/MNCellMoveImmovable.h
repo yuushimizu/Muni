@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "MNCellMove.h"
-#import "MNCell.h"
 
 @interface MNCellMoveImmovable : MNCellMove
 

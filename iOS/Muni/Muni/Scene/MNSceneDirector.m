@@ -11,7 +11,7 @@
 @implementation MNSceneDirector
 
 - (id)initWithGLView:(JZGLView *)glView withSize:(CGSize)size {
-	if (self = [super initWithGLView:glView	withScene:[[MNFieldScene alloc] initWithSize:size]]) {
+	if (self = [super initWithGLView:glView	withScene:[[MNFieldScene alloc] initWithSize:size] withTargetFPS:30]) {
 	}
 	return self;
 }

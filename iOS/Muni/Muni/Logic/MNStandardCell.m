@@ -19,7 +19,6 @@
 @synthesize speed = _speed;
 @synthesize sight = _sight;
 @synthesize center = _center;
-@synthesize moveClass = _moveClass;
 @synthesize actionClasses = _actionClasses;
 
 - (double)randomEnergy {
@@ -28,8 +27,8 @@
 }
 
 - (double)randomSpeed {
-	// 0.5 - 2.5
-	return 0.5 + MNRandomDouble(0, 1) * MNRandomDouble(0, 2);
+	// 0.5 - 4.5
+	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 2);
 }
 
 - (MNCellAttribute *)randomAttribute {
@@ -50,7 +49,7 @@
 }
 
 - (NSArray *)randomActionClasses {
-	NSMutableArray *actionClasses = [NSMutableArray array];
+	NSMutableArray *actionClasses = [NSMutableArray arrayWithObject:[self randomMoveClass]];
 	if (MNRandomBool()) {
 		[actionClasses addObject:[MNCellActionMultiply class]];
 	}
@@ -93,8 +92,6 @@
 		[self moveTo:MNRandomPointInSize(environment.field.size)];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
-		_moveClass = [self randomMoveClass];
-		_move = [[_moveClass alloc] initWithCell:self];
 		_actionClasses = [self randomActionClasses];
 		[self resetActions];
 	}
@@ -114,8 +111,6 @@
 		[self moveTo:other.center];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
-		_moveClass = other.moveClass;
-		_move = [[_moveClass alloc] initWithCell:self];
 		_actionClasses = other.actionClasses;
 		[self resetActions];
 	}
@@ -184,10 +179,7 @@
 	_previousEventBits = _eventBits;
 	_eventBits = 0;
 	[self decreaseEnergy:self.weight * 0.1];
-	if (self.living) {
-		[self moveTo:[_move pointMoved]];
-		for (MNCellAction *action in _actions) [action sendFrame];
-	}
+	if (self.living) for (MNCellAction *action in _actions) [action sendFrame];
 }
 
 @end

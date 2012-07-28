@@ -10,14 +10,19 @@
 
 @implementation JZSceneDirector
 
-- (id)initWithGLView:(JZGLView *)glView withScene:(id<JZScene>)scene {
+- (id)initWithGLView:(JZGLView *)glView withScene:(id<JZScene>)scene withTargetFPS:(int)targetFPS {
 	if (self = [super init]) {
 		_glView = glView;
 		_currentScene = scene;
+		_targetFPS = targetFPS;
 		_nextScene = nil;
 		_timer = nil;
 	}
 	return self;
+}
+
+- (id)initWithGLView:(JZGLView *)glView withScene:(id<JZScene>)scene {
+	return [self initWithGLView:glView withScene:scene withTargetFPS:60];
 }
 
 - (void)changeSceneTo:(id<JZScene>)scene {
@@ -50,10 +55,10 @@
 	_dateLastFrame = _dateLastFPSCalculation;
 	if ([[[UIDevice currentDevice] systemVersion] compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) {
 		_timer = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(sendFrame)];
-		[_timer setFrameInterval:1];
+		[_timer setFrameInterval:60 / _targetFPS];
 		[_timer addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 	} else {
-		_timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / 60.0 target:self selector:@selector(sendFrame) userInfo:nil repeats:YES];
+		_timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / _targetFPS target:self selector:@selector(sendFrame) userInfo:nil repeats:YES];
 	}
 }
 
