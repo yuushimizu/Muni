@@ -72,7 +72,9 @@ static CGRect rectFromCell(id<MNCell> cell) {
 }
 
 - (void)setCellSpriteColor:(JZGLSprite *)sprite withCell:(id<MNCell>)cell {
-	if ([cell eventOccurred:kMNCellEventDamaged]) {
+	if ([cell eventOccurred:kMNCellEventHealed]) {
+		[sprite setColorWithRed:0.0 withGreen:1.0 withBlue:0.5 withAlpha:1.0];
+	} else if ([cell eventOccurred:kMNCellEventDamaged]) {
 		[sprite setColorWithRed:1.0 withGreen:1.0 withBlue:1.0 withAlpha:1.0];
 	} else {
 		double red = cell.attribute.red;

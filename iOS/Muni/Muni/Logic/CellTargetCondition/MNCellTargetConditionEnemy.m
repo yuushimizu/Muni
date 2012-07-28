@@ -10,8 +10,8 @@
 
 @implementation MNCellTargetConditionEnemy
 
-- (BOOL)match:(id<MNCell>)me withOther:(id<MNCell>)other {
-	return [me hostility:other];
+- (BOOL)match:(id<MNCell>)other {
+	return [super match:other] && [self.cell hostility:other];
 }
 
 @end

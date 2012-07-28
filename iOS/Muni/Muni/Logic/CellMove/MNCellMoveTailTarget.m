@@ -11,7 +11,7 @@
 @implementation MNCellMoveTailTarget
 
 - (void)resetTarget {
-	NSArray *scanningResults = [self.environment scanCellsBy:self.cell withCondition:[[MNCellTargetConditionEnemy alloc] init]];
+	NSArray *scanningResults = [self.environment scanCellsBy:self.cell withCondition:_targetCondition];
 	if (scanningResults.count > 0) {
 		MNCellScanningResult *scanningResult = [scanningResults objectAtIndex:0];
 		_target = scanningResult.cell;
@@ -22,6 +22,7 @@
 
 - (id)initWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super initWithCell:cell withEnvironment:environment]) {
+		_targetCondition = [[MNCellTargetConditionEnemy alloc] initWithCell:cell];
 		[self resetTarget];
 	}
 	return self;

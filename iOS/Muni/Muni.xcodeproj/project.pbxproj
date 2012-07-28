@@ -10,6 +10,7 @@
 		CA02DC7315C21D470070B1F5 /* MNCellMoveTailTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC7215C21D470070B1F5 /* MNCellMoveTailTarget.m */; };
 		CA02DC7915C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC7815C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m */; };
 		CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.m */; };
+		CA02DC8315C40B700070B1F5 /* MNCellTargetCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC8215C40B700070B1F5 /* MNCellTargetCondition.m */; };
 		CA8BF7BD15BC8B2900B7B572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */; };
 		CA8BF7BF15BC8B2900B7B572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */; };
 		CA8BF7C115BC8B2900B7B572 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7C015BC8B2900B7B572 /* CoreGraphics.framework */; };
@@ -79,11 +80,12 @@
 /* Begin PBXFileReference section */
 		CA02DC7115C21D470070B1F5 /* MNCellMoveTailTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveTailTarget.h; path = Logic/CellMove/MNCellMoveTailTarget.h; sourceTree = "<group>"; };
 		CA02DC7215C21D470070B1F5 /* MNCellMoveTailTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveTailTarget.m; path = Logic/CellMove/MNCellMoveTailTarget.m; sourceTree = "<group>"; };
-		CA02DC7615C21DF80070B1F5 /* MNCellTargetCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNCellTargetCondition.h; path = Logic/CellTargetCondition/MNCellTargetCondition.h; sourceTree = "<group>"; };
 		CA02DC7715C21E5F0070B1F5 /* MNCellTargetConditionEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellTargetConditionEnemy.h; path = Logic/CellTargetCondition/MNCellTargetConditionEnemy.h; sourceTree = "<group>"; };
 		CA02DC7815C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellTargetConditionEnemy.m; path = Logic/CellTargetCondition/MNCellTargetConditionEnemy.m; sourceTree = "<group>"; };
 		CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellScanningResult.h; path = Logic/MNCellScanningResult.h; sourceTree = "<group>"; };
 		CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellScanningResult.m; path = Logic/MNCellScanningResult.m; sourceTree = "<group>"; };
+		CA02DC8115C40B700070B1F5 /* MNCellTargetCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellTargetCondition.h; path = Logic/CellTargetCondition/MNCellTargetCondition.h; sourceTree = "<group>"; };
+		CA02DC8215C40B700070B1F5 /* MNCellTargetCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellTargetCondition.m; path = Logic/CellTargetCondition/MNCellTargetCondition.m; sourceTree = "<group>"; };
 		CA8BF7B815BC8B2900B7B572 /* Muni.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muni.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -204,9 +206,10 @@
 		CA02DC7515C21DC20070B1F5 /* CellTargetCondition */ = {
 			isa = PBXGroup;
 			children = (
-				CA02DC7615C21DF80070B1F5 /* MNCellTargetCondition.h */,
 				CA02DC7715C21E5F0070B1F5 /* MNCellTargetConditionEnemy.h */,
 				CA02DC7815C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m */,
+				CA02DC8115C40B700070B1F5 /* MNCellTargetCondition.h */,
+				CA02DC8215C40B700070B1F5 /* MNCellTargetCondition.m */,
 			);
 			name = CellTargetCondition;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				CA02DC7315C21D470070B1F5 /* MNCellMoveTailTarget.m in Sources */,
 				CA02DC7915C21E5F0070B1F5 /* MNCellTargetConditionEnemy.m in Sources */,
 				CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.m in Sources */,
+				CA02DC8315C40B700070B1F5 /* MNCellTargetCondition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

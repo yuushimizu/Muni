@@ -18,6 +18,7 @@
 		_field = [[MNField alloc] initWithSize:size];
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
+		_addedCellsQueue = [NSMutableArray array];
 		_incidence = 0.1;
 		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
 	}
@@ -35,37 +36,45 @@
 }
 
 - (void)addCell:(id<MNCell>)cell {
-	if (_cells.count >= _maxCellCount) return;
-	int cellRadius = cell.radius;
-	int index;
-	for (index = 0; index < _cells.count; ++index) {
-		id<MNCell> cellStored = [_cells objectAtIndex:index];
-		if (cellStored.radius < cellRadius) {
-			break;
-		}
-	}
-	[_cells insertObject:cell atIndex:index];
-	[self addCellToSpatialIndex:cell];
+	[_addedCellsQueue addObject:cell];
 }
 
-- (NSArray *)cellsInCellSight:(id<MNCell>)cell {
+- (void)addCellsFromQueue {
+	for (id<MNCell> cell in _addedCellsQueue) {
+		if (_cells.count >= _maxCellCount) break;
+		int cellRadius = cell.radius;
+		int index = 0;
+		for (id<MNCell> cellStored in _cells) {
+			if (cellStored.radius < cellRadius) break;
+			index += 1;
+		}
+		[_cells insertObject:cell atIndex:index];
+		[self addCellToSpatialIndex:cell];
+	}
+	[_addedCellsQueue removeAllObjects];
+}
+
+- (NSArray *)scanCellsInCircle:(CGPoint)center withRadius:(double)radius withCondition:(MNCellTargetCondition *)condition {
 	NSMutableArray *scanningResults = [NSMutableArray array];
-	double sight = cell.sight;
-	for (id<MNCell> candidate in [_spatialIndex objectsForRect:CGRectMake(cell.center.x - sight, cell.center.y - sight, sight * 2, sight * 2)]) {
+	for (id<MNCell> candidate in [_spatialIndex objectsForRect:CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2)]) {
 		if (candidate.living) {
-			MNPointIntervalByPoints *interval = [[MNPointIntervalByPoints alloc] initWithSource:cell.center withDestination:candidate.center];
-			if (interval.distance <= sight) [scanningResults addObject:[[MNCellScanningResult alloc] initWithCell:candidate withInterval:interval]];
+			MNPointIntervalByPoints *intervalForCenter = [[MNPointIntervalByPoints alloc] initWithSource:center withDestination:candidate.center];
+			if (intervalForCenter.distance - candidate.radius <= radius && (condition == nil || [condition match:candidate])) {
+				MNPointIntervalByRadianAndDistance *interval = [[MNPointIntervalByRadianAndDistance alloc] initWithRadian:intervalForCenter.radian withDistance:intervalForCenter.distance - candidate.radius];
+				int index = 0;
+				for (MNCellScanningResult *scannedResult in scanningResults) {
+					if (scannedResult.interval.distance > interval.distance) break;
+					index += 1;
+				}
+				[scanningResults insertObject:[[MNCellScanningResult alloc] initWithCell:candidate withInterval:interval] atIndex:index];
+			}
 		}
 	}
 	return scanningResults;
 }
 
-- (NSArray *)scanCellsBy:(id<MNCell>)cell withCondition:(id<MNCellTargetCondition>)condition {
-	NSMutableArray *scanningResult = [NSMutableArray array];
-	for (MNCellScanningResult *candidate in [self cellsInCellSight:cell]) {
-		if ([condition match:cell withOther:candidate.cell]) [scanningResult addObject:candidate];
-	}
-	return scanningResult;
+- (NSArray *)scanCellsBy:(id<MNCell>)cell withCondition:(MNCellTargetCondition *)condition {
+	return [self scanCellsInCircle:cell.center withRadius:cell.sight + cell.radius withCondition:condition];
 }
 
 - (void)removeDeadCells {
@@ -74,6 +83,22 @@
 	for (id<MNCell> cell in deadCells) {
 		[_cells removeObject:cell];
 		[_spatialIndex removeObject:cell];
+	}
+}
+
+- (void)applyCellsDying {
+	for (id<MNCell> deadCell in _cells) {
+		if (!deadCell.living) {
+			double totalHealEnergy = deadCell.maxEnergy;
+			NSArray *healTargetScanningResults = [self scanCellsInCircle:deadCell.center withRadius:deadCell.radius * 3 withCondition:[[MNCellTargetConditionEnemy alloc] initWithCell:deadCell]];
+			double totalDistance = 0;
+			for (MNCellScanningResult *scanningResult in healTargetScanningResults) {
+				totalDistance += scanningResult.interval.distance;
+			}
+			for (MNCellScanningResult *scanningResult in healTargetScanningResults) {
+				[scanningResult.cell heal:totalHealEnergy * scanningResult.interval.distance / totalDistance];
+			}
+		}
 	}
 }
 
@@ -90,10 +115,21 @@
 				double moveDistance1 = piledDistance * (cell1.weight / (cell1.weight + cell2.weight));
 				double moveDistance2 = piledDistance * (cell2.weight / (cell2.weight + cell1.weight));
 				if ([cell1 hostility:cell2]) {
-					damage1 = piledDistance * (cell1.density / (cell1.density + cell2.density)) * 2;
-					moveDistance1 += MIN(damage1 * 5, cell2.radius * 0.5);
-					damage2 = piledDistance * (cell2.density / (cell2.density + cell1.density)) * 2;
-					moveDistance2 += MIN(damage2 * 5, cell1.radius * 0.5);
+					double totalDistance = piledDistance * 10;
+					if (![cell1 eventOccurredPrevious:kMNCellEventDamaged]) {
+						double knockbackDistance = totalDistance * (cell1.density / (cell1.density + cell2.density));
+						moveDistance1 += knockbackDistance;
+						damage1 = knockbackDistance * 2;
+					} else {
+						damage1 = 0;
+					}
+					if (![cell2 eventOccurredPrevious:kMNCellEventDamaged]) {
+						double knockbackDistance = totalDistance * (cell2.density / (cell2.density + cell1.density));
+						moveDistance2 += knockbackDistance;
+						damage2 = knockbackDistance * 2;
+					} else {
+						damage2 = 0;
+					}
 				} else {
 					damage1 = damage2 = 0;
 				}
@@ -109,7 +145,7 @@
 	NSMutableSet *cellsMoved = [NSMutableSet set];
 	for (MNCellHittingEffect *cellHittingEffect in [self detectCellsHitting]) {
 		id<MNCell> cell = cellHittingEffect.cell;
-		[cell moveFor:cellHittingEffect.moveRadian distance:cellHittingEffect.moveDistance];
+		[cell moveFor:cellHittingEffect.moveRadian distance:MIN(cellHittingEffect.moveDistance, cell.radius)];
 		if (cellHittingEffect.damage > 0) {
 			[cell damage:cellHittingEffect.damage];
 		}
@@ -125,9 +161,11 @@
 		[self updateSpatialIndexFor:cell];
 	}
 	[self applyCellsHitting];
+	[self applyCellsDying];
 	if (_cells.count < _maxCellCount && MNRandomDouble(0, _cells.count + 1) < _incidence) {
 		[self addCell:[[MNStandardCell alloc] initByRandomWithEnvironment:self]];
 	}
+	[self addCellsFromQueue];
 }
 
 @end

@@ -28,6 +28,7 @@
 	double _sight;
 	CGPoint _center;
 	int _eventBits;
+	int _previousEventBits;
 	MNCellMove *_move;
 }
 

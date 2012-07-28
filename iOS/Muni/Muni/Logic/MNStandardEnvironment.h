@@ -14,11 +14,14 @@
 #import "MNPointIntervalByPoints.h"
 #import "MNCellHittingEffect.h"
 #import "MNCellScanningResult.h"
+#import "MNCellTargetCondition.h"
+#import "MNCellTargetConditionEnemy.h"
 
 @interface MNStandardEnvironment : NSObject<MNEnvironment> {
 	MNField *_field;
 	NSMutableArray *_cells;
 	int _maxCellCount;
+	NSMutableArray *_addedCellsQueue;
 	double _incidence;
 	MNSpatialIndex *_spatialIndex;
 }

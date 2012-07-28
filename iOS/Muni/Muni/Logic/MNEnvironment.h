@@ -18,6 +18,6 @@
 
 - (void)sendFrame;
 - (void)addCell:(id<MNCell>)cell;
-- (NSArray *)scanCellsBy:(id<MNCell>)cell withCondition:(id<MNCellTargetCondition>)condition;
+- (NSArray *)scanCellsBy:(id<MNCell>)cell withCondition:(MNCellTargetCondition *)condition;
 
 @end

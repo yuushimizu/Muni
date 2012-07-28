@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "MNCellTargetCondition.h"
 
-@interface MNCellTargetConditionEnemy : NSObject<MNCellTargetCondition>
+@interface MNCellTargetConditionEnemy : MNCellTargetCondition
 
 @end

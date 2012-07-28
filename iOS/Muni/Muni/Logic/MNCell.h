@@ -15,6 +15,7 @@
 #define kMNCellEventBorned 1
 #define kMNCellEventDied 2
 #define kMNCellEventDamaged 4
+#define kMNCellEventHealed 8
 
 @protocol MNCell <NSObject>
 
@@ -34,7 +35,9 @@
 - (void)moveFor:(double)radian distance:(double)distance;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;
+- (void)heal:(double)energy;
 - (BOOL)eventOccurred:(int)event;
+- (BOOL)eventOccurredPrevious:(int)event;
 - (void)sendFrame;
 
 @end

@@ -25,8 +25,8 @@
 }
 
 - (double)randomSpeed {
-	// 0.5 - 4.5
-	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 2);
+	// 0.5 - 2.5
+	return 0.5 + MNRandomDouble(0, 1) * MNRandomDouble(0, 2);
 }
 
 - (MNCellAttribute *)randomAttribute {
@@ -57,6 +57,7 @@
 		_sight = MNRandomDouble(1, MNDiagonalFromSize(environment.field.size));
 		_center = MNRandomPointInSize(environment.field.size);
 		_eventBits = kMNCellEventBorned;
+		_previousEventBits = 0;
 		_move = [self randomMove:environment];
 	}
 	return self;
@@ -93,20 +94,33 @@
 }
 
 - (BOOL)hostility:(id<MNCell>)other {
-	double attributeDiff = fabs(other.attribute.red + other.attribute.green + other.attribute.blue - _attribute.red - _attribute.green - _attribute.blue);
-	return attributeDiff > 0.5;
+	return fabs(other.attribute.red - _attribute.red) > 0.3 || fabs(other.attribute.green - _attribute.green) > 0.3 || fabs(other.attribute.blue - _attribute.blue) > 0.3;
 }
 
 - (void)damage:(double)damage {
 	_energy -= damage;
 	_eventBits |= kMNCellEventDamaged;
+	if (_energy <= 0) {
+		_energy = 0;
+		_eventBits |= kMNCellEventDied;
+	}
+}
+
+- (void)heal:(double)energy {
+	_energy = MIN(_energy + energy, _maxEnergy);
+	_eventBits |= kMNCellEventHealed;
 }
 
 - (BOOL)eventOccurred:(int)event {
 	return _eventBits & event;
 }
 
+- (BOOL)eventOccurredPrevious:(int)event {
+	return _previousEventBits & event;
+}
+
 - (void)sendFrame {
+	_previousEventBits = _eventBits;
 	_eventBits = 0;
 	[self moveTo:[_move pointMoved]];
 	_energy -= self.weight * 0.1;

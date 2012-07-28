@@ -13,6 +13,7 @@
 
 @interface MNCellMoveTailTarget : MNCellMove {
 	id<MNCell> _target;
+	MNCellTargetCondition *_targetCondition;
 }
 
 @end
