@@ -1,14 +1,14 @@
 //
-//  MNCellMove.m
+//  MNCellAction.m
 //  Muni
 //
-//  Created by Yuu Shimizu on 7/26/12.
+//  Created by Yuu Shimizu on 7/28/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MNCellMove.h"
+#import "MNCellAction.h"
 
-@implementation MNCellMove
+@implementation MNCellAction
 
 @synthesize cell = _cell;
 
@@ -19,8 +19,7 @@
 	return self;
 }
 
-- (CGPoint)pointMoved {
-	return CGPointMake(0, 0);
+- (void)sendFrame {
 }
 
 @end

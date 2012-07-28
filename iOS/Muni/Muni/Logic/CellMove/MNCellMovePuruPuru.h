@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MNCellMove.h"
+#import "MNCell.h"
 #import "MNUtility.h"
 
 @interface MNCellMovePuruPuru : MNCellMove

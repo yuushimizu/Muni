@@ -1,5 +1,5 @@
 //
-//  MNCellTargetCondition.h
+//  MNCellAction.h
 //  Muni
 //
 //  Created by Yuu Shimizu on 7/28/12.
@@ -10,13 +10,13 @@
 
 @protocol MNCell;
 
-@interface MNCellTargetCondition : NSObject {
+@interface MNCellAction : NSObject {
 	id<MNCell> _cell;
 }
 
-@property (readonly) id<MNCell> cell;
+@property id<MNCell> cell;
 
 - (id)initWithCell:(id<MNCell>)cell;
-- (BOOL)match:(id<MNCell>)other;
+- (void)sendFrame;
 
 @end

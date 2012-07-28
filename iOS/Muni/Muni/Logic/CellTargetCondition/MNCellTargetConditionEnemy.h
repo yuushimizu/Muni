@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MNCellTargetCondition.h"
+#import "MNCell.h"
 
 @interface MNCellTargetConditionEnemy : MNCellTargetCondition
 

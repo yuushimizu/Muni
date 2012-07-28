@@ -16,6 +16,10 @@ int MNRandomInt(int min, int limit) {
 	return ((double) rand() / (RAND_MAX + 1.0)) * (limit - min) + min;
 }
 
+BOOL MNRandomBool(void) {
+	return MNRandomInt(0, 2) == 0;
+}
+
 CGPoint MNRandomPointInSize(CGSize size) {
 	return CGPointMake(((double) rand() / (RAND_MAX + 1.0)) * size.width, ((double) rand() / (RAND_MAX + 1.0)) * size.height);
 }

@@ -12,6 +12,7 @@
 
 double MNRandomDouble(double min, double limit);
 int MNRandomInt(int min, int limit);
+BOOL MNRandomBool(void);
 CGPoint MNRandomPointInSize(CGSize size);
 UIColor *MNRandomColor(void);
 double MNRandomRadian(void);

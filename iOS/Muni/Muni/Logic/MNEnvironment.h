@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "MNField.h"
-#import "MNCell.h"
 #import "MNCellTargetCondition.h"
+
+@protocol MNCell;
 
 @protocol MNEnvironment <NSObject>
 
@@ -18,6 +19,6 @@
 
 - (void)sendFrame;
 - (void)addCell:(id<MNCell>)cell;
-- (NSArray *)scanCellsBy:(id<MNCell>)cell withCondition:(MNCellTargetCondition *)condition;
+- (NSArray *)cellsInCircle:(CGPoint)center withRadius:(double)radius withCondition:(MNCellTargetCondition *)condition;
 
 @end

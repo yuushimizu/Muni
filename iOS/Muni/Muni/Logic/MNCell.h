@@ -1,14 +1,15 @@
 //
-//  MNBaseCell.h
+//  MNCell.h
 //  Muni
 //
-//  Created by Yuu Shimizu on 7/26/12.
+//  Created by Yuu Shimizu on 7/29/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "MNUtility.h"
 #import "MNCellAttribute.h"
+#import "MNEnvironment.h"
+#import "MNCellTargetCondition.h"
 
 #define kMNCellTypeCount 2
 
@@ -19,6 +20,7 @@
 
 @protocol MNCell <NSObject>
 
+@property (readonly) id<MNEnvironment> environment;
 @property (readonly) int type;
 @property (readonly) double maxEnergy;
 @property (readonly) double energy;
@@ -33,9 +35,11 @@
 
 - (void)moveTo:(CGPoint)center;
 - (void)moveFor:(double)radian distance:(double)distance;
+- (NSArray *)scanCells:(MNCellTargetCondition *)condition;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;
 - (void)heal:(double)energy;
+- (void)multiply;
 - (BOOL)eventOccurred:(int)event;
 - (BOOL)eventOccurredPrevious:(int)event;
 - (void)sendFrame;

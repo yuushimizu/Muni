@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MNCellMove.h"
+#import "MNCell.h"
 #import "MNCellTargetConditionEnemy.h"
 #import "MNCellScanningResult.h"
 
