@@ -102,12 +102,12 @@
 	if (self = [super init]) {
 		_environment = other.environment;
 		_type = other.type;
-		_energy = other.energy;
-		_maxEnergy = other.maxEnergy;
-		_density = other.density;
-		_attribute = other.attribute;
-		_speed = other.speed;
-		_sight = other.sight;
+		_energy = other.energy * MNRandomDouble(0.9, 1.1);
+		_maxEnergy = other.maxEnergy * MNRandomDouble(0.9, 1.1);
+		_density = other.density * MNRandomDouble(0.9, 1.1);
+		_attribute = [[MNCellAttribute alloc] initWithRed:other.attribute.red * MNRandomDouble(0.9, 1.1) withGreen:other.attribute.green * MNRandomDouble(0.9, 1.1) withBlue:other.attribute.blue * MNRandomDouble(0.9, 1.1)];
+		_speed = other.speed * MNRandomDouble(0.9, 1.1);
+		_sight = other.sight * MNRandomDouble(0.9, 1.1);
 		[self moveTo:other.center];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
@@ -138,7 +138,7 @@
 }
 
 - (BOOL)hostility:(id<MNCell>)other {
-	return fabs(other.attribute.red - _attribute.red) > 0.3 || fabs(other.attribute.green - _attribute.green) > 0.3 || fabs(other.attribute.blue - _attribute.blue) > 0.3;
+	return fabs(other.attribute.red - _attribute.red) > 0.4 || fabs(other.attribute.green - _attribute.green) > 0.4 || fabs(other.attribute.blue - _attribute.blue) > 0.4;
 }
 
 - (void)decreaseEnergy:(double)energy {
@@ -178,7 +178,7 @@
 - (void)sendFrame {
 	_previousEventBits = _eventBits;
 	_eventBits = 0;
-	[self decreaseEnergy:self.weight * 0.1];
+	[self decreaseEnergy:self.weight * 0.05];
 	if (self.living) for (MNCellAction *action in _actions) [action sendFrame];
 }
 

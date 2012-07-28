@@ -92,7 +92,7 @@
 				totalDistance += scanningResult.interval.distance;
 			}
 			for (MNCellScanningResult *scanningResult in healTargetScanningResults) {
-				[scanningResult.cell heal:totalHealEnergy * scanningResult.interval.distance / totalDistance];
+				[scanningResult.cell heal:totalHealEnergy * MIN(scanningResult.interval.distance / totalDistance, 0.5)];
 			}
 		}
 	}
@@ -111,7 +111,7 @@
 				double moveDistance1 = piledDistance * (cell1.weight / (cell1.weight + cell2.weight));
 				double moveDistance2 = piledDistance * (cell2.weight / (cell2.weight + cell1.weight));
 				if ([cell1 hostility:cell2]) {
-					double totalDistance = piledDistance * 10;
+					double totalDistance = piledDistance * 5;
 					if (![cell1 eventOccurredPrevious:kMNCellEventDamaged]) {
 						double knockbackDistance = totalDistance * (cell1.density / (cell1.density + cell2.density));
 						moveDistance1 += knockbackDistance;
@@ -141,7 +141,7 @@
 	NSMutableSet *cellsMoved = [NSMutableSet set];
 	for (MNCellHittingEffect *cellHittingEffect in [self detectCellsHitting]) {
 		id<MNCell> cell = cellHittingEffect.cell;
-		[cell moveFor:cellHittingEffect.moveRadian distance:MIN(cellHittingEffect.moveDistance, cell.radius)];
+		[cell moveFor:cellHittingEffect.moveRadian distance:MIN(cellHittingEffect.moveDistance, cell.radius * 0.5)];
 		if (cellHittingEffect.damage > 0) {
 			[cell damage:cellHittingEffect.damage];
 		}
