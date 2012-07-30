@@ -14,4 +14,7 @@
 	MNSceneDirector *_sceneDirector;
 }
 
+- (void)interrupt;
+- (void)resume;
+
 @end

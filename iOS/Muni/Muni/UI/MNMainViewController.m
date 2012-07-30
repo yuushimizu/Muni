@@ -52,4 +52,12 @@
 	return YES;
 }
 
+- (void)interrupt {
+	if (_sceneDirector) [_sceneDirector stop];
+}
+
+- (void)resume {
+	if (_sceneDirector) [_sceneDirector start];
+}
+
 @end

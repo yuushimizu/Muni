@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MNMainViewController.h"
 
-@interface MNAppDelegate : UIResponder <UIApplicationDelegate>
+@interface MNAppDelegate : UIResponder <UIApplicationDelegate> {
+	MNMainViewController *_mainViewController;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
