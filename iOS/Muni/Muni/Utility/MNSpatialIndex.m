@@ -24,6 +24,9 @@
 			}
 		}
 		_objectKeys = [NSMutableDictionary dictionary];
+		NSMutableArray *keyCache = [NSMutableArray arrayWithCapacity:_objects.count];
+		for (int i = 0; i < _objects.count; ++i) [keyCache addObject:[NSNumber numberWithInt:i]];
+		_keyCache = keyCache;
 	}
 	return self;
 }
@@ -41,7 +44,7 @@
 	NSMutableArray *keys = [NSMutableArray array];
 	for (NSValue *key in keyPoints) {
 		CGPoint point = [key CGPointValue];
-		[keys addObject:[NSNumber numberWithInt:point.x * _blockCount.height + point.y]];
+		[keys addObject:[_keyCache objectAtIndex:point.x * _blockCount.height + point.y]];
 	}
 	[self addObject:object forKeys:keys];
 }
@@ -58,7 +61,7 @@
 	NSMutableArray *keys = [NSMutableArray array];
 	for (int x = leftKey; x <= rightKey; ++x) {
 		for (int y = topKey; y <= bottomKey; ++y) {
-			[keys addObject:[NSNumber numberWithInt:x * _blockCount.height + y]];
+			[keys addObject:[_keyCache objectAtIndex:x * _blockCount.height + y]];
 		}
 	}
 	return keys;

@@ -13,6 +13,7 @@
 	CGSize _blockCount;
 	NSMutableArray *_objects;
 	NSMutableDictionary *_objectKeys;
+	NSArray *_keyCache;
 }
 
 @property (readonly) CGSize blockSize;

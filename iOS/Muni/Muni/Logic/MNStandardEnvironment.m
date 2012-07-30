@@ -20,7 +20,7 @@
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
-		_incidence = 0.1;
+		_incidence = 200.1;
 		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
 	}
 	return self;
