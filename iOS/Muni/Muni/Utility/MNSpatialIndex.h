@@ -27,6 +27,6 @@
 - (NSSet *)objectsForKeyPoints:(NSArray *)keyPoints;
 - (NSSet *)objectsForRect:(CGRect)rect;
 - (NSSet *)objectsPiledWith:(id)object;
-- (NSArray *)piles;
+- (void)enumeratePilesUsingBlock:(void (^)(id object1, id object2))block;
 
 @end

@@ -98,18 +98,15 @@
 	}
 }
 
-- (NSArray *)detectCellsHitting {
-	NSMutableArray *cellHittingEffects = [NSMutableArray array];
-	for (MNSpatialIndexPile *pile in [_spatialIndex piles]) {
-		id<MNCell> cell1 = pile.object1;
-		id<MNCell> cell2 = pile.object2;
+- (void)detectCellsHitting:(void (^)(id<MNCell> cell, double damage, double moveRadian, double moveDistance))block {
+	[_spatialIndex enumeratePilesUsingBlock:^(id<MNCell> cell1, id<MNCell> cell2) {
 		if (cell1.living && cell2.living) {
 			MNPointIntervalByPoints *interval = [[MNPointIntervalByPoints alloc] initWithSource:cell1.center withDestination:cell2.center];
 			double piledDistance = cell1.radius + cell2.radius - interval.distance;
 			if (piledDistance > 0) {
-				double damage1, damage2;
 				double moveDistance1 = piledDistance * (cell1.weight / (cell1.weight + cell2.weight));
 				double moveDistance2 = piledDistance * (cell2.weight / (cell2.weight + cell1.weight));
+				double damage1, damage2;
 				if ([cell1 hostility:cell2]) {
 					double totalDistance = piledDistance * 5;
 					if (![cell1 eventOccurredPrevious:kMNCellEventDamaged]) {
@@ -129,24 +126,21 @@
 				} else {
 					damage1 = damage2 = 0;
 				}
-				[cellHittingEffects addObject:[[MNCellHittingEffect alloc] initWithCell:cell1 withMoveRadian:MNInvertRadian(interval.radian) withMoveDistance:moveDistance1 withDamage:damage1]];
-				[cellHittingEffects addObject:[[MNCellHittingEffect alloc] initWithCell:cell2 withMoveRadian:interval.radian withMoveDistance:moveDistance2 withDamage:damage2]];
+				double radian = interval.radian;
+				block(cell1, damage1, MNInvertRadian(radian), moveDistance1);
+				block(cell2, damage2, radian, moveDistance2);
 			}
 		}
-	}
-	return cellHittingEffects;
+	}];
 }
 
 - (void)applyCellsHitting {
 	NSMutableSet *cellsMoved = [NSMutableSet set];
-	for (MNCellHittingEffect *cellHittingEffect in [self detectCellsHitting]) {
-		id<MNCell> cell = cellHittingEffect.cell;
-		[cell moveFor:cellHittingEffect.moveRadian distance:MIN(cellHittingEffect.moveDistance, cell.radius * 0.5) withEnvironment:self];
-		if (cellHittingEffect.damage > 0) {
-			[cell damage:cellHittingEffect.damage];
-		}
+	[self detectCellsHitting:^(id<MNCell> cell, double damage, double moveRadian, double moveDistance) {
+		[cell moveFor:moveRadian distance:MIN(moveDistance, cell.radius * 0.5) withEnvironment:self];
+		if (damage > 0) [cell damage:damage];
 		[cellsMoved addObject:cell];
-	}
+	}];
 	for (id<MNCell> cell in cellsMoved) [self updateSpatialIndexFor:cell];
 }
 
