@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MNSpatialIndexPile.h"
 
 @interface MNSpatialIndex : NSObject {
 	CGSize _blockSize;

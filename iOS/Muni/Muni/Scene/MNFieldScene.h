@@ -16,7 +16,7 @@
 #import "MNCellBornEffect.h"
 #import "MNCellDieEffect.h"
 
-#define kMNMaxCells 50
+#define kMNMaxCells 100
 
 @interface MNFieldScene : NSObject<JZScene> {
 	MNStandardEnvironment *_environment;

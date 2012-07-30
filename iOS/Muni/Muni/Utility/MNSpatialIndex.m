@@ -97,20 +97,26 @@
 }
 
 - (void)enumeratePilesUsingBlock:(void (^)(id object1, id object2))block {
-	NSMutableArray *processedPiles = [NSMutableArray array];
+	NSMutableArray *processedObjects1 = [NSMutableArray array];
+	NSMutableArray *processedObjects2 = [NSMutableArray array];
 	for (NSArray *objectsInBlock in _objects) {
 		for (id object1 in objectsInBlock) {
 			for (id object2 in objectsInBlock) {
 				if (object1 >= object2) continue;
 				BOOL proceeded = NO;
-				for (MNSpatialIndexPile *pile in processedPiles) {
-					if (pile.object1 == object1 && pile.object2 == object2) {
-						proceeded = YES;
-						break;
+				int index = 0;
+				for (id processedObject1 in processedObjects1) {
+					if (processedObject1 == object1) {
+						if ([processedObjects2 objectAtIndex:index] == object2) {
+							proceeded = YES;
+							break;
+						}
 					}
+					index += 1;
 				}
 				if (!proceeded) {
-					[processedPiles addObject:[[MNSpatialIndexPile alloc] initWithObject1:object1 withObject2:object2]];
+					[processedObjects1 addObject:object1];
+					[processedObjects2 addObject:object2];
 					block(object1, object2);
 				}
 			}
