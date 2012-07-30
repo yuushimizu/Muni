@@ -12,7 +12,7 @@
 	CGSize _blockSize;
 	CGSize _blockCount;
 	NSMutableArray *_objects;
-	NSMutableDictionary *_objectKeyPoints;
+	NSMutableDictionary *_objectKeys;
 }
 
 @property (readonly) CGSize blockSize;
@@ -20,9 +20,11 @@
 
 - (id)initWithBlockSize:(CGSize)blockSize withBlockCount:(CGSize)blockCount;
 - (id)initWithTotalSize:(CGSize)totalSize withBlockCount:(CGSize)blockCount;
+- (void)addObject:(id)object forKeys:(NSArray *)keys;
 - (void)addObject:(id)object forKeyPoints:(NSArray *)keyPoints;
 - (void)addObject:(id)object forRect:(CGRect)rect;
 - (void)removeObject:(id)object;
+- (NSSet *)objectsForKeys:(NSArray *)keys;
 - (NSSet *)objectsForKeyPoints:(NSArray *)keyPoints;
 - (NSSet *)objectsForRect:(CGRect)rect;
 - (NSSet *)objectsPiledWith:(id)object;
