@@ -54,12 +54,12 @@
 	[_addedCellsQueue removeAllObjects];
 }
 
-- (NSArray *)cellsInCircle:(CGPoint)center withRadius:(double)radius withCondition:(MNCellTargetCondition *)condition {
+- (NSArray *)cellsInCircle:(CGPoint)center withRadius:(double)radius withCondition:(BOOL (^)(id<MNCell> other))condition {
 	NSMutableArray *scanningResults = [NSMutableArray array];
 	for (id<MNCell> candidate in [_spatialIndex objectsForRect:CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2)]) {
 		if (candidate.living) {
 			MNPointIntervalByPoints *intervalForCenter = [[MNPointIntervalByPoints alloc] initWithSource:center withDestination:candidate.center];
-			if (intervalForCenter.distance - candidate.radius <= radius && (condition == nil || [condition match:candidate])) {
+			if (intervalForCenter.distance - candidate.radius <= radius && (condition == nil || condition(candidate))) {
 				MNPointIntervalByRadianAndDistance *interval = [[MNPointIntervalByRadianAndDistance alloc] initWithRadian:intervalForCenter.radian withDistance:intervalForCenter.distance - candidate.radius];
 				int index = 0;
 				for (MNCellScanningResult *scannedResult in scanningResults) {
@@ -86,7 +86,7 @@
 	for (id<MNCell> deadCell in _cells) {
 		if (!deadCell.living) {
 			double totalHealEnergy = deadCell.maxEnergy;
-			NSArray *healTargetScanningResults = [self cellsInCircle:deadCell.center withRadius:deadCell.radius * 3 withCondition:[[MNCellTargetConditionEnemy alloc] initWithCell:deadCell]];
+			NSArray *healTargetScanningResults = [self cellsInCircle:deadCell.center withRadius:deadCell.radius * 3 withCondition:^(id<MNCell> cell){return (BOOL) (deadCell != cell && [cell hostility:deadCell]);}];
 			double totalDistance = 0;
 			for (MNCellScanningResult *scanningResult in healTargetScanningResults) {
 				totalDistance += scanningResult.interval.distance;

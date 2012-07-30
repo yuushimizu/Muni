@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "MNCellMove.h"
-#import "MNCellTargetConditionEnemy.h"
 #import "MNCellScanningResult.h"
 
 @interface MNCellMoveTailTarget : MNCellMove {
 	id<MNCell> _target;
-	MNCellTargetCondition *_targetCondition;
+	BOOL (^_targetCondition)(id<MNCell> me, id<MNCell> other);
+	MNCellMove *_moveWithoutTarget;
 }
+
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell> me, id<MNCell> other))condition withMoveWithoutTarget:(MNCellMove *)moveWihtoutTarget;
 
 @end

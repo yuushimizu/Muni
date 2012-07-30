@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "MNCellAttribute.h"
 #import "MNEnvironment.h"
-#import "MNCellTargetCondition.h"
 
 #define kMNCellTypeCount 2
 
@@ -35,7 +34,7 @@
 
 - (void)moveTo:(CGPoint)center;
 - (void)moveFor:(double)radian distance:(double)distance;
-- (NSArray *)scanCells:(MNCellTargetCondition *)condition;
+- (NSArray *)scanCells:(BOOL (^)(id<MNCell> other))condition;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;
 - (void)heal:(double)energy;

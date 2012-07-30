@@ -31,11 +31,11 @@
 	CGPoint _center;
 	int _eventBits;
 	int _previousEventBits;
-	NSArray *_actionClasses;
+	NSArray *_actionSources;
 	NSArray *_actions;
 }
 
-@property (readonly) NSArray *actionClasses;
+@property (readonly) NSArray *actionSources;
 
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment;
 - (id)initByOther:(MNStandardCell *)other;

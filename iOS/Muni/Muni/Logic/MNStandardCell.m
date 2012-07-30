@@ -19,7 +19,7 @@
 @synthesize speed = _speed;
 @synthesize sight = _sight;
 @synthesize center = _center;
-@synthesize actionClasses = _actionClasses;
+@synthesize actionSources = _actionSources;
 
 - (double)randomEnergy {
 	// 500 - 8500
@@ -35,30 +35,43 @@
 	return [[MNCellAttribute alloc] initWithRed:MNRandomDouble(0, 1) withGreen:MNRandomDouble(0, 1) withBlue:MNRandomDouble(0, 1)];
 }
 
-- (Class)randomMoveClass {
+- (MNCellAction *(^)(id<MNCell>))randomMoveSource {
 	int type = MNRandomInt(0, 4);
+	type = 2;
 	if (type == 0) {
-		return [MNCellMoveRandomWalk class];
+		return ^(id<MNCell> cell) {
+			return [[MNCellMoveRandomWalk alloc] initWithCell:cell];
+		};
 	} else if (type == 1) {
-		return [MNCellMovePuruPuru class];
+		return ^(id<MNCell> cell) {
+			return [[MNCellMovePuruPuru alloc] initWithCell:cell];
+		};
 	} else if (type == 2) {
-		return [MNCellMoveTailTarget class];
+		return ^(id<MNCell> cell) {
+			return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (cell != other && [cell hostility:other]);} withMoveWithoutTarget:[[MNCellMoveImmovable alloc] initWithCell:cell]];
+		};
 	} else {
-		return [MNCellMoveImmovable class];
+		return ^(id<MNCell> cell) {
+			return [[MNCellMoveImmovable alloc] initWithCell:cell];
+		};
 	}
 }
 
-- (NSArray *)randomActionClasses {
-	NSMutableArray *actionClasses = [NSMutableArray arrayWithObject:[self randomMoveClass]];
+- (NSArray *)randomActionSources {
+	NSMutableArray *actionSources = [NSMutableArray arrayWithObject:[self randomMoveSource]];
 	if (MNRandomBool()) {
-		[actionClasses addObject:[MNCellActionMultiply class]];
+		[actionSources addObject:^(id<MNCell> cell) {
+			return [[MNCellActionMultiply alloc] initWithCell:cell];
+		}];
 	}
-	return actionClasses;
+	return actionSources;
 }
 
 - (void)resetActions {
 	NSMutableArray *actions = [NSMutableArray array];
-	for (Class actionClass in _actionClasses) [actions addObject:[[actionClass alloc] initWithCell:self]];
+	for (MNCellAction *(^actionSource)(id<MNCell>) in _actionSources) {
+		[actions addObject:actionSource(self)];
+	}
 	_actions = actions;
 }
 
@@ -92,7 +105,7 @@
 		[self moveTo:MNRandomPointInSize(environment.field.size)];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
-		_actionClasses = [self randomActionClasses];
+		_actionSources = [self randomActionSources];
 		[self resetActions];
 	}
 	return self;
@@ -111,7 +124,7 @@
 		[self moveTo:other.center];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
-		_actionClasses = other.actionClasses;
+		_actionSources = other.actionSources;
 		[self resetActions];
 	}
 	return self;
@@ -133,7 +146,7 @@
 	_center = MNMovedPoint(_center, radian, distance);
 }
 
-- (NSArray *)scanCells:(MNCellTargetCondition *)condition {
+- (NSArray *)scanCells:(BOOL (^)(id<MNCell> other))condition {
 	return [_environment cellsInCircle:_center withRadius:_sight + self.radius withCondition:condition];
 }
 
