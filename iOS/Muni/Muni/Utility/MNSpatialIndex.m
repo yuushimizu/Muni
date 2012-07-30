@@ -35,7 +35,7 @@
 - (void)addObject:(id)object forKeyPoints:(NSArray *)keyPoints {
 	for (NSValue *key in keyPoints) {
 		CGPoint point = [key CGPointValue];
-		[[_objects objectAtIndex:point.x * _blockCount.width + point.y] addObject:object];
+		[[_objects objectAtIndex:point.x * _blockCount.height + point.y] addObject:object];
 	}
 	[_objectKeyPoints setObject:keyPoints forKey:[NSValue valueWithNonretainedObject:object]];
 }
@@ -67,7 +67,7 @@
 	if (keyPoints) {
 		for (NSValue *key in keyPoints) {
 			CGPoint point = [key CGPointValue];
-			[[_objects objectAtIndex:point.x * _blockCount.width + point.y] removeObject:object];
+			[[_objects objectAtIndex:point.x * _blockCount.height + point.y] removeObject:object];
 		}
 		[_objectKeyPoints removeObjectForKey:[NSValue valueWithNonretainedObject:object]];
 	}
@@ -77,7 +77,7 @@
 	NSMutableSet *objects = [NSMutableSet set];
 	for (NSValue *key in keyPoints) {
 		CGPoint point = [key CGPointValue];
-		for (id object in [_objects objectAtIndex:point.x * _blockCount.width + point.y]) {
+		for (id object in [_objects objectAtIndex:point.x * _blockCount.height + point.y]) {
 			[objects addObject:object];
 		}
 	}
@@ -100,7 +100,7 @@
 	NSMutableArray *piles = [NSMutableArray array];
 	for (int x = 0; x < _blockCount.width; ++x) {
 		for (int y = 0; y < _blockCount.height; ++y) {
-			NSArray *objectsInBlock = [[_objects objectAtIndex:x * _blockCount.width + y] allObjects];
+			NSArray *objectsInBlock = [[_objects objectAtIndex:x * _blockCount.height + y] allObjects];
 			for (id object1 in objectsInBlock) {
 				for (id object2 in objectsInBlock) {
 					if (object1 >= object2) continue;
