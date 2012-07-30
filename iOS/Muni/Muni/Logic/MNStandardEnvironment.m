@@ -14,6 +14,7 @@
 @synthesize cells = _cells;
 
 - (id)initWithSize:(CGSize)size withMaxCellCount:(int)maxCellCount {
+	srand(100);
 	if (self = [super init]) {
 		_field = [[MNField alloc] initWithSize:size];
 		_cells = [NSMutableArray array];
