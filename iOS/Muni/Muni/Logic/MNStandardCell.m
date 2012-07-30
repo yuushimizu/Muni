@@ -39,7 +39,7 @@
 	MNCellMove *(^sourceWithoutTarget)(id<MNCell>, id<MNEnvironment>);
 	if (typeWithoutTarget == 0) {
 		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMoveRandomWalk alloc] init];
+			return [[MNCellMoveRandomWalk alloc] initWithEnvironment:environment];
 		};
 	} else if (typeWithoutTarget == 1) {
 		sourceWithoutTarget =  ^(id<MNCell> cell, id<MNEnvironment> environment) {
