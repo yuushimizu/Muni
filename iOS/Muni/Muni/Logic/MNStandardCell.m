@@ -35,23 +35,28 @@
 }
 
 - (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
-	int type = MNRandomInt(0, 4);
-	if (type == 0) {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+	int typeWithoutTarget = MNRandomInt(0, 3);
+	MNCellMove *(^sourceWithoutTarget)(id<MNCell>, id<MNEnvironment>);
+	if (typeWithoutTarget == 0) {
+		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveRandomWalk alloc] init];
 		};
-	} else if (type == 1) {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+	} else if (typeWithoutTarget == 1) {
+		sourceWithoutTarget =  ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMovePuruPuru alloc] init];
 		};
-	} else if (type == 2) {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);} withMoveWithoutTarget:[[MNCellMoveImmovable alloc] init] withEnvironment:environment];
-		};
 	} else {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveImmovable alloc] init];
 		};
+	}
+	int typeWithTarget = MNRandomInt(0, 2);
+	if (typeWithTarget == 0) {
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);} withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
+		};
+	} else {
+		return sourceWithoutTarget;
 	}
 }
 
