@@ -19,7 +19,6 @@
 
 @protocol MNCell <NSObject>
 
-@property (readonly) id<MNEnvironment> environment;
 @property (readonly) int type;
 @property (readonly) double maxEnergy;
 @property (readonly) double energy;
@@ -32,15 +31,15 @@
 @property (readonly) BOOL living;
 @property (readonly) CGPoint center;
 
-- (void)moveTo:(CGPoint)center;
-- (void)moveFor:(double)radian distance:(double)distance;
-- (NSArray *)scanCells:(BOOL (^)(id<MNCell> other))condition;
+- (void)moveTo:(CGPoint)center withEnvironment:(id<MNEnvironment>)environment;
+- (void)moveFor:(double)radian distance:(double)distance withEnvironment:(id<MNEnvironment>)environment;
+- (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(id<MNEnvironment>)environment;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;
 - (void)heal:(double)energy;
-- (void)multiply;
+- (void)multiplyWithEnvironment:(id<MNEnvironment>)environment;
 - (BOOL)eventOccurred:(int)event;
 - (BOOL)eventOccurredPrevious:(int)event;
-- (void)sendFrame;
+- (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment;
 
 @end

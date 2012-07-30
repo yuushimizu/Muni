@@ -10,10 +10,10 @@
 
 @implementation MNCellMoveTailTarget
 
-- (void)resetTarget {
-	NSArray *scanningResults = [self.cell scanCells:^(id<MNCell> candidate) {
-		return _targetCondition(self.cell, candidate);
-	}];
+- (void)resetTargetWithCell:(id<MNCell>)cell Environment:(id<MNEnvironment>)environment {
+	NSArray *scanningResults = [cell scanCellsWithCondition:^(id<MNCell> candidate) {
+		return _targetCondition(cell, candidate);
+	} withEnvironment:environment];
 	if (scanningResults.count > 0) {
 		MNCellScanningResult *scanningResult = [scanningResults objectAtIndex:0];
 		_target = scanningResult.cell;
@@ -22,21 +22,21 @@
 	}
 }
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell> me, id<MNCell> other))condition withMoveWithoutTarget:(MNCellMove *)moveWihtoutTarget {
-	if (self = [super initWithCell:cell]) {
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellMove *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment {
+	if (self = [super init]) {
 		_targetCondition = condition;
 		_moveWithoutTarget = moveWihtoutTarget;
-		[self resetTarget];
+		[self resetTargetWithCell:cell Environment:environment];
 	}
 	return self;
 }
 
-- (CGPoint)pointMoved {
-	if (!_target || !_target.living) [self resetTarget];
+- (CGPoint)pointMovedOfCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+	if (!_target || !_target.living) [self resetTargetWithCell:cell Environment:environment];
 	if (_target) {
-		return MNMovedPointToDestination(self.cell.center, _target.center, self.cell.speed);
+		return MNMovedPointToDestination(cell.center, _target.center, cell.speed);
 	} else {
-		return [_moveWithoutTarget pointMoved];
+		return [_moveWithoutTarget pointMovedOfCell:cell withEnvironment:environment];
 	}
 }
 

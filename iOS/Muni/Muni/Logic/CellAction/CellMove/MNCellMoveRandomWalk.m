@@ -10,20 +10,20 @@
 
 @implementation MNCellMoveRandomWalk
 
-- (void)resetDestination {
-	_destination = MNRandomPointInSize(self.cell.environment.field.size);
+- (void)resetDestinationWithEnvironment:(id<MNEnvironment>)environment {
+	_destination = MNRandomPointInSize(environment.field.size);
 }
 
-- (id)initWithCell:(id<MNCell>)cell {
-	if (self = [super initWithCell:cell]) {
-		[self resetDestination];
+- (id)initWithEnvironment:(id<MNEnvironment>)environment {
+	if (self = [super init]) {
+		[self resetDestinationWithEnvironment:environment];
 	}
 	return self;
 }
 
-- (CGPoint)pointMoved {
-	if (self.cell.center.x == _destination.x && self.cell.center.y == _destination.y) [self resetDestination];
-	return MNMovedPointToDestination(self.cell.center, _destination, self.cell.speed);
+- (CGPoint)pointMovedOfCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+	if (cell.center.x == _destination.x && cell.center.y == _destination.y) [self resetDestinationWithEnvironment:environment];
+	return MNMovedPointToDestination(cell.center, _destination, cell.speed);
 }
 
 @end

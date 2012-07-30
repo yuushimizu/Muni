@@ -16,6 +16,6 @@
 	MNCellMove *_moveWithoutTarget;
 }
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell> me, id<MNCell> other))condition withMoveWithoutTarget:(MNCellMove *)moveWihtoutTarget;
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell> me, id<MNCell> other))condition withMoveWithoutTarget:(MNCellMove *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment;
 
 @end

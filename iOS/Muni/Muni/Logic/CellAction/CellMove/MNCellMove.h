@@ -12,6 +12,6 @@
 
 @interface MNCellMove : MNCellAction;
 
-- (CGPoint)pointMoved;
+- (CGPoint)pointMovedOfCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment;
 
 @end

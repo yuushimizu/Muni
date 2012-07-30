@@ -10,7 +10,6 @@
 
 @implementation MNStandardCell
 
-@synthesize environment = _environment;
 @synthesize type = _type;
 @synthesize maxEnergy = _maxEnergy;
 @synthesize energy = _energy;
@@ -35,24 +34,23 @@
 	return [[MNCellAttribute alloc] initWithRed:MNRandomDouble(0, 1) withGreen:MNRandomDouble(0, 1) withBlue:MNRandomDouble(0, 1)];
 }
 
-- (MNCellAction *(^)(id<MNCell>))randomMoveSource {
+- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
 	int type = MNRandomInt(0, 4);
-	type = 2;
 	if (type == 0) {
-		return ^(id<MNCell> cell) {
-			return [[MNCellMoveRandomWalk alloc] initWithCell:cell];
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveRandomWalk alloc] init];
 		};
 	} else if (type == 1) {
-		return ^(id<MNCell> cell) {
-			return [[MNCellMovePuruPuru alloc] initWithCell:cell];
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMovePuruPuru alloc] init];
 		};
 	} else if (type == 2) {
-		return ^(id<MNCell> cell) {
-			return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (cell != other && [cell hostility:other]);} withMoveWithoutTarget:[[MNCellMoveImmovable alloc] initWithCell:cell]];
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);} withMoveWithoutTarget:[[MNCellMoveImmovable alloc] init] withEnvironment:environment];
 		};
 	} else {
-		return ^(id<MNCell> cell) {
-			return [[MNCellMoveImmovable alloc] initWithCell:cell];
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveImmovable alloc] init];
 		};
 	}
 }
@@ -61,59 +59,57 @@
 	NSMutableArray *actionSources = [NSMutableArray arrayWithObject:[self randomMoveSource]];
 	if (MNRandomBool()) {
 		[actionSources addObject:^(id<MNCell> cell) {
-			return [[MNCellActionMultiply alloc] initWithCell:cell];
+			return [[MNCellActionMultiply alloc] init];
 		}];
 	}
 	return actionSources;
 }
 
-- (void)resetActions {
+- (void)resetActionsWithEnvironment:(id<MNEnvironment>)environment {
 	NSMutableArray *actions = [NSMutableArray array];
-	for (MNCellAction *(^actionSource)(id<MNCell>) in _actionSources) {
-		[actions addObject:actionSource(self)];
+	for (MNCellAction *(^actionSource)(id<MNCell>, id<MNEnvironment>environment) in _actionSources) {
+		[actions addObject:actionSource(self, environment)];
 	}
 	_actions = actions;
 }
 
-- (void)fixPosition {
+- (void)fixPositionWithEnvironment:(id<MNEnvironment>)environment {
 	if (_center.x < 0) {
 		_center.x = 0;
-	} else if (_center.x >= _environment.field.size.width) {
-		_center.x = _environment.field.size.width;
+	} else if (_center.x >= environment.field.size.width) {
+		_center.x = environment.field.size.width;
 	}
 	if (_center.y < 0) {
 		_center.y = 0;
-	} else if (_center.y >= _environment.field.size.height) {
-		_center.y = _environment.field.size.height;
+	} else if (_center.y >= environment.field.size.height) {
+		_center.y = environment.field.size.height;
 	}
 }
 
-- (void)moveTo:(CGPoint)center {
+- (void)moveTo:(CGPoint)center withEnvironment:(id<MNEnvironment>)environment {
 	_center = center;
-	[self fixPosition];
+	[self fixPositionWithEnvironment:environment];
 }
 
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
-		_environment = environment;
 		_type = MNRandomInt(0, kMNCellTypeCount);
 		_energy = _maxEnergy = [self randomEnergy];
 		_density = MNRandomDouble(0.2, 1.0);
 		_attribute = [self randomAttribute];
 		_speed = [self randomSpeed];
 		_sight = MNRandomDouble(1, MNDiagonalFromSize(environment.field.size));
-		[self moveTo:MNRandomPointInSize(environment.field.size)];
+		[self moveTo:MNRandomPointInSize(environment.field.size) withEnvironment:environment];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
 		_actionSources = [self randomActionSources];
-		[self resetActions];
+		[self resetActionsWithEnvironment:environment];
 	}
 	return self;
 }
 
-- (id)initByOther:(MNStandardCell *)other {
+- (id)initByOther:(MNStandardCell *)other withEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
-		_environment = other.environment;
 		_type = other.type;
 		_energy = other.energy * MNRandomDouble(0.9, 1.1);
 		_maxEnergy = other.maxEnergy * MNRandomDouble(0.9, 1.1);
@@ -121,11 +117,11 @@
 		_attribute = [[MNCellAttribute alloc] initWithRed:other.attribute.red * MNRandomDouble(0.9, 1.1) withGreen:other.attribute.green * MNRandomDouble(0.9, 1.1) withBlue:other.attribute.blue * MNRandomDouble(0.9, 1.1)];
 		_speed = other.speed * MNRandomDouble(0.9, 1.1);
 		_sight = other.sight * MNRandomDouble(0.9, 1.1);
-		[self moveTo:other.center];
+		[self moveTo:other.center withEnvironment:environment];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
 		_actionSources = other.actionSources;
-		[self resetActions];
+		[self resetActionsWithEnvironment:environment];
 	}
 	return self;
 }
@@ -142,12 +138,12 @@
 	return _energy > 0;
 }
 
-- (void)moveFor:(double)radian distance:(double)distance {
-	_center = MNMovedPoint(_center, radian, distance);
+- (void)moveFor:(double)radian distance:(double)distance withEnvironment:(id<MNEnvironment>)environment {
+	[self moveTo:MNMovedPoint(_center, radian, distance) withEnvironment:environment];
 }
 
-- (NSArray *)scanCells:(BOOL (^)(id<MNCell> other))condition {
-	return [_environment cellsInCircle:_center withRadius:_sight + self.radius withCondition:condition];
+- (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell>))condition withEnvironment:(id<MNEnvironment>)environment {
+	return [environment cellsInCircle:_center withRadius:_sight + self.radius withCondition:condition];
 }
 
 - (BOOL)hostility:(id<MNCell>)other {
@@ -173,11 +169,11 @@
 	_eventBits |= kMNCellEventHealed;
 }
 
-- (void)multiply {
+- (void)multiplyWithEnvironment:(id<MNEnvironment>)environment {
 	[self decreaseEnergy:self.maxEnergy * 0.25];
-	MNStandardCell *newCell = [[MNStandardCell alloc] initByOther:self];
-	[newCell moveFor:MNRandomRadian() distance:self.radius * 2];
-	[self.environment addCell:newCell];
+	MNStandardCell *newCell = [[MNStandardCell alloc] initByOther:self withEnvironment:environment];
+	[newCell moveFor:MNRandomRadian() distance:self.radius * 2 withEnvironment:environment];
+	[environment addCell:newCell];
 }
 
 - (BOOL)eventOccurred:(int)event {
@@ -188,11 +184,13 @@
 	return _previousEventBits & event;
 }
 
-- (void)sendFrame {
+- (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment {
 	_previousEventBits = _eventBits;
 	_eventBits = 0;
 	[self decreaseEnergy:self.weight * 0.05];
-	if (self.living) for (MNCellAction *action in _actions) [action sendFrame];
+	if (self.living) for (MNCellAction *action in _actions) {
+		[action sendFrameWithCell:self WithEnvironment:environment];
+	}
 }
 
 @end

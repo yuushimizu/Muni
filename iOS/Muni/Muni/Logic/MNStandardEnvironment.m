@@ -141,7 +141,7 @@
 	NSMutableSet *cellsMoved = [NSMutableSet set];
 	for (MNCellHittingEffect *cellHittingEffect in [self detectCellsHitting]) {
 		id<MNCell> cell = cellHittingEffect.cell;
-		[cell moveFor:cellHittingEffect.moveRadian distance:MIN(cellHittingEffect.moveDistance, cell.radius * 0.5)];
+		[cell moveFor:cellHittingEffect.moveRadian distance:MIN(cellHittingEffect.moveDistance, cell.radius * 0.5) withEnvironment:self];
 		if (cellHittingEffect.damage > 0) {
 			[cell damage:cellHittingEffect.damage];
 		}
@@ -153,7 +153,7 @@
 - (void)sendFrame {
 	[self removeDeadCells];
 	for (id<MNCell> cell in _cells) {
-		[cell sendFrame];
+		[cell sendFrameWithEnvironment:self];
 		[self updateSpatialIndexFor:cell];
 	}
 	[self applyCellsHitting];

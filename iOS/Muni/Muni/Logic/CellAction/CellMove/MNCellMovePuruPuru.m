@@ -10,8 +10,8 @@
 
 @implementation MNCellMovePuruPuru
 
-- (CGPoint)pointMoved {
-	return MNMovedPoint(self.cell.center, MNRandomRadian(), self.cell.speed);
+- (CGPoint)pointMovedOfCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+	return MNMovedPoint(cell.center, MNRandomRadian(), cell.speed);
 }
 
 @end

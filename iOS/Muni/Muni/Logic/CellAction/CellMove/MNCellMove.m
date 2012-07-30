@@ -10,12 +10,12 @@
 
 @implementation MNCellMove
 
-- (CGPoint)pointMoved {
-	return self.cell.center;
+- (CGPoint)pointMovedOfCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+	return cell.center;
 }
 
-- (void)sendFrame {
-	[self.cell moveTo:[self pointMoved]];
+- (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment {
+	[cell moveTo:[self pointMovedOfCell:cell withEnvironment:environment] withEnvironment:environment];
 }
 
 @end

@@ -7,16 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MNEnvironment.h"
 
 @protocol MNCell;
 
-@interface MNCellAction : NSObject {
-	id<MNCell> _cell;
-}
+@interface MNCellAction : NSObject
 
-@property id<MNCell> cell;
-
-- (id)initWithCell:(id<MNCell>)cell;
-- (void)sendFrame;
+- (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment;
 
 @end

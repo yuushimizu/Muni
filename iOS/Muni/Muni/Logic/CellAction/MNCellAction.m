@@ -10,16 +10,7 @@
 
 @implementation MNCellAction
 
-@synthesize cell = _cell;
-
-- (id)initWithCell:(id<MNCell>)cell {
-	if (self = [super init]) {
-		_cell = cell;
-	}
-	return self;
-}
-
-- (void)sendFrame {
+- (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment {
 }
 
 @end

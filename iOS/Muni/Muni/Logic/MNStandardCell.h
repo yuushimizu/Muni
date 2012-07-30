@@ -20,7 +20,6 @@
 #import "MNCellMoveTailTarget.h"
 
 @interface MNStandardCell : NSObject<MNCell> {
-	id<MNEnvironment> _environment;
 	int _type;
 	double _maxEnergy;
 	double _energy;
@@ -38,6 +37,6 @@
 @property (readonly) NSArray *actionSources;
 
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment;
-- (id)initByOther:(MNStandardCell *)other;
+- (id)initByOther:(MNStandardCell *)other withEnvironment:(id<MNEnvironment>)environment;
 
 @end

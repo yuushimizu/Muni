@@ -10,18 +10,18 @@
 
 @implementation MNCellActionMultiply
 
-- (id)initWithCell:(id<MNCell>)cell {
-	if (self = [super initWithCell:cell]) {
+- (id)init {
+	if (self = [super init]) {
 		_restCount = 2;
 		_incidence = 0.002;
 	}
 	return self;
 }
 
-- (void)sendFrame {
+- (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment {
 	if (_restCount <= 0) return;
 	if (MNRandomDouble(0, 1) >= _incidence) return;
-	[self.cell multiply];
+	[cell multiplyWithEnvironment:environment];
 }
 
 @end

@@ -14,4 +14,6 @@
 	CGPoint _destination;
 }
 
+- (id)initWithEnvironment:(id<MNEnvironment>)environment;
+
 @end
