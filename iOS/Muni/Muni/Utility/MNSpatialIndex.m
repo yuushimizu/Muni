@@ -40,15 +40,6 @@
 	[_objectKeys setObject:keys forKey:[NSValue valueWithNonretainedObject:object]];
 }
 
-- (void)addObject:(id)object forKeyPoints:(NSArray *)keyPoints {
-	NSMutableArray *keys = [NSMutableArray array];
-	for (NSValue *key in keyPoints) {
-		CGPoint point = [key CGPointValue];
-		[keys addObject:[_keyCache objectAtIndex:point.x * _blockCount.height + point.y]];
-	}
-	[self addObject:object forKeys:keys];
-}
-
 - (NSArray *)keysFromRect:(CGRect)rect {
 	int leftKey = rect.origin.x / _blockSize.width;
 	if (leftKey < 0) leftKey = 0;
@@ -87,19 +78,8 @@
 	return objects;
 }
 
-- (NSSet *)objectsForKeyPoints:(NSArray *)keyPoints {
-	NSMutableSet *objects = [NSMutableSet set];
-	for (NSValue *key in keyPoints) {
-		CGPoint point = [key CGPointValue];
-		for (id object in [_objects objectAtIndex:point.x * _blockCount.height + point.y]) {
-			[objects addObject:object];
-		}
-	}
-	return objects;
-}
-
 - (NSSet *)objectsForRect:(CGRect)rect {
-	return [self objectsForKeyPoints:[self keysFromRect:rect]];
+	return [self objectsForKeys:[self keysFromRect:rect]];
 }
 
 - (NSSet *)objectsPiledWith:(id)object {
