@@ -18,6 +18,8 @@
 	id _timer;
 	NSDate *_dateLastFPSCalculation;
 	int _framesSinceLastFPSCalculation;
+	double _drawingMillisecondsSinceLastFPSCalculation;
+	double _sendingFrameMillisecondsSinceLastFPSCalculation;
 	NSDate *_dateLastFrame;
 }
 

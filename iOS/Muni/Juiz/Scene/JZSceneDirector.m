@@ -30,28 +30,36 @@
 }
 
 - (void)sendFrame {
-	NSDate *now = [NSDate date];
-	NSTimeInterval interval = [now timeIntervalSinceDate:_dateLastFPSCalculation];
+	NSDate *dateStartedFrame = [NSDate date];
+	NSTimeInterval interval = [dateStartedFrame timeIntervalSinceDate:_dateLastFPSCalculation];
 	if (interval >= 1) {
 		const double fps = _framesSinceLastFPSCalculation / interval;
-		NSLog(@"FPS: %d", (int) round(fps));
-		_dateLastFPSCalculation = now;
+		NSLog(@"FPS: %d\tdrawing: %lf\tsending: %lf", (int) round(fps), _drawingMillisecondsSinceLastFPSCalculation / _framesSinceLastFPSCalculation, _sendingFrameMillisecondsSinceLastFPSCalculation / _framesSinceLastFPSCalculation);
+		_dateLastFPSCalculation = dateStartedFrame;
 		_framesSinceLastFPSCalculation = 0;
+		_drawingMillisecondsSinceLastFPSCalculation = 0;
+		_sendingFrameMillisecondsSinceLastFPSCalculation = 0;
 	}
 	_framesSinceLastFPSCalculation++;
 	if (_nextScene) {
 		_currentScene = _nextScene;
 		_nextScene = nil;
 	}
+	NSDate *dateStartedSendingFrame = [NSDate date];
 	[_currentScene sendFrame];
-	_dateLastFrame = now;
+	_sendingFrameMillisecondsSinceLastFPSCalculation += [dateStartedSendingFrame timeIntervalSinceDate:dateStartedFrame];
+	NSDate *dateStartedDrawing = [NSDate date];
 	[_glView drawWithDrawer:_currentScene];
+	_drawingMillisecondsSinceLastFPSCalculation += [dateStartedDrawing timeIntervalSinceDate:dateStartedFrame];
+	_dateLastFrame = dateStartedFrame;
 }
 
 - (void)start {
 	if (_timer != nil) return;
 	_dateLastFPSCalculation = [NSDate date];
 	_framesSinceLastFPSCalculation = 0;
+	_drawingMillisecondsSinceLastFPSCalculation = 0;
+	_sendingFrameMillisecondsSinceLastFPSCalculation = 0;
 	_dateLastFrame = _dateLastFPSCalculation;
 	if ([[[UIDevice currentDevice] systemVersion] compare:@"3.1" options:NSNumericSearch] != NSOrderedAscending) {
 		_timer = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(sendFrame)];
