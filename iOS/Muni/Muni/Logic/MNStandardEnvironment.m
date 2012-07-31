@@ -14,13 +14,12 @@
 @synthesize cells = _cells;
 
 - (id)initWithSize:(CGSize)size withMaxCellCount:(int)maxCellCount {
-	srand(100);
 	if (self = [super init]) {
 		_field = [[MNField alloc] initWithSize:size];
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
-		_incidence = 200.1;
+		_incidence = 0.15;
 		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
 	}
 	return self;
@@ -32,8 +31,8 @@
 }
 
 - (void)updateSpatialIndexFor:(id<MNCell>)cell {
-	[_spatialIndex removeObject:cell];
-	[self addCellToSpatialIndex:cell];
+	double radius = cell.radius;
+	[_spatialIndex updateObject:cell withRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
 }
 
 - (void)addCell:(id<MNCell>)cell {

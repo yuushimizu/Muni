@@ -70,6 +70,22 @@
 	}
 }
 
+- (void)updateObject:(id)object withKeys:(NSArray *)keys {
+	NSArray *oldKeys = [_objectKeys objectForKey:[NSValue valueWithNonretainedObject:object]];
+	if (oldKeys) {
+		if (![keys isEqualToArray:oldKeys]) {
+			[self removeObject:object];
+			[self addObject:object forKeys:keys];
+		}
+	} else {
+		[self addObject:object forKeys:keys];
+	}
+}
+
+- (void)updateObject:(id)object withRect:(CGRect)rect {
+	[self updateObject:object withKeys:[self keysFromRect:rect]];
+}
+
 - (NSSet *)objectsForKeys:(NSArray *)keys {
 	NSMutableSet *objects = [NSMutableSet set];
 	for (NSNumber *key in keys) {
