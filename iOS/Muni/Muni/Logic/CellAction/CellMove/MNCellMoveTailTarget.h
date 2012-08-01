@@ -14,9 +14,10 @@
 @interface MNCellMoveTailTarget : MNCellAction {
 	id<MNCell> _target;
 	BOOL (^_targetCondition)(id<MNCell> me, id<MNCell> other);
+	double _minDistance;
 	MNCellAction *_moveWithoutTarget;
 }
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell> me, id<MNCell> other))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment;
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell> me, id<MNCell> other))condition withMinDistance:(double)minDistance withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment;
 
 @end

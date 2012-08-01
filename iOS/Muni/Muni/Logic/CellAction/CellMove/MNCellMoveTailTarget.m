@@ -22,19 +22,25 @@
 	}
 }
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment {
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMinDistance:(double)minDistance withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
 		_targetCondition = condition;
 		_moveWithoutTarget = moveWihtoutTarget;
+		_minDistance = minDistance;
 		[self resetTargetWithCell:cell Environment:environment];
 	}
 	return self;
 }
 
 - (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment {
-	if (!_target || !_target.living) [self resetTargetWithCell:cell Environment:environment];
+	double distance = MNDistanceOfPoints(cell.center, _target.center) - cell.radius - _target.radius;
+	if (!_target || !_target.living || distance > cell.sight) [self resetTargetWithCell:cell Environment:environment];
 	if (_target) {
-		[cell moveTowards:_target.center];
+		if (distance > _minDistance) {
+			[cell moveTowards:_target.center];
+		} else {
+			[cell moveFor:MNInvertRadian(MNRadianFromPoints(cell.center, _target.center))];
+		}
 	} else {
 		[_moveWithoutTarget sendFrameWithCell:cell WithEnvironment:environment];
 	}

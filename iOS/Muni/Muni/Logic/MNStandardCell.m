@@ -29,8 +29,8 @@
 }
 
 - (double)randomSpeed {
-	// 0.5 - 9.0
-	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 4);
+	// 0.5 - 6.5
+	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 3);
 }
 
 - (MNCellAttribute *)randomAttribute {
@@ -38,14 +38,14 @@
 }
 
 - (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
-	int typeWithoutTarget = MNRandomInt(0, 3);
+	int decisionTypeWithoutTarget = MNRandomInt(0, 3);
 	MNCellAction *(^sourceWithoutTarget)(id<MNCell>, id<MNEnvironment>);
-	if (typeWithoutTarget == 0) {
+	if (decisionTypeWithoutTarget == 0) {
 		int maxIntervalFrames = MNRandomInt(0, 100);
 		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveRandomWalk alloc] initWithMaxIntervalFrames:maxIntervalFrames withEnvironment:environment];
 		};
-	} else if (typeWithoutTarget == 1) {
+	} else if (decisionTypeWithoutTarget == 1) {
 		sourceWithoutTarget =  ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveFloat alloc] init];
 		};
@@ -54,10 +54,18 @@
 			return [[MNCellMoveImmovable alloc] init];
 		};
 	}
-	int typeWithTarget = MNRandomInt(0, 100);
-	if (typeWithTarget < 75) {
+	int decisionTypeWithTarget = MNRandomInt(0, 100);
+	if (decisionTypeWithTarget < 75) {
+		double minDistanceRate = MNRandomInt(0, 100) < 75 ? 0 : MNRandomDouble(0, 4);
+		BOOL (^targetCondition)(id<MNCell> me, id<MNCell> other);
+		int decisionTargetCondition = MNRandomInt(0, 100);
+		if (decisionTargetCondition < 75) {
+			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);};
+		} else {
+			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && ![me hostility:other]);};
+		}
 		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);} withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
+			return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:targetCondition withMinDistance:minDistanceRate * cell.radius withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 		};
 	} else {
 		return sourceWithoutTarget;
