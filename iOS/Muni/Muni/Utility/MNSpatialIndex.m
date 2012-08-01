@@ -63,10 +63,11 @@
 }
 
 - (void)removeObject:(id)object {
-	NSArray *keys = [_objectKeys objectForKey:[NSValue valueWithNonretainedObject:object]];
+	NSValue *objectAsKey = [NSValue valueWithNonretainedObject:object];
+	NSArray *keys = [_objectKeys objectForKey:objectAsKey];
 	if (keys) {
 		for (NSNumber *key in keys) [[_objects objectAtIndex:[key intValue]] removeObject:object];
-		[_objectKeys removeObjectForKey:[NSValue valueWithNonretainedObject:object]];
+		[_objectKeys removeObjectForKey:objectAsKey];
 	}
 }
 
@@ -98,34 +99,23 @@
 	return [self objectsForKeys:[self keysFromRect:rect]];
 }
 
-- (NSSet *)objectsPiledWith:(id)object {
-	NSArray *keys = [_objectKeys objectForKey:[NSValue valueWithNonretainedObject:object]];
-	return keys ? [self objectsForKeys:keys] : [NSSet set];
-}
-
-- (void)enumeratePilesUsingBlock:(void (^)(id object1, id object2))block {
+- (void)enumerateCollisionsUsingBlock:(void (^)(id object1, id object2))block {
 	NSMutableArray *processedObjects1 = [NSMutableArray array];
 	NSMutableArray *processedObjects2 = [NSMutableArray array];
 	for (NSArray *objectsInBlock in _objects) {
 		for (id object1 in objectsInBlock) {
 			for (id object2 in objectsInBlock) {
 				if (object1 >= object2) continue;
-				BOOL proceeded = NO;
 				int index = 0;
 				for (id processedObject1 in processedObjects1) {
-					if (processedObject1 == object1) {
-						if ([processedObjects2 objectAtIndex:index] == object2) {
-							proceeded = YES;
-							break;
-						}
-					}
+					if (processedObject1 == object1 && [processedObjects2 objectAtIndex:index] == object2) goto ignore;
 					index += 1;
 				}
-				if (!proceeded) {
-					[processedObjects1 addObject:object1];
-					[processedObjects2 addObject:object2];
-					block(object1, object2);
-				}
+				[processedObjects1 addObject:object1];
+				[processedObjects2 addObject:object2];
+				block(object1, object2);
+			ignore:
+				;
 			}
 		}
 	}

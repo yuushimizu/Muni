@@ -15,23 +15,29 @@
 
 - (id)initWithSize:(CGSize)size withMaxCellCount:(int)maxCellCount {
 	if (self = [super init]) {
+		srand(100);
 		_field = [[MNField alloc] initWithSize:size];
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
-		_incidence = 0.15;
+		_incidence = 300.15;
+//		_spatialIndex = [[MNQuadtreeSpatialIndex alloc] initWithAreaSize:_field.size withMaxDepth:3];
 		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
+//		_spatialIndex = [[MNSpatialIndex2 alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
 	}
 	return self;
 }
 
-- (void)addCellToSpatialIndex:(id<MNCell>)cell {
+
+ - (void)addCellToSpatialIndex:(id<MNCell>)cell {
 	double radius = cell.radius;
 	[_spatialIndex addObject:cell forRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
 }
 
+
 - (void)updateSpatialIndexFor:(id<MNCell>)cell {
 	double radius = cell.radius;
+//	[_spatialIndex addOrUpdateObject:cell forRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
 	[_spatialIndex updateObject:cell withRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
 }
 
@@ -49,6 +55,7 @@
 			index += 1;
 		}
 		[_cells insertObject:cell atIndex:index];
+//		[self updateSpatialIndexFor:cell];
 		[self addCellToSpatialIndex:cell];
 	}
 	[_addedCellsQueue removeAllObjects];
@@ -56,6 +63,7 @@
 
 - (NSArray *)cellsInCircle:(CGPoint)center withRadius:(double)radius withCondition:(BOOL (^)(id<MNCell> other))condition {
 	NSMutableArray *scanningResults = [NSMutableArray array];
+//	[_spatialIndex enumerateObjectsInRect:CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2) usingBlock:^(id<MNCell> candidate) {
 	for (id<MNCell> candidate in [_spatialIndex objectsForRect:CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2)]) {
 		if (candidate.living) {
 			MNPointIntervalByPoints *intervalForCenter = [[MNPointIntervalByPoints alloc] initWithSource:center withDestination:candidate.center];
@@ -69,6 +77,7 @@
 				[scanningResults insertObject:[[MNCellScanningResult alloc] initWithCell:candidate withInterval:interval] atIndex:index];
 			}
 		}
+//	}];
 	}
 	return scanningResults;
 }
@@ -99,7 +108,7 @@
 }
 
 - (void)detectCellsHitting:(void (^)(id<MNCell> cell, double damage, double moveRadian, double moveDistance))block {
-	[_spatialIndex enumeratePilesUsingBlock:^(id<MNCell> cell1, id<MNCell> cell2) {
+	[_spatialIndex enumerateCollisionsUsingBlock:^(id<MNCell> cell1, id<MNCell> cell2) {
 		if (cell1.living && cell2.living) {
 			MNPointIntervalByPoints *interval = [[MNPointIntervalByPoints alloc] initWithSource:cell1.center withDestination:cell2.center];
 			double piledDistance = cell1.radius + cell2.radius - interval.distance;

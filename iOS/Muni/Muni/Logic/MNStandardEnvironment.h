@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "MNEnvironment.h"
 #import "MNStandardCell.h"
+#import "MNQuadtreeSpatialIndex.h"
 #import "MNSpatialIndex.h"
+#import "MNSpatialIndex2.h"
 #import "MNPointIntervalByPoints.h"
 #import "MNCellScanningResult.h"
 
@@ -19,7 +21,9 @@
 	int _maxCellCount;
 	NSMutableArray *_addedCellsQueue;
 	double _incidence;
+//	MNQuadtreeSpatialIndex *_spatialIndex;
 	MNSpatialIndex *_spatialIndex;
+//	MNSpatialIndex2 *_spatialIndex;
 }
 
 - (id)initWithSize:(CGSize)size withMaxCellCount:(int)maxCellCount;

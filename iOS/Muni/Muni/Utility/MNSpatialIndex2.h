@@ -1,18 +1,19 @@
 //
-//  MNSpatialIndex.h
+//  MNSpatialIndex2.h
 //  Muni
 //
-//  Created by Yuu Shimizu on 7/27/12.
+//  Created by Yuu Shimizu on 8/1/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "MNSpatialIndexEntry.h"
 
-@interface MNSpatialIndex : NSObject {
+@interface MNSpatialIndex2 : NSObject {
 	CGSize _blockSize;
 	CGSize _blockCount;
-	NSMutableArray *_objects;
-	NSMutableDictionary *_objectKeys;
+	NSMutableArray *_entries;
+	NSMutableDictionary *_objectEntries;
 	NSArray *_keyCache;
 }
 
@@ -21,10 +22,9 @@
 
 - (id)initWithBlockSize:(CGSize)blockSize withBlockCount:(CGSize)blockCount;
 - (id)initWithTotalSize:(CGSize)totalSize withBlockCount:(CGSize)blockCount;
-- (void)addObject:(id)object forRect:(CGRect)rect;
 - (void)removeObject:(id)object;
-- (void)updateObject:(id)object withRect:(CGRect)rect;
-- (NSSet *)objectsForRect:(CGRect)rect;
+- (void)addOrUpdateObject:(id)object forRect:(CGRect)rect;
+- (void)enumerateObjectsInRect:(CGRect)rect usingBlock:(void (^)(id object))block;
 - (void)enumerateCollisionsUsingBlock:(void (^)(id object1, id object2))block;
 
 @end
