@@ -15,6 +15,8 @@ double MNRandomRadian(void);
 double MNDistanceOfPoints(CGPoint point1, CGPoint point2);
 double MNRadianFromPoints(CGPoint start, CGPoint destination);
 CGPoint MNManhattanDiffFromRadianAndDistance(double radian, double distance);
+double MNRadianFromManhattanDiff(CGPoint manhattanDiff);
+double MNDistanceFromManhattanDiff(CGPoint manhattanDiff);
 CGPoint MNMovedPoint(CGPoint start, double radian, double distance);
 CGPoint MNMovedPointToDestination(CGPoint start, CGPoint destination, double distance);
 double MNDiagonalFromSize(CGSize size);

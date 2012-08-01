@@ -19,7 +19,7 @@
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
-		_incidence = 0.1;
+		_incidence = 0.12;
 		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
 	}
 	return self;
@@ -93,68 +93,57 @@
 	}
 }
 
-- (void)detectCellsHitting:(void (^)(id<MNCell> cell, double damage, double moveRadian, double moveDistance))block {
+- (void)applyCellsHitting {
 	NSArray *collisions = [_spatialIndex collisions];
-	id<MNCell> cell1 = nil;
-	for (id<MNCell> cell in collisions) {
+	MNStandardCell * cell1 = nil;
+	for (MNStandardCell * cell in collisions) {
 		if (cell1 == nil) {
 			cell1 = cell;
 			continue;
 		}
-		id<MNCell> cell2 = cell;
+		MNStandardCell * cell2 = cell;
 		if (cell1.living && cell2.living) {
 			double distance = MNDistanceOfPoints(cell1.center, cell2.center);
 			double piledDistance = cell1.radius + cell2.radius - distance;
 			if (piledDistance > 0) {
-				double moveDistance1 = piledDistance * (cell1.weight / (cell1.weight + cell2.weight));
-				double moveDistance2 = piledDistance * (cell2.weight / (cell2.weight + cell1.weight));
-				double damage1, damage2;
+				double radian = MNRadianFromPoints(cell1.center, cell2.center);
+				double invertedRadian = MNInvertRadian(radian);
+				double weight1 = cell1.weight;
+				double weight2 = cell2.weight;
+				[cell1 moveForFix:invertedRadian distance:piledDistance * (weight2 / (weight1 + weight2))];
+				[cell2 moveForFix:radian distance:piledDistance * (weight1 / (weight2 + weight1))];
 				if ([cell1 hostility:cell2]) {
-					double totalDistance = piledDistance * 5;
+					double totalKnockedbackdDistance = MAX(cell1.lastMovedDistance * cos(radian - cell1.lastMovedRadian) + cell2.lastMovedDistance * cos(invertedRadian - cell2.lastMovedRadian) * 2, MIN(cell1.radius, cell2.radius) * 0.25);
+					double minKnockedbackDistance = totalKnockedbackdDistance * 0.1;
+					double restKnockedbackDistance = totalKnockedbackdDistance * 0.8;
+					double density1 = cell1.density;
+					double density2 = cell2.density;
 					if (![cell1 eventOccurredPrevious:kMNCellEventDamaged]) {
-						double knockbackDistance = totalDistance * (cell1.density / (cell1.density + cell2.density));
-						moveDistance1 += knockbackDistance;
-						damage1 = knockbackDistance * 2;
-					} else {
-						damage1 = 0;
+						double knockedback1 = minKnockedbackDistance + (restKnockedbackDistance * (density2	/ (density1 + density2)));
+						[cell1 moveFor:invertedRadian withForce:knockedback1];
+						[cell1 damage:knockedback1 * 10];
 					}
 					if (![cell2 eventOccurredPrevious:kMNCellEventDamaged]) {
-						double knockbackDistance = totalDistance * (cell2.density / (cell2.density + cell1.density));
-						moveDistance2 += knockbackDistance;
-						damage2 = knockbackDistance * 2;
-					} else {
-						damage2 = 0;
+						double knockedback2 = minKnockedbackDistance + (restKnockedbackDistance * (density1 / (density2 + density1)));
+						[cell2 moveFor:radian withForce:knockedback2];
+						[cell2 damage:knockedback2 * 10];
 					}
-				} else {
-					damage1 = damage2 = 0;
 				}
-				double radian = MNRadianFromPoints(cell1.center, cell2.center);
-				block(cell1, damage1, MNInvertRadian(radian), moveDistance1);
-				block(cell2, damage2, radian, moveDistance2);
 			}
 		}
 		cell1 = nil;
 	}
 }
 
-- (void)applyCellsHitting {
-	NSMutableSet *cellsMoved = [NSMutableSet set];
-	[self detectCellsHitting:^(id<MNCell> cell, double damage, double moveRadian, double moveDistance) {
-		[cell moveFor:moveRadian distance:MIN(moveDistance, cell.radius * 0.5) withEnvironment:self];
-		if (damage > 0) [cell damage:damage];
-		[cellsMoved addObject:cell];
-	}];
-	for (id<MNCell> cell in cellsMoved) [self updateSpatialIndexFor:cell];
-}
-
 - (void)sendFrame {
 	[self removeDeadCells];
-	for (id<MNCell> cell in _cells) {
-		[cell sendFrameWithEnvironment:self];
-		[self updateSpatialIndexFor:cell];
-	}
+	for (id<MNCell> cell in _cells) [cell sendFrameWithEnvironment:self];
 	[self applyCellsHitting];
 	[self applyCellsDying];
+	for (MNStandardCell *cell in _cells) {
+		[cell realMove:self];
+		[self updateSpatialIndexFor:cell];
+	}
 	if (_cells.count < _maxCellCount && MNRandomDouble(0, _cells.count + 1) < _incidence) {
 		[self addCell:[[MNStandardCell alloc] initByRandomWithEnvironment:self]];
 	}

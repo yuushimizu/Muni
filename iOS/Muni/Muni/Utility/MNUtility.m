@@ -34,8 +34,7 @@ double MNRandomRadian(void) {
 
 double MNDistanceOfPoints(CGPoint point1, CGPoint point2) {
 	double x = point1.x - point2.x;
-	double y = point1
-	.y - point2.y;
+	double y = point1.y - point2.y;
 	return sqrt(x * x + y * y);
 }
 

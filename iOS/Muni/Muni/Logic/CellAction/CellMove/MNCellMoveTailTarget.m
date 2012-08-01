@@ -22,7 +22,7 @@
 	}
 }
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellMove *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment {
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
 		_targetCondition = condition;
 		_moveWithoutTarget = moveWihtoutTarget;
@@ -31,12 +31,12 @@
 	return self;
 }
 
-- (CGPoint)pointMovedOfCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment {
 	if (!_target || !_target.living) [self resetTargetWithCell:cell Environment:environment];
 	if (_target) {
-		return MNMovedPointToDestination(cell.center, _target.center, cell.speed);
+		[cell moveTowards:_target.center];
 	} else {
-		return [_moveWithoutTarget pointMovedOfCell:cell withEnvironment:environment];
+		[_moveWithoutTarget sendFrameWithCell:cell WithEnvironment:environment];
 	}
 }
 

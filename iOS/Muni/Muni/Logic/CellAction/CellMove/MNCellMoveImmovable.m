@@ -10,8 +10,4 @@
 
 @implementation MNCellMoveImmovable
 
-- (CGPoint)pointMovedOfCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
-	return cell.center;
-}
-
 @end

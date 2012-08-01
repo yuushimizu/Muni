@@ -16,9 +16,12 @@
 @synthesize density = _density;
 @synthesize attribute = _attribute;
 @synthesize speed = _speed;
+@synthesize movingRadian = _movingRadian;
 @synthesize sight = _sight;
 @synthesize center = _center;
 @synthesize actionSources = _actionSources;
+@synthesize lastMovedDistance = _lastMovedDistance;
+@synthesize lastMovedRadian = _lastMovedRadian;
 
 - (double)randomEnergy {
 	// 500 - 8500
@@ -26,8 +29,8 @@
 }
 
 - (double)randomSpeed {
-	// 0.5 - 4.5
-	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 2);
+	// 0.5 - 9.0
+	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 4);
 }
 
 - (MNCellAttribute *)randomAttribute {
@@ -36,22 +39,23 @@
 
 - (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
 	int typeWithoutTarget = MNRandomInt(0, 3);
-	MNCellMove *(^sourceWithoutTarget)(id<MNCell>, id<MNEnvironment>);
+	MNCellAction *(^sourceWithoutTarget)(id<MNCell>, id<MNEnvironment>);
 	if (typeWithoutTarget == 0) {
+		int maxIntervalFrames = MNRandomInt(0, 100);
 		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMoveRandomWalk alloc] initWithEnvironment:environment];
+			return [[MNCellMoveRandomWalk alloc] initWithMaxIntervalFrames:maxIntervalFrames withEnvironment:environment];
 		};
 	} else if (typeWithoutTarget == 1) {
 		sourceWithoutTarget =  ^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMovePuruPuru alloc] init];
+			return [[MNCellMoveFloat alloc] init];
 		};
 	} else {
 		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveImmovable alloc] init];
 		};
 	}
-	int typeWithTarget = MNRandomInt(0, 2);
-	if (typeWithTarget == 0) {
+	int typeWithTarget = MNRandomInt(0, 100);
+	if (typeWithTarget < 75) {
 		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);} withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 		};
@@ -81,19 +85,55 @@
 - (void)fixPositionWithEnvironment:(id<MNEnvironment>)environment {
 	if (_center.x < 0) {
 		_center.x = 0;
+		_movingSpeed = 0;
 	} else if (_center.x >= environment.field.size.width) {
 		_center.x = environment.field.size.width;
+		_movingSpeed = 0;
 	}
 	if (_center.y < 0) {
 		_center.y = 0;
+		_movingSpeed = 0;
 	} else if (_center.y >= environment.field.size.height) {
 		_center.y = environment.field.size.height;
+		_movingSpeed = 0;
 	}
 }
 
-- (void)moveTo:(CGPoint)center withEnvironment:(id<MNEnvironment>)environment {
-	_center = center;
+- (void)realMove:(id<MNEnvironment>)environment {
+	_center = MNMovedPoint(MNMovedPoint(_center, _radianForFix, _distanceForFix), _movingRadian, _movingSpeed);
+	_distanceForFix = 0;
 	[self fixPositionWithEnvironment:environment];
+}
+
+- (void)moveFor:(double)radian withForce:(double)force {
+	CGPoint pointMoved = CGPointMake(_center.x + ((sin(_movingRadian) * _movingSpeed) + (sin(radian) * force)), _center.y + ((cos(_movingRadian) * _movingSpeed) + (cos(radian) * force)));
+	_movingSpeed = MNDistanceOfPoints(_center, pointMoved);
+	_movingRadian = MNRadianFromPoints(_center, pointMoved);
+
+}
+
+- (void)moveFor:(double)radian withTargetSpeed:(double)targetSpeed {
+	CGPoint movingPoint = MNMovedPoint(_center, _movingRadian, _movingSpeed);
+	CGPoint targetPoint = MNMovedPoint(_center, radian, targetSpeed);
+	[self moveFor:MNRadianFromPoints(movingPoint, targetPoint) withForce:MIN(MNDistanceOfPoints(movingPoint, targetPoint), _speed * 0.2 * (1 - _density))];
+}
+
+- (void)moveFor:(double)radian {
+	[self moveFor:radian withTargetSpeed:_speed];
+}
+
+- (void)stop {
+	[self moveFor:MNInvertRadian(_movingRadian) withTargetSpeed:0];
+}
+
+- (void)moveTowards:(CGPoint)point {
+	[self moveFor:MNRadianFromPoints(_center, point)];
+}
+
+- (void)moveForFix:(double)radian distance:(double)distance {
+	CGPoint pointMoved = CGPointMake(_center.x + ((sin(_radianForFix) * _distanceForFix) + (sin(radian) * distance)), _center.y + ((cos(_radianForFix) * _distanceForFix) + (cos(radian) * distance)));
+	_distanceForFix = MNDistanceOfPoints(_center, pointMoved);
+	_radianForFix = MNRadianFromPoints(_center, pointMoved);
 }
 
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment {
@@ -103,12 +143,16 @@
 		_density = MNRandomDouble(0.2, 1.0);
 		_attribute = [self randomAttribute];
 		_speed = [self randomSpeed];
+		_movingSpeed = 0;
+		_movingRadian = MNRandomRadian();
 		_sight = MNRandomDouble(1, MNDiagonalFromSize(environment.field.size));
-		[self moveTo:MNRandomPointInSize(environment.field.size) withEnvironment:environment];
+		_center = MNRandomPointInSize(environment.field.size);
+		[self fixPositionWithEnvironment:environment];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
 		_actionSources = [self randomActionSources];
 		[self resetActionsWithEnvironment:environment];
+		_distanceForFix = 0;
 	}
 	return self;
 }
@@ -121,12 +165,17 @@
 		_density = other.density * MNRandomDouble(0.9, 1.1);
 		_attribute = [[MNCellAttribute alloc] initWithRed:other.attribute.red * MNRandomDouble(0.9, 1.1) withGreen:other.attribute.green * MNRandomDouble(0.9, 1.1) withBlue:other.attribute.blue * MNRandomDouble(0.9, 1.1)];
 		_speed = other.speed * MNRandomDouble(0.9, 1.1);
+		_movingSpeed = 0;
+		_movingRadian = MNRandomRadian();
 		_sight = other.sight * MNRandomDouble(0.9, 1.1);
-		[self moveTo:other.center withEnvironment:environment];
+		_center = other.center;
+		_center = MNMovedPoint(other.center, MNRandomRadian(), other.radius);
+		[self fixPositionWithEnvironment:environment];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
 		_actionSources = other.actionSources;
 		[self resetActionsWithEnvironment:environment];
+		_distanceForFix = 0;
 	}
 	return self;
 }
@@ -141,10 +190,6 @@
 
 - (BOOL)living {
 	return _energy > 0;
-}
-
-- (void)moveFor:(double)radian distance:(double)distance withEnvironment:(id<MNEnvironment>)environment {
-	[self moveTo:MNMovedPoint(_center, radian, distance) withEnvironment:environment];
 }
 
 - (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell>))condition withEnvironment:(id<MNEnvironment>)environment {
@@ -176,7 +221,6 @@
 - (void)multiplyWithEnvironment:(id<MNEnvironment>)environment {
 	[self decreaseEnergy:self.maxEnergy * 0.25];
 	MNStandardCell *newCell = [[MNStandardCell alloc] initByOther:self withEnvironment:environment];
-	[newCell moveFor:MNRandomRadian() distance:self.radius * 2 withEnvironment:environment];
 	[environment addCell:newCell];
 }
 
@@ -191,6 +235,8 @@
 - (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment {
 	_previousEventBits = _eventBits;
 	_eventBits = 0;
+	_lastMovedRadian = _movingRadian;
+	_lastMovedDistance = _movingSpeed;
 	[self decreaseEnergy:self.weight * 0.05];
 	if (self.living) for (MNCellAction *action in _actions) {
 		[action sendFrameWithCell:self WithEnvironment:environment];

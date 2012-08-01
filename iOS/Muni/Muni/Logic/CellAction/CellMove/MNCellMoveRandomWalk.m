@@ -12,18 +12,27 @@
 
 - (void)resetDestinationWithEnvironment:(id<MNEnvironment>)environment {
 	_destination = MNRandomPointInSize(environment.field.size);
+	_restIntervalFrames = _maxIntervalFrames * MNRandomDouble(0.5, 1.0);
 }
 
-- (id)initWithEnvironment:(id<MNEnvironment>)environment {
+- (id)initWithMaxIntervalFrames:(int)maxIntervalFrames withEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
+		_maxIntervalFrames = maxIntervalFrames;
 		[self resetDestinationWithEnvironment:environment];
 	}
 	return self;
 }
 
-- (CGPoint)pointMovedOfCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
-	if (cell.center.x == _destination.x && cell.center.y == _destination.y) [self resetDestinationWithEnvironment:environment];
-	return MNMovedPointToDestination(cell.center, _destination, cell.speed);
+- (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment {
+	if (_restIntervalFrames > 0) {
+		_restIntervalFrames -= 1;
+		[cell stop];
+	} else if (MNDistanceOfPoints(cell.center, _destination) <= cell.radius) {
+		[self resetDestinationWithEnvironment:environment];
+		[cell stop];
+	} else {
+		[cell moveTowards:_destination];
+	}
 }
 
 @end

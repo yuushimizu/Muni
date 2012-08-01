@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MNCellMove.h"
+#import "MNCellAction.h"
 
-@interface MNCellMoveImmovable : MNCellMove
+@interface MNCellMoveImmovable : MNCellAction
 
 @end

@@ -26,13 +26,14 @@
 @property (readonly) double density;
 @property (readonly) double weight;
 @property (readonly) MNCellAttribute *attribute;
-@property (readonly) double speed;
 @property (readonly) double sight;
 @property (readonly) BOOL living;
 @property (readonly) CGPoint center;
 
-- (void)moveTo:(CGPoint)center withEnvironment:(id<MNEnvironment>)environment;
-- (void)moveFor:(double)radian distance:(double)distance withEnvironment:(id<MNEnvironment>)environment;
+- (void)moveFor:(double)radian withForce:(double)force;
+- (void)moveFor:(double)radian;
+- (void)stop;
+- (void)moveTowards:(CGPoint)point;
 - (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(id<MNEnvironment>)environment;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;

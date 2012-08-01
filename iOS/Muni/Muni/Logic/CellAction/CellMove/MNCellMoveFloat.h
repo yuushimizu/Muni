@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MNCellMove.h"
+#import "MNCellAction.h"
 #import "MNUtility.h"
+#import "MNCell.h"
 
-@interface MNCellMovePuruPuru : MNCellMove
+@interface MNCellMoveFloat : MNCellAction
 
 @end

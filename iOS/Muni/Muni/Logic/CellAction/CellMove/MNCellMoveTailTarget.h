@@ -7,15 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MNCellMove.h"
+#import "MNCellAction.h"
+#import "MNCell.h"
 #import "MNCellScanningResult.h"
 
-@interface MNCellMoveTailTarget : MNCellMove {
+@interface MNCellMoveTailTarget : MNCellAction {
 	id<MNCell> _target;
 	BOOL (^_targetCondition)(id<MNCell> me, id<MNCell> other);
-	MNCellMove *_moveWithoutTarget;
+	MNCellAction *_moveWithoutTarget;
 }
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell> me, id<MNCell> other))condition withMoveWithoutTarget:(MNCellMove *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment;
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell> me, id<MNCell> other))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment;
 
 @end

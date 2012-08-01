@@ -7,13 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MNCellMove.h"
+#import "MNCellAction.h"
 #import "MNUtility.h"
+#import "MNCell.h"
 
-@interface MNCellMoveRandomWalk : MNCellMove {
+@interface MNCellMoveRandomWalk : MNCellAction {
 	CGPoint _destination;
+	int _maxIntervalFrames;
+	int _restIntervalFrames;
 }
 
-- (id)initWithEnvironment:(id<MNEnvironment>)environment;
+- (id)initWithMaxIntervalFrames:(int)maxIntervalFrames withEnvironment:(id<MNEnvironment>)environment;
 
 @end
