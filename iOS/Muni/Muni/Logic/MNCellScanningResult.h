@@ -8,16 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "MNCell.h"
-#import "MNPointInterval.h"
 
 @interface MNCellScanningResult : NSObject {
 	id<MNCell> _cell;
-	id<MNPointInterval> _interval;
+	double _distance;
 }
 
 @property (readonly) id<MNCell> cell;
-@property (readonly) id<MNPointInterval> interval;
+@property (readonly) double distance;
 
-- (id)initWithCell:(id<MNCell>)cell withInterval:(id<MNPointInterval>)interval;
+- (id)initWithCell:(id<MNCell>)cell withDistance:(double)distance;
 
 @end

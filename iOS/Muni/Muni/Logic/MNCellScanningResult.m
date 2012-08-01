@@ -11,12 +11,12 @@
 @implementation MNCellScanningResult
 
 @synthesize cell = _cell;
-@synthesize interval = _interval;
+@synthesize distance = _distance;
 
-- (id)initWithCell:(id<MNCell>)cell withInterval:(id<MNPointInterval>)interval {
+- (id)initWithCell:(id<MNCell>)cell withDistance:(double)distance {
 	if (self = [super init]) {
 		_cell = cell;
-		_interval = interval;
+		_distance = distance;
 	}
 	return self;
 }

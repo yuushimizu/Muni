@@ -61,15 +61,15 @@
 	NSMutableArray *scanningResults = [NSMutableArray array];
 	for (id<MNCell> candidate in [_spatialIndex objectsForRect:CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2)]) {
 		if (candidate.living) {
-			MNPointIntervalByPoints *intervalForCenter = [[MNPointIntervalByPoints alloc] initWithSource:center withDestination:candidate.center];
-			if (intervalForCenter.distance - candidate.radius <= radius && (condition == nil || condition(candidate))) {
-				MNPointIntervalByRadianAndDistance *interval = [[MNPointIntervalByRadianAndDistance alloc] initWithRadian:intervalForCenter.radian withDistance:intervalForCenter.distance - candidate.radius];
+			double distanceFromCenter = MNDistanceOfPoints(center, candidate.center);
+			if (distanceFromCenter - candidate.radius <= radius && (condition == nil || condition(candidate))) {
+				double distance = distanceFromCenter - candidate.radius;
 				int index = 0;
 				for (MNCellScanningResult *scannedResult in scanningResults) {
-					if (scannedResult.interval.distance > interval.distance) break;
+					if (scannedResult.distance > distance) break;
 					index += 1;
 				}
-				[scanningResults insertObject:[[MNCellScanningResult alloc] initWithCell:candidate withInterval:interval] atIndex:index];
+				[scanningResults insertObject:[[MNCellScanningResult alloc] initWithCell:candidate withDistance:distance] atIndex:index];
 			}
 		}
 	}
@@ -92,10 +92,10 @@
 			NSArray *healTargetScanningResults = [self cellsInCircle:deadCell.center withRadius:deadCell.radius * 3 withCondition:^(id<MNCell> cell){return (BOOL) (deadCell != cell && [cell hostility:deadCell]);}];
 			double totalDistance = 0;
 			for (MNCellScanningResult *scanningResult in healTargetScanningResults) {
-				totalDistance += scanningResult.interval.distance;
+				totalDistance += scanningResult.distance;
 			}
 			for (MNCellScanningResult *scanningResult in healTargetScanningResults) {
-				[scanningResult.cell heal:totalHealEnergy * MIN(scanningResult.interval.distance / totalDistance, 0.5)];
+				[scanningResult.cell heal:totalHealEnergy * MIN(scanningResult.distance / totalDistance, 0.5)];
 			}
 		}
 	}
@@ -111,8 +111,8 @@
 		}
 		id<MNCell> cell2 = cell;
 		if (cell1.living && cell2.living) {
-			MNPointIntervalByPoints *interval = [[MNPointIntervalByPoints alloc] initWithSource:cell1.center withDestination:cell2.center];
-			double piledDistance = cell1.radius + cell2.radius - interval.distance;
+			double distance = MNDistanceOfPoints(cell1.center, cell2.center);
+			double piledDistance = cell1.radius + cell2.radius - distance;
 			if (piledDistance > 0) {
 				double moveDistance1 = piledDistance * (cell1.weight / (cell1.weight + cell2.weight));
 				double moveDistance2 = piledDistance * (cell2.weight / (cell2.weight + cell1.weight));
@@ -136,7 +136,7 @@
 				} else {
 					damage1 = damage2 = 0;
 				}
-				double radian = interval.radian;
+				double radian = MNRadianFromPoints(cell1.center, cell2.center);
 				block(cell1, damage1, MNInvertRadian(radian), moveDistance1);
 				block(cell2, damage2, radian, moveDistance2);
 			}

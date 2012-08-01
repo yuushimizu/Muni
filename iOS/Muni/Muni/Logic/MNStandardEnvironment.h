@@ -10,7 +10,6 @@
 #import "MNEnvironment.h"
 #import "MNStandardCell.h"
 #import "MNSpatialIndex.h"
-#import "MNPointIntervalByPoints.h"
 #import "MNCellScanningResult.h"
 
 @interface MNStandardEnvironment : NSObject<MNEnvironment> {

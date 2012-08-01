@@ -161,7 +161,6 @@
 		_energy = 0;
 		_eventBits |= kMNCellEventDied;
 	}
-
 }
 
 - (void)damage:(double)damage {

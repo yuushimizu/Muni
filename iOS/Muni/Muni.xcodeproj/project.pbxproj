@@ -49,8 +49,6 @@
 		CAA99D6015C078D7002B85D2 /* MNUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D5F15C078D7002B85D2 /* MNUtility.m */; };
 		CAA99D6315C07E62002B85D2 /* Cell1EffectDie.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */; };
 		CAA99D6415C07E62002B85D2 /* Cell1EffectDie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */; };
-		CAA99D7C15C11648002B85D2 /* MNPointIntervalByPoints.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D7B15C11648002B85D2 /* MNPointIntervalByPoints.m */; };
-		CAA99D7F15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D7E15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m */; };
 		CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */; };
 		CAF14AB615BC957C000AD7A8 /* Cell1.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AB415BC957C000AD7A8 /* Cell1.png */; };
 		CAF14AB715BC957C000AD7A8 /* Cell1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AB515BC957C000AD7A8 /* Cell1@2x.png */; };
@@ -138,11 +136,6 @@
 		CAA99D5F15C078D7002B85D2 /* MNUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNUtility.m; path = Utility/MNUtility.m; sourceTree = "<group>"; };
 		CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell1EffectDie.png; path = ../images/Cell1EffectDie.png; sourceTree = "<group>"; };
 		CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell1EffectDie@2x.png"; path = "../images/Cell1EffectDie@2x.png"; sourceTree = "<group>"; };
-		CAA99D7615C10E2C002B85D2 /* MNPointInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNPointInterval.h; path = Utility/MNPointInterval.h; sourceTree = "<group>"; };
-		CAA99D7A15C11648002B85D2 /* MNPointIntervalByPoints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNPointIntervalByPoints.h; path = Utility/MNPointIntervalByPoints.h; sourceTree = "<group>"; };
-		CAA99D7B15C11648002B85D2 /* MNPointIntervalByPoints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNPointIntervalByPoints.m; path = Utility/MNPointIntervalByPoints.m; sourceTree = "<group>"; };
-		CAA99D7D15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNPointIntervalByRadianAndDistance.h; path = Utility/MNPointIntervalByRadianAndDistance.h; sourceTree = "<group>"; };
-		CAA99D7E15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNPointIntervalByRadianAndDistance.m; path = Utility/MNPointIntervalByRadianAndDistance.m; sourceTree = "<group>"; };
 		CAA99D8715C1AFCF002B85D2 /* MNStandardEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNStandardEnvironment.h; path = Logic/MNStandardEnvironment.h; sourceTree = "<group>"; };
 		CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNStandardEnvironment.m; path = Logic/MNStandardEnvironment.m; sourceTree = "<group>"; };
 		CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNEnvironment.h; path = Logic/MNEnvironment.h; sourceTree = "<group>"; };
@@ -384,11 +377,6 @@
 			children = (
 				CAA99D5E15C078D7002B85D2 /* MNUtility.h */,
 				CAA99D5F15C078D7002B85D2 /* MNUtility.m */,
-				CAA99D7615C10E2C002B85D2 /* MNPointInterval.h */,
-				CAA99D7A15C11648002B85D2 /* MNPointIntervalByPoints.h */,
-				CAA99D7B15C11648002B85D2 /* MNPointIntervalByPoints.m */,
-				CAA99D7D15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.h */,
-				CAA99D7E15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m */,
 				CAF4F96215C1BCE30018353B /* MNSpatialIndex.h */,
 				CAF4F96315C1BCE30018353B /* MNSpatialIndex.m */,
 			);
@@ -585,8 +573,6 @@
 				CAF14AE315BE6C34000AD7A8 /* MNSceneDirector.m in Sources */,
 				CAA99D5115C05CFA002B85D2 /* MNCellBornEffect.m in Sources */,
 				CAA99D6015C078D7002B85D2 /* MNUtility.m in Sources */,
-				CAA99D7C15C11648002B85D2 /* MNPointIntervalByPoints.m in Sources */,
-				CAA99D7F15C119B5002B85D2 /* MNPointIntervalByRadianAndDistance.m in Sources */,
 				CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */,
 				CAF4F96415C1BCE30018353B /* MNSpatialIndex.m in Sources */,
 				CAF4F98215C20D7A0018353B /* MNCellAttribute.m in Sources */,
