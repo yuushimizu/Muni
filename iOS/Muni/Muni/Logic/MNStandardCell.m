@@ -24,8 +24,8 @@
 @synthesize lastMovedRadian = _lastMovedRadian;
 
 - (double)randomEnergy {
-	// 500 - 8500
-	return 500 + MNRandomDouble(0, 20) * MNRandomDouble(0, 20) * MNRandomDouble(0, 20);
+	// 500 - 10500
+	return 500 + MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(5, 10);
 }
 
 - (double)randomSpeed {
@@ -93,17 +93,17 @@
 - (void)fixPositionWithEnvironment:(id<MNEnvironment>)environment {
 	if (_center.x < 0) {
 		_center.x = 0;
-		_movingSpeed = 0;
-	} else if (_center.x >= environment.field.size.width) {
+		_movingRadian = -_movingRadian;
+	} else if (_center.x > environment.field.size.width) {
 		_center.x = environment.field.size.width;
-		_movingSpeed = 0;
+		_movingRadian = -_movingRadian;
 	}
 	if (_center.y < 0) {
 		_center.y = 0;
-		_movingSpeed = 0;
-	} else if (_center.y >= environment.field.size.height) {
+		_movingRadian = -M_PI - _movingRadian;
+	} else if (_center.y > environment.field.size.height) {
 		_center.y = environment.field.size.height;
-		_movingSpeed = 0;
+		_movingRadian = -M_PI - _movingRadian;
 	}
 }
 

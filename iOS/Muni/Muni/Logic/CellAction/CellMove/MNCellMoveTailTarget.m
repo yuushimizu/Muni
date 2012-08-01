@@ -36,10 +36,12 @@
 	double distance = MNDistanceOfPoints(cell.center, _target.center) - cell.radius - _target.radius;
 	if (!_target || !_target.living || distance > cell.sight) [self resetTargetWithCell:cell Environment:environment];
 	if (_target) {
-		if (distance > _minDistance) {
+		if (distance + cell.radius > _minDistance) {
 			[cell moveTowards:_target.center];
-		} else {
+		} else if (distance < _minDistance) {
 			[cell moveFor:MNInvertRadian(MNRadianFromPoints(cell.center, _target.center))];
+		} else {
+			[cell stop];
 		}
 	} else {
 		[_moveWithoutTarget sendFrameWithCell:cell WithEnvironment:environment];

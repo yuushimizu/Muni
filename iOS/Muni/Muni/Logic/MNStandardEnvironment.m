@@ -19,7 +19,7 @@
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
-		_incidence = 0.13;
+		_incidence = 0.12;
 		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
 	}
 	return self;
@@ -113,7 +113,7 @@
 				[cell1 moveForFix:invertedRadian distance:piledDistance * (weight2 / (weight1 + weight2))];
 				[cell2 moveForFix:radian distance:piledDistance * (weight1 / (weight2 + weight1))];
 				if ([cell1 hostility:cell2]) {
-					double totalKnockedbackdDistance = MAX(cell1.lastMovedDistance * cos(radian - cell1.lastMovedRadian) + cell2.lastMovedDistance * cos(invertedRadian - cell2.lastMovedRadian) * 2, MIN(cell1.radius, cell2.radius) * 0.25);
+					double totalKnockedbackdDistance = MAX(cell1.lastMovedDistance * cos(radian - cell1.lastMovedRadian) + cell2.lastMovedDistance * cos(invertedRadian - cell2.lastMovedRadian), MIN(cell1.radius, cell2.radius) * 0.1);
 					double minKnockedbackDistance = totalKnockedbackdDistance * 0.1;
 					double restKnockedbackDistance = totalKnockedbackdDistance * 0.8;
 					double density1 = cell1.density;
@@ -121,12 +121,14 @@
 					if (![cell1 eventOccurredPrevious:kMNCellEventDamaged]) {
 						double knockedback1 = minKnockedbackDistance + (restKnockedbackDistance * (density2	/ (density1 + density2)));
 						[cell1 moveFor:invertedRadian withForce:knockedback1];
-						[cell1 damage:knockedback1 * 10];
+						double damage = knockedback1 * 10;
+						[cell1 damage:damage];
 					}
 					if (![cell2 eventOccurredPrevious:kMNCellEventDamaged]) {
 						double knockedback2 = minKnockedbackDistance + (restKnockedbackDistance * (density1 / (density2 + density1)));
 						[cell2 moveFor:radian withForce:knockedback2];
-						[cell2 damage:knockedback2 * 10];
+						double damage = knockedback2 * 10;
+						[cell2 damage:damage];
 					}
 				}
 			}
