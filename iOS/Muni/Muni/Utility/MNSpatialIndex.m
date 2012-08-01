@@ -35,11 +35,6 @@
 	return [self initWithBlockSize:CGSizeMake(totalSize.width / blockCount.width, totalSize.height / blockCount.height) withBlockCount:blockCount];
 }
 
-- (void)addObject:(id)object forKeys:(NSArray *)keys {
-	for (NSNumber *key in keys) [[_objects objectAtIndex:[key intValue]] addObject:object];
-	[_objectKeys setObject:keys forKey:[NSValue valueWithNonretainedObject:object]];
-}
-
 - (NSArray *)keysFromRect:(CGRect)rect {
 	int leftKey = rect.origin.x / _blockSize.width;
 	if (leftKey < 0) leftKey = 0;
@@ -58,33 +53,25 @@
 	return keys;
 }
 
-- (void)addObject:(id)object forRect:(CGRect)rect {
-	[self addObject:object forKeys:[self keysFromRect:rect]];
-}
-
 - (void)removeObject:(id)object {
 	NSValue *objectAsKey = [NSValue valueWithNonretainedObject:object];
 	NSArray *keys = [_objectKeys objectForKey:objectAsKey];
 	if (keys) {
-		for (NSNumber *key in keys) [[_objects objectAtIndex:[key intValue]] removeObject:object];
+		for (NSNumber *key in keys) [[_objects objectAtIndex:key.intValue] removeObject:object];
 		[_objectKeys removeObjectForKey:objectAsKey];
 	}
 }
 
-- (void)updateObject:(id)object withKeys:(NSArray *)keys {
-	NSArray *oldKeys = [_objectKeys objectForKey:[NSValue valueWithNonretainedObject:object]];
+- (void)addOrUpdateObject:(id)object withRect:(CGRect)rect {
+	NSArray *keys = [self keysFromRect:rect];
+	NSValue *objectAsKey = [NSValue valueWithNonretainedObject:object];
+	NSArray *oldKeys = [_objectKeys objectForKey:objectAsKey];
 	if (oldKeys) {
-		if (![keys isEqualToArray:oldKeys]) {
-			[self removeObject:object];
-			[self addObject:object forKeys:keys];
-		}
-	} else {
-		[self addObject:object forKeys:keys];
+		if ([keys isEqualToArray:oldKeys]) return;
+		for (NSNumber *key in oldKeys) [[_objects objectAtIndex:key.intValue] removeObject:object];
 	}
-}
-
-- (void)updateObject:(id)object withRect:(CGRect)rect {
-	[self updateObject:object withKeys:[self keysFromRect:rect]];
+	for (NSNumber *key in keys) [[_objects objectAtIndex:key.intValue] addObject:object];
+	[_objectKeys setObject:keys forKey:objectAsKey];
 }
 
 - (NSSet *)objectsForKeys:(NSArray *)keys {

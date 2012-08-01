@@ -15,27 +15,19 @@
 
 - (id)initWithSize:(CGSize)size withMaxCellCount:(int)maxCellCount {
 	if (self = [super init]) {
-		srand(100);
 		_field = [[MNField alloc] initWithSize:size];
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
-		_incidence = 300.15;
+		_incidence = 0.1;
 		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
 	}
 	return self;
 }
 
-
- - (void)addCellToSpatialIndex:(id<MNCell>)cell {
-	double radius = cell.radius;
-	[_spatialIndex addObject:cell forRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
-}
-
-
 - (void)updateSpatialIndexFor:(id<MNCell>)cell {
 	double radius = cell.radius;
-	[_spatialIndex updateObject:cell withRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
+	[_spatialIndex addOrUpdateObject:cell withRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
 }
 
 - (void)addCell:(id<MNCell>)cell {
@@ -52,7 +44,7 @@
 			index += 1;
 		}
 		[_cells insertObject:cell atIndex:index];
-		[self addCellToSpatialIndex:cell];
+		[self updateSpatialIndexFor:cell];
 	}
 	[_addedCellsQueue removeAllObjects];
 }

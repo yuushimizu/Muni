@@ -21,9 +21,8 @@
 
 - (id)initWithBlockSize:(CGSize)blockSize withBlockCount:(CGSize)blockCount;
 - (id)initWithTotalSize:(CGSize)totalSize withBlockCount:(CGSize)blockCount;
-- (void)addObject:(id)object forRect:(CGRect)rect;
 - (void)removeObject:(id)object;
-- (void)updateObject:(id)object withRect:(CGRect)rect;
+- (void)addOrUpdateObject:(id)object withRect:(CGRect)rect;
 - (NSSet *)objectsForRect:(CGRect)rect;
 - (NSArray *)collisions;
 
