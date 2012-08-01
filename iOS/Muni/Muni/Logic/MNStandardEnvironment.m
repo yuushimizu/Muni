@@ -102,7 +102,14 @@
 }
 
 - (void)detectCellsHitting:(void (^)(id<MNCell> cell, double damage, double moveRadian, double moveDistance))block {
-	[_spatialIndex enumerateCollisionsUsingBlock:^(id<MNCell> cell1, id<MNCell> cell2) {
+	NSArray *collisions = [_spatialIndex collisions];
+	id<MNCell> cell1 = nil;
+	for (id<MNCell> cell in collisions) {
+		if (cell1 == nil) {
+			cell1 = cell;
+			continue;
+		}
+		id<MNCell> cell2 = cell;
 		if (cell1.living && cell2.living) {
 			MNPointIntervalByPoints *interval = [[MNPointIntervalByPoints alloc] initWithSource:cell1.center withDestination:cell2.center];
 			double piledDistance = cell1.radius + cell2.radius - interval.distance;
@@ -134,7 +141,8 @@
 				block(cell2, damage2, radian, moveDistance2);
 			}
 		}
-	}];
+		cell1 = nil;
+	}
 }
 
 - (void)applyCellsHitting {

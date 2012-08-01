@@ -25,6 +25,6 @@
 - (void)removeObject:(id)object;
 - (void)updateObject:(id)object withRect:(CGRect)rect;
 - (NSSet *)objectsForRect:(CGRect)rect;
-- (void)enumerateCollisionsUsingBlock:(void (^)(id object1, id object2))block;
+- (NSArray *)collisions;
 
 @end

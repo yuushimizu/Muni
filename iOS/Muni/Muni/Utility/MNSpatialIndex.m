@@ -99,7 +99,8 @@
 	return [self objectsForKeys:[self keysFromRect:rect]];
 }
 
-- (void)enumerateCollisionsUsingBlock:(void (^)(id object1, id object2))block {
+- (NSArray *)collisions {
+	NSMutableArray *collisions = [NSMutableArray array];
 	NSMutableArray *processedObjects1 = [NSMutableArray array];
 	NSMutableArray *processedObjects2 = [NSMutableArray array];
 	for (NSArray *objectsInBlock in _objects) {
@@ -113,12 +114,14 @@
 				}
 				[processedObjects1 addObject:object1];
 				[processedObjects2 addObject:object2];
-				block(object1, object2);
+				[collisions addObject:object1];
+				[collisions addObject:object2];
 			ignore:
 				;
 			}
 		}
 	}
+	return collisions;
 }
 
 @end
