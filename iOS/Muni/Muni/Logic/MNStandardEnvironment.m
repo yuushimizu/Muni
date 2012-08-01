@@ -21,9 +21,7 @@
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
 		_incidence = 300.15;
-//		_spatialIndex = [[MNQuadtreeSpatialIndex alloc] initWithAreaSize:_field.size withMaxDepth:3];
 		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
-//		_spatialIndex = [[MNSpatialIndex2 alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
 	}
 	return self;
 }
@@ -37,7 +35,6 @@
 
 - (void)updateSpatialIndexFor:(id<MNCell>)cell {
 	double radius = cell.radius;
-//	[_spatialIndex addOrUpdateObject:cell forRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
 	[_spatialIndex updateObject:cell withRect:CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2)];
 }
 
@@ -55,7 +52,6 @@
 			index += 1;
 		}
 		[_cells insertObject:cell atIndex:index];
-//		[self updateSpatialIndexFor:cell];
 		[self addCellToSpatialIndex:cell];
 	}
 	[_addedCellsQueue removeAllObjects];
@@ -63,7 +59,6 @@
 
 - (NSArray *)cellsInCircle:(CGPoint)center withRadius:(double)radius withCondition:(BOOL (^)(id<MNCell> other))condition {
 	NSMutableArray *scanningResults = [NSMutableArray array];
-//	[_spatialIndex enumerateObjectsInRect:CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2) usingBlock:^(id<MNCell> candidate) {
 	for (id<MNCell> candidate in [_spatialIndex objectsForRect:CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2)]) {
 		if (candidate.living) {
 			MNPointIntervalByPoints *intervalForCenter = [[MNPointIntervalByPoints alloc] initWithSource:center withDestination:candidate.center];
@@ -77,7 +72,6 @@
 				[scanningResults insertObject:[[MNCellScanningResult alloc] initWithCell:candidate withInterval:interval] atIndex:index];
 			}
 		}
-//	}];
 	}
 	return scanningResults;
 }
