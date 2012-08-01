@@ -29,6 +29,7 @@
 @property (readonly) double sight;
 @property (readonly) BOOL living;
 @property (readonly) CGPoint center;
+@property (readonly) double movingRadian;
 
 - (void)moveFor:(double)radian withForce:(double)force;
 - (void)moveFor:(double)radian;

@@ -38,7 +38,7 @@
 }
 
 - (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
-	int decisionTypeWithoutTarget = MNRandomInt(0, 3);
+	int decisionTypeWithoutTarget = MNRandomInt(0, 4);
 	MNCellAction *(^sourceWithoutTarget)(id<MNCell>, id<MNEnvironment>);
 	if (decisionTypeWithoutTarget == 0) {
 		int maxIntervalFrames = MNRandomInt(0, 100);
@@ -46,6 +46,10 @@
 			return [[MNCellMoveRandomWalk alloc] initWithMaxIntervalFrames:maxIntervalFrames withEnvironment:environment];
 		};
 	} else if (decisionTypeWithoutTarget == 1) {
+		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveBound alloc] init];
+		};
+	} else if (decisionTypeWithoutTarget == 2) {
 		sourceWithoutTarget =  ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveFloat alloc] init];
 		};
@@ -74,7 +78,7 @@
 
 - (NSArray *)randomActionSources {
 	NSMutableArray *actionSources = [NSMutableArray arrayWithObject:[self randomMoveSource]];
-	if (MNRandomBool()) {
+	if (MNRandomInt(0, 100) < 75) {
 		[actionSources addObject:^(id<MNCell> cell) {
 			return [[MNCellActionMultiply alloc] init];
 		}];

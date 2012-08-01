@@ -12,7 +12,7 @@
 
 - (id)init {
 	if (self = [super init]) {
-		_restCount = 2;
+		_restCount = MNRandomDouble(1, 2);
 		_incidence = 0.002;
 	}
 	return self;

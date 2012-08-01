@@ -14,6 +14,7 @@
 #import "MNCellAction.h"
 #import "MNCellActionMultiply.h"
 #import "MNCellMoveRandomWalk.h"
+#import "MNCellMoveBound.h"
 #import "MNCellMoveFloat.h"
 #import "MNCellMoveImmovable.h"
 #import "MNCellMoveTailTarget.h"
@@ -40,7 +41,6 @@
 }
 
 @property (readonly) double speed;
-@property (readonly) double movingRadian;
 @property (readonly) NSArray *actionSources;
 @property (readonly) double lastMovedRadian;
 @property (readonly) double lastMovedDistance;
