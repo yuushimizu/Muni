@@ -24,13 +24,13 @@
 @synthesize lastMovedRadian = _lastMovedRadian;
 
 - (double)randomEnergy {
-	// 500 - 8500
-	return 500 + MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(3, 8);
+	// 500 - 5500
+	return 500 + MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(0, 5);
 }
 
 - (double)randomSpeed {
-	// 0.5 - 6.5
-	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 3);
+	// 0.5 - 4.5
+	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 2);
 }
 
 - (MNCellAttribute *)randomAttribute {
@@ -58,8 +58,7 @@
 			return [[MNCellMoveImmovable alloc] init];
 		};
 	}
-	int decisionMoveWithTarget = MNRandomInt(0, 100);
-	if (decisionMoveWithTarget < 20) {
+	if (MNRandomInt(0, 100) < 20) {
 		return sourceWithoutTarget;
 	} else {
 		BOOL (^targetCondition)(id<MNCell> me, id<MNCell> other);
@@ -69,21 +68,28 @@
 		} else {
 			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && ![me hostility:other]);};
 		}
-		if (decisionMoveWithTarget < 40) {
+		int decisionMoveWithTarget = MNRandomInt(0, 100);
+		if (decisionMoveWithTarget < 20) {
 			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 				return [[MNCellMoveApproachTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 			};
-		} else if (decisionMoveWithTarget < 60) {
+		} else if (decisionMoveWithTarget < 40) {
 			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 				return [[MNCellMoveEscapeTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 			};
-		} else if (decisionMoveWithTarget < 80) {
+		} else if (decisionMoveWithTarget < 60) {
 			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 				return [[MNCellMoveApproachNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 			};
-		} else {
+		} else if (decisionMoveWithTarget < 80) {
 			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 				return [[MNCellMoveEscapeNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
+			};
+		} else {
+			double distanceRate = MNRandomDouble(1, 4);
+			double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
+			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+				return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease withEnvironment:environment];
 			};
 		}
 	}
@@ -145,6 +151,10 @@
 
 - (void)moveFor:(double)radian {
 	[self moveFor:radian withTargetSpeed:_speed];
+}
+
+- (void)accelerate {
+	[self moveFor:_movingRadian];
 }
 
 - (void)stop {

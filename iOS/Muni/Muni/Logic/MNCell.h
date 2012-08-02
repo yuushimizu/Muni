@@ -29,10 +29,10 @@
 @property (readonly) double sight;
 @property (readonly) BOOL living;
 @property (readonly) CGPoint center;
-@property (readonly) double movingRadian;
 
 - (void)moveFor:(double)radian withForce:(double)force;
 - (void)moveFor:(double)radian;
+- (void)accelerate;
 - (void)stop;
 - (void)moveTowards:(CGPoint)point;
 - (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(id<MNEnvironment>)environment;

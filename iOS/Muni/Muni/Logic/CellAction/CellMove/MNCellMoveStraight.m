@@ -20,7 +20,7 @@
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
 	if (_moved) {
-		[cell moveFor:cell.movingRadian];
+		[cell accelerate];
 	} else {
 		_moved = YES;
 		[cell moveFor:_radian];

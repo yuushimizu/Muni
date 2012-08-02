@@ -24,6 +24,7 @@
 		CA2C3D3515CA5F21003E1299 /* MNCellMoveWithNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3415CA5F21003E1299 /* MNCellMoveWithNearestTarget.m */; };
 		CA2C3D3B15CA654E003E1299 /* MNCellMoveEscapeTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3A15CA6547003E1299 /* MNCellMoveEscapeTarget.m */; };
 		CA2C3D3E15CA6753003E1299 /* MNCellMoveEscapeNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3D15CA6752003E1299 /* MNCellMoveEscapeNearestTarget.m */; };
+		CA2C3D4115CA6945003E1299 /* MNCellMoveMoon.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D4015CA6944003E1299 /* MNCellMoveMoon.m */; };
 		CA8BF7BD15BC8B2900B7B572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */; };
 		CA8BF7BF15BC8B2900B7B572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */; };
 		CA8BF7C115BC8B2900B7B572 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7C015BC8B2900B7B572 /* CoreGraphics.framework */; };
@@ -110,6 +111,8 @@
 		CA2C3D3A15CA6547003E1299 /* MNCellMoveEscapeTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveEscapeTarget.m; path = Logic/CellAction/CellMove/MNCellMoveEscapeTarget.m; sourceTree = "<group>"; };
 		CA2C3D3C15CA6751003E1299 /* MNCellMoveEscapeNearestTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveEscapeNearestTarget.h; path = Logic/CellAction/CellMove/MNCellMoveEscapeNearestTarget.h; sourceTree = "<group>"; };
 		CA2C3D3D15CA6752003E1299 /* MNCellMoveEscapeNearestTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveEscapeNearestTarget.m; path = Logic/CellAction/CellMove/MNCellMoveEscapeNearestTarget.m; sourceTree = "<group>"; };
+		CA2C3D3F15CA6943003E1299 /* MNCellMoveMoon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveMoon.h; path = Logic/CellAction/CellMove/MNCellMoveMoon.h; sourceTree = "<group>"; };
+		CA2C3D4015CA6944003E1299 /* MNCellMoveMoon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveMoon.m; path = Logic/CellAction/CellMove/MNCellMoveMoon.m; sourceTree = "<group>"; };
 		CA8BF7B815BC8B2900B7B572 /* Muni.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muni.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -420,6 +423,8 @@
 				CA2C3D3A15CA6547003E1299 /* MNCellMoveEscapeTarget.m */,
 				CA2C3D3C15CA6751003E1299 /* MNCellMoveEscapeNearestTarget.h */,
 				CA2C3D3D15CA6752003E1299 /* MNCellMoveEscapeNearestTarget.m */,
+				CA2C3D3F15CA6943003E1299 /* MNCellMoveMoon.h */,
+				CA2C3D4015CA6944003E1299 /* MNCellMoveMoon.m */,
 			);
 			name = Move;
 			sourceTree = "<group>";
@@ -608,6 +613,7 @@
 				CA2C3D3515CA5F21003E1299 /* MNCellMoveWithNearestTarget.m in Sources */,
 				CA2C3D3B15CA654E003E1299 /* MNCellMoveEscapeTarget.m in Sources */,
 				CA2C3D3E15CA6753003E1299 /* MNCellMoveEscapeNearestTarget.m in Sources */,
+				CA2C3D4115CA6945003E1299 /* MNCellMoveMoon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

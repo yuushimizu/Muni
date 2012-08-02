@@ -21,6 +21,7 @@
 #import "MNCellMoveEscapeTarget.h"
 #import "MNCellMoveApproachNearestTarget.h"
 #import "MNCellMoveEscapeNearestTarget.h"
+#import "MNCellMoveMoon.h"
 
 @interface MNStandardCell : NSObject<MNCell> {
 	int _type;
@@ -44,6 +45,7 @@
 }
 
 @property (readonly) double speed;
+@property (readonly) double movingRadian;
 @property (readonly) NSArray *actionSources;
 @property (readonly) double lastMovedRadian;
 @property (readonly) double lastMovedDistance;
