@@ -59,7 +59,6 @@
 		};
 	}
 	int decisionMoveWithTarget = MNRandomInt(0, 100);
-	decisionMoveWithTarget = 40;
 	if (decisionMoveWithTarget < 20) {
 		return sourceWithoutTarget;
 	} else {
