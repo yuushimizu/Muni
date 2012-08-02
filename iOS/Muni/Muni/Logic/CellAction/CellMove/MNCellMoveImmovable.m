@@ -10,7 +10,7 @@
 
 @implementation MNCellMoveImmovable
 
-- (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
 	[cell stop];
 }
 

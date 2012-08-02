@@ -18,7 +18,7 @@
 	return self;
 }
 
-- (void)sendFrameWithCell:(id<MNCell>)cell WithEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
 	if (_restCount <= 0) return;
 	if (MNRandomDouble(0, 1) >= _incidence) return;
 	[cell multiplyWithEnvironment:environment];

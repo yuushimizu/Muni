@@ -1,8 +1,8 @@
 //
-//  MNCellMoveTailTarget.h
+//  MNCellMoveTailNearestTarget.h
 //  Muni
 //
-//  Created by Yuu Shimizu on 7/27/12.
+//  Created by Yuu Shimizu on 8/2/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,8 +11,7 @@
 #import "MNCell.h"
 #import "MNCellScanningResult.h"
 
-@interface MNCellMoveTailTarget : MNCellAction {
-	id<MNCell> _target;
+@interface MNCellMoveTailNearestTarget : MNCellAction {
 	BOOL (^_targetCondition)(id<MNCell> me, id<MNCell> other);
 	MNCellAction *_moveWithoutTarget;
 }

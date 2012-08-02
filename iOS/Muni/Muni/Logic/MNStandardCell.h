@@ -18,6 +18,7 @@
 #import "MNCellMoveFloat.h"
 #import "MNCellMoveImmovable.h"
 #import "MNCellMoveTailTarget.h"
+#import "MNCellMoveTailNearestTarget.h"
 
 @interface MNStandardCell : NSObject<MNCell> {
 	int _type;
