@@ -40,6 +40,7 @@
 - (void)damage:(double)damage;
 - (void)heal:(double)energy;
 - (void)multiplyWithEnvironment:(id<MNEnvironment>)environment;
+- (void)makeMoonWithDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment;
 - (BOOL)eventOccurred:(int)event;
 - (BOOL)eventOccurredPrevious:(int)event;
 - (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment;

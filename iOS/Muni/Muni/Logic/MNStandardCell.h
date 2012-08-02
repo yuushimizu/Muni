@@ -13,6 +13,7 @@
 #import "MNCellAttribute.h"
 #import "MNCellAction.h"
 #import "MNCellActionMultiply.h"
+#import "MNCellActionMakeMoon.h"
 #import "MNCellMoveRandomWalk.h"
 #import "MNCellMoveStraight.h"
 #import "MNCellMoveFloat.h"

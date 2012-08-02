@@ -102,6 +102,15 @@
 			return [[MNCellActionMultiply alloc] init];
 		}];
 	}
+	if (MNRandomInt(0, 100) < 10) {
+		double distanceRate = MNRandomDouble(1, 2);
+		double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
+		double maxCount = MNRandomInt(1, 4) * MNRandomInt(1, 2);
+		double incidence = 0.001;
+		[actionSources addObject:^(id<MNCell> cell) {
+			return [[MNCellActionMakeMoon alloc] initWithDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease withMaxCount:maxCount withIncidence:incidence];
+		}];
+	}
 	return actionSources;
 }
 
@@ -203,12 +212,35 @@
 		_movingSpeed = 0;
 		_movingRadian = MNRandomRadian();
 		_sight = other.sight * MNRandomDouble(0.9, 1.1);
-		_center = other.center;
 		_center = MNMovedPoint(other.center, MNRandomRadian(), other.radius);
 		[self fixPositionWithEnvironment:environment];
 		_eventBits = kMNCellEventBorned;
 		_previousEventBits = 0;
 		_actionSources = other.actionSources;
+		[self resetActionsWithEnvironment:environment];
+		_distanceForFix = 0;
+	}
+	return self;
+}
+
+- (id)initAsMoonOf:(MNStandardCell *)parent withDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment {
+	if (self = [super init]) {
+		_type = parent.type;
+		_maxEnergy = parent.maxEnergy * 0.5;
+		_energy = _maxEnergy * 0.5;
+		_density = parent.density;
+		_attribute = parent.attribute;
+		_speed = parent.speed;
+		_movingSpeed = 0;
+		_movingRadian = MNRandomRadian();
+		_sight = parent.sight + distance;
+		_center = MNMovedPoint(parent.center, MNRandomRadian(), parent.radius + distance + self.radius);
+		[self fixPositionWithEnvironment:environment];
+		_eventBits = kMNCellEventBorned;
+		_previousEventBits = 0;
+		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:[[MNCellMoveFloat alloc] init] withDistance:distance withRadianIncrease:radianIncrease withEnvironment:environment];
+		}];
 		[self resetActionsWithEnvironment:environment];
 		_distanceForFix = 0;
 	}
@@ -257,6 +289,12 @@
 	[self decreaseEnergy:self.maxEnergy * 0.25];
 	MNStandardCell *newCell = [[MNStandardCell alloc] initByOther:self withEnvironment:environment];
 	[environment addCell:newCell];
+}
+
+- (void)makeMoonWithDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment {
+	[self decreaseEnergy:self.maxEnergy * 0.1];
+	MNStandardCell *moon = [[MNStandardCell alloc] initAsMoonOf:self withDistance:distance withRadianIncrease:radianIncrease withEnvironment:environment];
+	[environment addCell:moon];
 }
 
 - (BOOL)eventOccurred:(int)event {
