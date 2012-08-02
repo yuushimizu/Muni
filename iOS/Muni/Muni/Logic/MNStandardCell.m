@@ -47,7 +47,7 @@
 		};
 	} else if (decisionMoveWithoutTarget < 50) {
 		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMoveBound alloc] init];
+			return [[MNCellMoveStraight alloc] init];
 		};
 	} else if (decisionMoveWithoutTarget < 75) {
 		sourceWithoutTarget =  ^(id<MNCell> cell, id<MNEnvironment> environment) {
@@ -59,7 +59,7 @@
 		};
 	}
 	int decisionMoveWithTarget = MNRandomInt(0, 100);
-	decisionMoveWithTarget = 80;
+	decisionMoveWithTarget = 40;
 	if (decisionMoveWithTarget < 20) {
 		return sourceWithoutTarget;
 	} else {

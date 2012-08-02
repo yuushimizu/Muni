@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MNCellMoveBound.h"
+#import "MNCellMoveStraight.h"
 
-@implementation MNCellMoveBound
+@implementation MNCellMoveStraight
 
 - (id)init {
 	if (self = [super init]) {

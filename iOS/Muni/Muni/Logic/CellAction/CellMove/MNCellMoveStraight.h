@@ -11,7 +11,7 @@
 #import "MNCell.h"
 #import "MNUtility.h"
 
-@interface MNCellMoveBound : MNCellAction {
+@interface MNCellMoveStraight : MNCellAction {
 	double _radian;
 	BOOL _moved;
 }

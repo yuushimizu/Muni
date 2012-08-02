@@ -14,7 +14,7 @@
 #import "MNCellAction.h"
 #import "MNCellActionMultiply.h"
 #import "MNCellMoveRandomWalk.h"
-#import "MNCellMoveBound.h"
+#import "MNCellMoveStraight.h"
 #import "MNCellMoveFloat.h"
 #import "MNCellMoveImmovable.h"
 #import "MNCellMoveTailTarget.h"
