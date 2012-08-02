@@ -64,18 +64,26 @@
 	} else {
 		BOOL (^targetCondition)(id<MNCell> me, id<MNCell> other);
 		int decisionTargetCondition = MNRandomInt(0, 100);
-		if (decisionTargetCondition < 75) {
+		if (decisionTargetCondition < 50) {
 			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);};
 		} else {
 			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && ![me hostility:other]);};
 		}
-		if (decisionMoveWithTarget < 60) {
+		if (decisionMoveWithTarget < 40) {
 			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 				return [[MNCellMoveApproachTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 			};
-		} else {
+		} else if (decisionMoveWithTarget < 60) {
+			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+				return [[MNCellMoveEscapeTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
+			};
+		} else if (decisionMoveWithTarget < 80) {
 			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 				return [[MNCellMoveApproachNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
+			};
+		} else {
+			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+				return [[MNCellMoveEscapeNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 			};
 		}
 	}
