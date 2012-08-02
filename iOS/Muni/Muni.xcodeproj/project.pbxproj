@@ -13,13 +13,13 @@
 		CA02DC9A15C47FE20070B1F5 /* MNCellMoveImmovable.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9215C47FE20070B1F5 /* MNCellMoveImmovable.m */; };
 		CA02DC9B15C47FE20070B1F5 /* MNCellMoveFloat.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9415C47FE20070B1F5 /* MNCellMoveFloat.m */; };
 		CA02DC9C15C47FE20070B1F5 /* MNCellMoveRandomWalk.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9615C47FE20070B1F5 /* MNCellMoveRandomWalk.m */; };
-		CA02DC9D15C47FE20070B1F5 /* MNCellMoveTailTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9815C47FE20070B1F5 /* MNCellMoveTailTarget.m */; };
+		CA02DC9D15C47FE20070B1F5 /* MNCellMoveApproachTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9815C47FE20070B1F5 /* MNCellMoveApproachTarget.m */; };
 		CA02DC9F15C481DC0070B1F5 /* MNCellMoveImmovable.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9215C47FE20070B1F5 /* MNCellMoveImmovable.m */; };
 		CA02DCA015C481DF0070B1F5 /* MNCellMoveFloat.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9415C47FE20070B1F5 /* MNCellMoveFloat.m */; };
 		CA02DCA115C481E30070B1F5 /* MNCellMoveRandomWalk.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9615C47FE20070B1F5 /* MNCellMoveRandomWalk.m */; };
-		CA02DCA215C481E80070B1F5 /* MNCellMoveTailTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9815C47FE20070B1F5 /* MNCellMoveTailTarget.m */; };
+		CA02DCA215C481E80070B1F5 /* MNCellMoveApproachTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9815C47FE20070B1F5 /* MNCellMoveApproachTarget.m */; };
 		CA2C3D2C15C9E196003E1299 /* MNCellMoveStraight.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D2B15C9E196003E1299 /* MNCellMoveStraight.m */; };
-		CA2C3D2F15CA46F1003E1299 /* MNCellMoveTailNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D2E15CA46F1003E1299 /* MNCellMoveTailNearestTarget.m */; };
+		CA2C3D2F15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D2E15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m */; };
 		CA2C3D3215CA5301003E1299 /* MNCellMoveWithTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3115CA5301003E1299 /* MNCellMoveWithTarget.m */; };
 		CA2C3D3515CA5F21003E1299 /* MNCellMoveWithNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3415CA5F21003E1299 /* MNCellMoveWithNearestTarget.m */; };
 		CA8BF7BD15BC8B2900B7B572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */; };
@@ -94,12 +94,12 @@
 		CA02DC9415C47FE20070B1F5 /* MNCellMoveFloat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveFloat.m; path = Logic/CellAction/CellMove/MNCellMoveFloat.m; sourceTree = "<group>"; };
 		CA02DC9515C47FE20070B1F5 /* MNCellMoveRandomWalk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveRandomWalk.h; path = Logic/CellAction/CellMove/MNCellMoveRandomWalk.h; sourceTree = "<group>"; };
 		CA02DC9615C47FE20070B1F5 /* MNCellMoveRandomWalk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveRandomWalk.m; path = Logic/CellAction/CellMove/MNCellMoveRandomWalk.m; sourceTree = "<group>"; };
-		CA02DC9715C47FE20070B1F5 /* MNCellMoveTailTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveTailTarget.h; path = Logic/CellAction/CellMove/MNCellMoveTailTarget.h; sourceTree = "<group>"; };
-		CA02DC9815C47FE20070B1F5 /* MNCellMoveTailTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveTailTarget.m; path = Logic/CellAction/CellMove/MNCellMoveTailTarget.m; sourceTree = "<group>"; };
+		CA02DC9715C47FE20070B1F5 /* MNCellMoveApproachTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; name = MNCellMoveApproachTarget.h; path = Logic/CellAction/CellMove/MNCellMoveApproachTarget.h; sourceTree = "<group>"; };
+		CA02DC9815C47FE20070B1F5 /* MNCellMoveApproachTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveApproachTarget.m; path = Logic/CellAction/CellMove/MNCellMoveApproachTarget.m; sourceTree = "<group>"; };
 		CA2C3D2A15C9E196003E1299 /* MNCellMoveStraight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveStraight.h; path = Logic/CellAction/CellMove/MNCellMoveStraight.h; sourceTree = "<group>"; };
 		CA2C3D2B15C9E196003E1299 /* MNCellMoveStraight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveStraight.m; path = Logic/CellAction/CellMove/MNCellMoveStraight.m; sourceTree = "<group>"; };
-		CA2C3D2D15CA46F1003E1299 /* MNCellMoveTailNearestTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveTailNearestTarget.h; path = Logic/CellAction/MNCellMoveTailNearestTarget.h; sourceTree = "<group>"; };
-		CA2C3D2E15CA46F1003E1299 /* MNCellMoveTailNearestTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveTailNearestTarget.m; path = Logic/CellAction/MNCellMoveTailNearestTarget.m; sourceTree = "<group>"; };
+		CA2C3D2D15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; name = MNCellMoveApproachNearestTarget.h; path = Logic/CellAction/MNCellMoveApproachNearestTarget.h; sourceTree = "<group>"; };
+		CA2C3D2E15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveApproachNearestTarget.m; path = Logic/CellAction/MNCellMoveApproachNearestTarget.m; sourceTree = "<group>"; };
 		CA2C3D3015CA5300003E1299 /* MNCellMoveWithTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCellMoveWithTarget.h; sourceTree = "<group>"; };
 		CA2C3D3115CA5301003E1299 /* MNCellMoveWithTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCellMoveWithTarget.m; sourceTree = "<group>"; };
 		CA2C3D3315CA5F20003E1299 /* MNCellMoveWithNearestTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveWithNearestTarget.h; path = Logic/CellAction/CellMove/MNCellMoveWithNearestTarget.h; sourceTree = "<group>"; };
@@ -400,12 +400,12 @@
 				CA02DC9415C47FE20070B1F5 /* MNCellMoveFloat.m */,
 				CA02DC9515C47FE20070B1F5 /* MNCellMoveRandomWalk.h */,
 				CA02DC9615C47FE20070B1F5 /* MNCellMoveRandomWalk.m */,
-				CA02DC9715C47FE20070B1F5 /* MNCellMoveTailTarget.h */,
-				CA02DC9815C47FE20070B1F5 /* MNCellMoveTailTarget.m */,
+				CA02DC9715C47FE20070B1F5 /* MNCellMoveApproachTarget.h */,
+				CA02DC9815C47FE20070B1F5 /* MNCellMoveApproachTarget.m */,
 				CA2C3D2A15C9E196003E1299 /* MNCellMoveStraight.h */,
 				CA2C3D2B15C9E196003E1299 /* MNCellMoveStraight.m */,
-				CA2C3D2D15CA46F1003E1299 /* MNCellMoveTailNearestTarget.h */,
-				CA2C3D2E15CA46F1003E1299 /* MNCellMoveTailNearestTarget.m */,
+				CA2C3D2D15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.h */,
+				CA2C3D2E15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m */,
 				CA2C3D3015CA5300003E1299 /* MNCellMoveWithTarget.h */,
 				CA2C3D3115CA5301003E1299 /* MNCellMoveWithTarget.m */,
 				CA2C3D3315CA5F20003E1299 /* MNCellMoveWithNearestTarget.h */,
@@ -564,7 +564,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA02DCA215C481E80070B1F5 /* MNCellMoveTailTarget.m in Sources */,
+				CA02DCA215C481E80070B1F5 /* MNCellMoveApproachTarget.m in Sources */,
 				CA02DCA115C481E30070B1F5 /* MNCellMoveRandomWalk.m in Sources */,
 				CA02DCA015C481DF0070B1F5 /* MNCellMoveFloat.m in Sources */,
 				CA02DC9F15C481DC0070B1F5 /* MNCellMoveImmovable.m in Sources */,
@@ -593,7 +593,7 @@
 				CA02DC8715C423D80070B1F5 /* MNCellAction.m in Sources */,
 				CA02DC8E15C458B80070B1F5 /* MNCellActionMultiply.m in Sources */,
 				CA2C3D2C15C9E196003E1299 /* MNCellMoveStraight.m in Sources */,
-				CA2C3D2F15CA46F1003E1299 /* MNCellMoveTailNearestTarget.m in Sources */,
+				CA2C3D2F15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m in Sources */,
 				CA2C3D3215CA5301003E1299 /* MNCellMoveWithTarget.m in Sources */,
 				CA2C3D3515CA5F21003E1299 /* MNCellMoveWithNearestTarget.m in Sources */,
 			);
@@ -609,7 +609,7 @@
 				CA02DC9A15C47FE20070B1F5 /* MNCellMoveImmovable.m in Sources */,
 				CA02DC9B15C47FE20070B1F5 /* MNCellMoveFloat.m in Sources */,
 				CA02DC9C15C47FE20070B1F5 /* MNCellMoveRandomWalk.m in Sources */,
-				CA02DC9D15C47FE20070B1F5 /* MNCellMoveTailTarget.m in Sources */,
+				CA02DC9D15C47FE20070B1F5 /* MNCellMoveApproachTarget.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

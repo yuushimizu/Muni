@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MNCellMoveTailNearestTarget.h"
+#import "MNCellMoveApproachNearestTarget.h"
 
-@implementation MNCellMoveTailNearestTarget
+@implementation MNCellMoveApproachNearestTarget
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withTarget:(id<MNCell>)target withEnvironment:(id<MNEnvironment>)environment {
 	[cell moveTowards:target.center];

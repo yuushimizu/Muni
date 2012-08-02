@@ -71,11 +71,11 @@
 		}
 		if (decisionMoveWithTarget < 60) {
 			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-				return [[MNCellMoveTailTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
+				return [[MNCellMoveApproachTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 			};
 		} else {
 			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-				return [[MNCellMoveTailNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
+				return [[MNCellMoveApproachNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
 			};
 		}
 	}

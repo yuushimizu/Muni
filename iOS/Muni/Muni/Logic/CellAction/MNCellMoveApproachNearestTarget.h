@@ -10,6 +10,6 @@
 #import "MNCellMoveWithNearestTarget.h"
 #import "MNCell.h"
 
-@interface MNCellMoveTailNearestTarget : MNCellMoveWithNearestTarget
+@interface MNCellMoveApproachNearestTarget : MNCellMoveWithNearestTarget
 
 @end
