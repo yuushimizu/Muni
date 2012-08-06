@@ -14,6 +14,7 @@
 #import "MNCellAction.h"
 #import "MNCellActionMultiply.h"
 #import "MNCellActionMakeMoon.h"
+#import "MNCellActionMakeTracer.h"
 #import "MNCellMoveRandomWalk.h"
 #import "MNCellMoveStraight.h"
 #import "MNCellMoveFloat.h"
@@ -22,6 +23,7 @@
 #import "MNCellMoveEscapeTarget.h"
 #import "MNCellMoveApproachNearestTarget.h"
 #import "MNCellMoveEscapeNearestTarget.h"
+#import "MNCellMoveTraceTarget.h"
 #import "MNCellMoveMoon.h"
 
 @interface MNStandardCell : NSObject<MNCell> {
