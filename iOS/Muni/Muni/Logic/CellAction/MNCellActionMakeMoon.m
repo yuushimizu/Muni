@@ -22,7 +22,9 @@
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
 	if (_restCount <= 0 || MNRandomDouble(0, 1) >= _incidence) return;
-	[cell makeMoonWithDistance:_distance withRadianIncrease:_radianIncrease withEnvironment:environment];
+	if ([cell makeMoonWithDistance:_distance withRadianIncrease:_radianIncrease withEnvironment:environment]) {
+		_restCount -= 1;
+	}
 }
 
 @end

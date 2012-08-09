@@ -29,6 +29,7 @@
 @property (readonly) double sight;
 @property (readonly) BOOL living;
 @property (readonly) CGPoint center;
+@property (readonly) double beatingRadius;
 
 - (void)moveFor:(double)radian withForce:(double)force;
 - (void)moveFor:(double)radian;
@@ -39,9 +40,9 @@
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;
 - (void)heal:(double)energy;
-- (void)multiplyWithEnvironment:(id<MNEnvironment>)environment;
-- (void)makeMoonWithDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment;
-- (void)makeTracerWithIntervalFrames:(int)intervalFrames withEnvironment:(id<MNEnvironment>)environment;
+- (BOOL)multiplyWithEnvironment:(id<MNEnvironment>)environment;
+- (BOOL)makeMoonWithDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment;
+- (BOOL)makeTracerWithIntervalFrames:(int)intervalFrames withEnvironment:(id<MNEnvironment>)environment;
 - (BOOL)eventOccurred:(int)event;
 - (BOOL)eventOccurredPrevious:(int)event;
 - (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment;

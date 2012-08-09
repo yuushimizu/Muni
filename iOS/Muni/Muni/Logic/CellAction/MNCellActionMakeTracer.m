@@ -21,8 +21,9 @@
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
 	if (_generated || MNRandomDouble(0, 1) >= _incidence) return;
-	[cell makeTracerWithIntervalFrames:_intervalFrames withEnvironment:environment];
-	_generated = YES;
+	if ([cell makeTracerWithIntervalFrames:_intervalFrames withEnvironment:environment]) {
+		_generated = YES;
+	}
 }
 
 @end

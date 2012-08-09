@@ -9,7 +9,7 @@
 #import "MNFieldScene.h"
 
 static CGRect rectFromCell(id<MNCell> cell) {
-	const double radius = cell.radius;
+	const double radius = cell.beatingRadius;
 	return CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2);
 }
 

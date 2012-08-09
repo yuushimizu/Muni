@@ -45,6 +45,8 @@
 	double _lastMovedDistance;
 	double _radianForFix;
 	double _distanceForFix;
+	int _maxBeat;
+	int _beat;
 }
 
 @property (readonly) double speed;
@@ -52,6 +54,8 @@
 @property (readonly) NSArray *actionSources;
 @property (readonly) double lastMovedRadian;
 @property (readonly) double lastMovedDistance;
+@property (readonly) int maxBeat;
+@property (readonly) int beat;
 
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment;
 - (id)initByOther:(MNStandardCell *)other withEnvironment:(id<MNEnvironment>)environment;

@@ -16,4 +16,6 @@
 	double _incidence;
 }
 
+- (id)initWithMaxCount:(int)maxCount withIncidence:(double)incidence;
+
 @end

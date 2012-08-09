@@ -10,10 +10,10 @@
 
 @implementation MNCellActionMultiply
 
-- (id)init {
+- (id)initWithMaxCount:(int)maxCount withIncidence:(double)incidence {
 	if (self = [super init]) {
-		_restCount = MNRandomDouble(1, 2);
-		_incidence = 0.002;
+		_restCount = maxCount;
+		_incidence = incidence;
 	}
 	return self;
 }
@@ -21,7 +21,9 @@
 - (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
 	if (_restCount <= 0) return;
 	if (MNRandomDouble(0, 1) >= _incidence) return;
-	[cell multiplyWithEnvironment:environment];
+	if ([cell multiplyWithEnvironment:environment]) {
+		_restCount -= 1;
+	}
 }
 
 @end
