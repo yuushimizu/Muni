@@ -16,10 +16,23 @@ static CGRect rectFromCell(id<MNCell> cell) {
 @implementation MNFieldScene
 
 - (void)setupBackground:(CGSize)size {
-	JZGLTexture *texture = _resources.backgroundTexture;
-	_backgroundSprite = [[JZGLSprite alloc] initWithTexture:texture];
-	_xBackgroundTileCount = size.width / texture.imageSize.width + 1;
-	_yBackgroundTileCount = size.height / texture.imageSize.height + 1;
+	_backgroundSprite = [[JZGLSprite alloc] initWithTexture:_resources.backgroundTexture];
+}
+
+- (NSString *)dataPath {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	return [documentsDirectory stringByAppendingPathComponent:@"game-data.plist"];
+}
+
+- (BOOL)firstMessageIsShownInPast {
+	NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:[self dataPath]];
+	if (data == nil) return NO;
+	return [[data objectForKey:@"first-message-is-shown"] boolValue];
+}
+
+- (void)markAsShownFirstMessage {
+	[[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first-message-is-shown"] writeToFile:[self dataPath] atomically:YES];
 }
 
 - (id)initWithSize:(CGSize)size {
@@ -31,6 +44,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 			_cellSprites[i] = [[JZGLSprite alloc] init];
 		}
 		_effects = [NSMutableArray array];
+		_firstMessageIsShown = [self firstMessageIsShownInPast];
 	}
 	return self;
 }
@@ -45,8 +59,13 @@ static CGRect rectFromCell(id<MNCell> cell) {
 }
 
 - (void)sendFrame {
+	if (!_firstMessageIsShown) {
+		[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"FirstMessageTitle", @"") message:NSLocalizedString(@"FirstMessageBody", @"") delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"FirstMessageButton", @""), nil] show];
+		_firstMessageIsShown = YES;
+		[self markAsShownFirstMessage];
+	}
 	for (id<MNCell> cell in _environment.cells) {
-		if ([cell eventOccurred:kMNCellEventBorned]) {
+		if ([cell eventOccurred:kMNCellEventBoned]) {
 			[_effects addObject:[[MNCellBornEffect alloc] initWithCell:cell withResources:_resources]];
 		} else if ([cell eventOccurred:kMNCellEventDied]) {
 			[_effects addObject:[[MNCellDieEffect alloc] initWithCell:cell withResources:_resources]];
@@ -57,14 +76,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 }
 
 - (void)drawBackground {
-	const JZGLTexture *texture = _resources.backgroundTexture;
-	const double width = texture.imageSize.width;
-	const double height = texture.imageSize.height;
-	for (int x = 0; x < _xBackgroundTileCount; ++x) {
-		for (int y = 0; y < _yBackgroundTileCount; ++y) {
-			[_backgroundSprite drawToRect:CGRectMake(x * width, y * height, width, height)];
-		}
-	}
+	[_backgroundSprite drawToRect:CGRectMake(0, 0, _environment.field.size.width, _environment.field.size.height)];
 }
 
 - (void)drawEffects {

@@ -10,9 +10,9 @@
 #import "MNCellAttribute.h"
 #import "MNEnvironment.h"
 
-#define kMNCellTypeCount 2
+#define kMNCellTypeCount 3
 
-#define kMNCellEventBorned 1
+#define kMNCellEventBoned 1
 #define kMNCellEventDied 2
 #define kMNCellEventDamaged 4
 #define kMNCellEventHealed 8

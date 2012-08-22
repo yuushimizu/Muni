@@ -22,12 +22,13 @@
 	MNStandardEnvironment *_environment;
 	MNGLResources *_resources;
 	JZGLSprite *_backgroundSprite;
-	int _xBackgroundTileCount;
-	int _yBackgroundTileCount;
 	JZGLSprite *_cellSprites[kMNMaxCells];
 	NSMutableArray *_effects;
+	BOOL _firstMessageIsShown;
 }
 
+- (BOOL)firstMessageIsShownInPast;
+- (void)markAsShownFirstMessage;
 - (id)initWithSize:(CGSize)size;
 
 @end

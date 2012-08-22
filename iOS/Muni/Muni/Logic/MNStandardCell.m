@@ -26,8 +26,8 @@
 @synthesize beat = _beat;
 
 - (double)randomEnergy {
-	// 700 - 5700
-	return 700 + MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(0, 5);
+	// 700 - 7700
+	return 700 + MNRandomDouble(0, 10) * MNRandomDouble(0, 10) * MNRandomDouble(3, 10) * MNRandomDouble(0, 7);
 }
 
 - (double)randomSpeed {
@@ -105,13 +105,13 @@
 - (NSArray *)randomActionSources {
 	NSMutableArray *actionSources = [NSMutableArray arrayWithObject:[self randomMoveSource]];
 	if (MNRandomInt(0, 100) < 75) {
-		int maxCount = MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2);
-		double incidence = 0.004;
+		int maxCount = MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2);
+		double incidence = 0.012;
 		[actionSources addObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellActionMultiply alloc] initWithMaxCount:maxCount withIncidence:incidence];
 		}];
 	}
-	if (MNRandomInt(0, 100) < 20) {
+	if (MNRandomInt(0, 100) < 10) {
 		double distanceRate = MNRandomDouble(1, 2);
 		double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
 		int maxCount = MNRandomInt(1, 4) * MNRandomInt(1, 2);
@@ -120,7 +120,7 @@
 			return [[MNCellActionMakeMoon alloc] initWithDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease withMaxCount:maxCount withIncidence:incidence];
 		}];
 	}
-	if (MNRandomInt(0, 100) < 20) {
+	if (MNRandomInt(0, 100) < 10) {
 		int intervalFrames = MNRandomInt(30, 450);
 		double incidence = 0.003;
 		[actionSources addObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
@@ -200,7 +200,8 @@
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
 		_type = MNRandomInt(0, kMNCellTypeCount);
-		_energy = _maxEnergy = [self randomEnergy];
+		_maxEnergy = [self randomEnergy];
+		_energy = _maxEnergy * MNRandomDouble(0.5, 0.9);
 		_density = MNRandomDouble(0.2, 0.9);
 		_attribute = [self randomAttribute];
 		_speed = [self randomSpeed];
@@ -209,7 +210,7 @@
 		_sight = MNDiagonalFromSize(environment.field.size) * MNRandomDouble(0.1, 0.5);
 		_center = MNRandomPointInSize(environment.field.size);
 		[self fixPositionWithEnvironment:environment];
-		_eventBits = kMNCellEventBorned;
+		_eventBits = kMNCellEventBoned;
 		_previousEventBits = 0;
 		_actionSources = [self randomActionSources];
 		[self resetActionsWithEnvironment:environment];
@@ -233,7 +234,7 @@
 		_sight = other.sight * MNRandomDouble(0.9, 1.1);
 		_center = MNMovedPoint(other.center, MNRandomRadian(), other.radius);
 		[self fixPositionWithEnvironment:environment];
-		_eventBits = kMNCellEventBorned;
+		_eventBits = kMNCellEventBoned;
 		_previousEventBits = 0;
 		_actionSources = other.actionSources;
 		[self resetActionsWithEnvironment:environment];
@@ -257,7 +258,7 @@
 		_sight = parent.sight;
 		_center = MNMovedPoint(parent.center, MNRandomRadian(), parent.radius);
 		[self fixPositionWithEnvironment:environment];
-		_eventBits = kMNCellEventBorned;
+		_eventBits = kMNCellEventBoned;
 		_previousEventBits = 0;
 		MNCellAction *(^moveSourceWithoutTarget)(id<MNCell>, id<MNEnvironment>) = [self randomMoveSource];
 		MNCellAction *(^moveSoure)(id<MNCell>, id<MNEnvironment>) = ^(id<MNCell> cell, id<MNEnvironment> environment) {
@@ -288,7 +289,7 @@
 		_sight = parent.sight + distance;
 		_center = MNMovedPoint(parent.center, MNRandomRadian(), parent.radius + distance + self.radius);
 		[self fixPositionWithEnvironment:environment];
-		_eventBits = kMNCellEventBorned;
+		_eventBits = kMNCellEventBoned;
 		_previousEventBits = 0;
 		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:[[MNCellMoveFloat alloc] init] withDistance:distance withRadianIncrease:radianIncrease withEnvironment:environment];
@@ -340,8 +341,8 @@
 }
 
 - (BOOL)multiplyWithEnvironment:(id<MNEnvironment>)environment {
-	if (self.energy < self.maxEnergy * 0.3) return NO;
-	[self decreaseEnergy:self.maxEnergy * 0.25];
+	if (self.energy < self.maxEnergy * 0.2) return NO;
+	[self decreaseEnergy:self.maxEnergy * 0.15];
 	MNStandardCell *newCell = [[MNStandardCell alloc] initByOther:self withEnvironment:environment];
 	[environment addCell:newCell];
 	return YES;
@@ -375,7 +376,7 @@
 
 - (double)beatingRadius {
 	double baseRadius = self.radius;
-	return baseRadius + baseRadius * (((double) ((_beat < _maxBeat / 2) ? _beat : _maxBeat - _beat) / (_maxBeat / 2)) * 0.05 - 0.025);
+	return baseRadius + baseRadius * 0.05 * sin(M_PI * _beat / _maxBeat) - baseRadius * 0.025;
 }
 
 - (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment {

@@ -19,8 +19,8 @@
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
-		_incidence = 0.08;
-		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(8, 8)];
+		_incidence = 0.07 * (size.width * size.height) / (480.0 * 320.0);
+		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:CGSizeMake(16, 16)];
 	}
 	return self;
 }
@@ -146,7 +146,7 @@
 		[cell realMove:self];
 		[self updateSpatialIndexFor:cell];
 	}
-	if (_cells.count < _maxCellCount && MNRandomDouble(0, _cells.count + 1) < _incidence) {
+	if (_cells.count < _maxCellCount && (_cells.count == 0 || MNRandomDouble(0, _cells.count + 10) < _incidence)) {
 		[self addCell:[[MNStandardCell alloc] initByRandomWithEnvironment:self]];
 	}
 	[self addCellsFromQueue];
