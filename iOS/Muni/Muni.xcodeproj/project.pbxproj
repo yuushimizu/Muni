@@ -24,8 +24,6 @@
 		CA2C3D3B15CA654E003E1299 /* MNCellMoveEscapeTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3A15CA6547003E1299 /* MNCellMoveEscapeTarget.m */; };
 		CA2C3D3E15CA6753003E1299 /* MNCellMoveEscapeNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3D15CA6752003E1299 /* MNCellMoveEscapeNearestTarget.m */; };
 		CA2C3D4115CA6945003E1299 /* MNCellMoveMoon.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D4015CA6944003E1299 /* MNCellMoveMoon.m */; };
-		CA6579E615F7BED200C4351A /* Cell4.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6579E415F7BED200C4351A /* Cell4.png */; };
-		CA6579E715F7BED200C4351A /* Cell4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA6579E515F7BED200C4351A /* Cell4@2x.png */; };
 		CA6579EC15F7C05D00C4351A /* JZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6579EB15F7C05D00C4351A /* JZUtility.m */; };
 		CA8BF7BD15BC8B2900B7B572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */; };
 		CA8BF7BF15BC8B2900B7B572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */; };
@@ -51,15 +49,11 @@
 		CAA99D4E15C05CE6002B85D2 /* MNEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D4D15C05CE6002B85D2 /* MNEffect.m */; };
 		CAA99D5115C05CFA002B85D2 /* MNCellBornEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D5015C05CFA002B85D2 /* MNCellBornEffect.m */; };
 		CAA99D5815C06A17002B85D2 /* MNEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D4D15C05CE6002B85D2 /* MNEffect.m */; };
-		CAA99D5B15C0721D002B85D2 /* Cell2.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D5915C0721D002B85D2 /* Cell2.png */; };
-		CAA99D5C15C0721D002B85D2 /* Cell2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D5A15C0721D002B85D2 /* Cell2@2x.png */; };
 		CAA99D6015C078D7002B85D2 /* MNUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D5F15C078D7002B85D2 /* MNUtility.m */; };
 		CAA99D6315C07E62002B85D2 /* Cell1EffectDie.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */; };
 		CAA99D6415C07E62002B85D2 /* Cell1EffectDie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */; };
 		CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */; };
 		CAC53B0D15E1DABD008DD063 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B0F15E1DABD008DD063 /* Localizable.strings */; };
-		CAC53B2015E22A07008DD063 /* Cell3.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B1E15E22A07008DD063 /* Cell3.png */; };
-		CAC53B2115E22A07008DD063 /* Cell3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B1F15E22A07008DD063 /* Cell3@2x.png */; };
 		CAC53B2415E23116008DD063 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B2215E23116008DD063 /* Default.png */; };
 		CAC53B2515E23116008DD063 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B2315E23116008DD063 /* Default@2x.png */; };
 		CAC53B3115E2387A008DD063 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B2B15E23879008DD063 /* Icon-Small-50.png */; };
@@ -71,8 +65,6 @@
 		CAC53B4815E23998008DD063 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B4715E23998008DD063 /* Icon-72@2x.png */; };
 		CAC53B4B15E23C4B008DD063 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B4915E23C4B008DD063 /* Default-Portrait@2x~ipad.png */; };
 		CAC53B4C15E23C4B008DD063 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B4A15E23C4B008DD063 /* Default-Portrait~ipad.png */; };
-		CAF14AB615BC957C000AD7A8 /* Cell1.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AB415BC957C000AD7A8 /* Cell1.png */; };
-		CAF14AB715BC957C000AD7A8 /* Cell1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AB515BC957C000AD7A8 /* Cell1@2x.png */; };
 		CAF14ABC15BC95F9000AD7A8 /* MNGLResources.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF14ABB15BC95F9000AD7A8 /* MNGLResources.m */; };
 		CAF14ACA15BD35D0000AD7A8 /* JZGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF14AC915BD35D0000AD7A8 /* JZGLView.m */; };
 		CAF14ACE15BD46D6000AD7A8 /* JZSceneDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF14ACD15BD46D6000AD7A8 /* JZSceneDirector.m */; };
@@ -130,8 +122,6 @@
 		CA2C3D3D15CA6752003E1299 /* MNCellMoveEscapeNearestTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveEscapeNearestTarget.m; path = Logic/CellAction/CellMove/MNCellMoveEscapeNearestTarget.m; sourceTree = "<group>"; };
 		CA2C3D3F15CA6943003E1299 /* MNCellMoveMoon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveMoon.h; path = Logic/CellAction/CellMove/MNCellMoveMoon.h; sourceTree = "<group>"; };
 		CA2C3D4015CA6944003E1299 /* MNCellMoveMoon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveMoon.m; path = Logic/CellAction/CellMove/MNCellMoveMoon.m; sourceTree = "<group>"; };
-		CA6579E415F7BED200C4351A /* Cell4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell4.png; path = ../images/Cell4.png; sourceTree = "<group>"; };
-		CA6579E515F7BED200C4351A /* Cell4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell4@2x.png"; path = "../images/Cell4@2x.png"; sourceTree = "<group>"; };
 		CA6579EA15F7C05D00C4351A /* JZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JZUtility.h; path = Juiz/Utility/JZUtility.h; sourceTree = "<group>"; };
 		CA6579EB15F7C05D00C4351A /* JZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JZUtility.m; path = Juiz/Utility/JZUtility.m; sourceTree = "<group>"; };
 		CA8BF7B815BC8B2900B7B572 /* Muni.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muni.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,8 +158,6 @@
 		CAA99D4D15C05CE6002B85D2 /* MNEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNEffect.m; path = Scene/Effect/MNEffect.m; sourceTree = "<group>"; };
 		CAA99D4F15C05CFA002B85D2 /* MNCellBornEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellBornEffect.h; path = Scene/Effect/MNCellBornEffect.h; sourceTree = "<group>"; };
 		CAA99D5015C05CFA002B85D2 /* MNCellBornEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellBornEffect.m; path = Scene/Effect/MNCellBornEffect.m; sourceTree = "<group>"; };
-		CAA99D5915C0721D002B85D2 /* Cell2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell2.png; path = ../images/Cell2.png; sourceTree = "<group>"; };
-		CAA99D5A15C0721D002B85D2 /* Cell2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell2@2x.png"; path = "../images/Cell2@2x.png"; sourceTree = "<group>"; };
 		CAA99D5E15C078D7002B85D2 /* MNUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNUtility.h; path = Utility/MNUtility.h; sourceTree = "<group>"; };
 		CAA99D5F15C078D7002B85D2 /* MNUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNUtility.m; path = Utility/MNUtility.m; sourceTree = "<group>"; };
 		CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell1EffectDie.png; path = ../images/Cell1EffectDie.png; sourceTree = "<group>"; };
@@ -180,8 +168,6 @@
 		CAC53B0C15E1DAA5008DD063 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = /Users/yuu/Development/nyampass/muni/iOS/Muni/MuniTests/ja.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
 		CAC53B0E15E1DABD008DD063 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CAC53B1015E1DAC5008DD063 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CAC53B1E15E22A07008DD063 /* Cell3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell3.png; path = ../images/Cell3.png; sourceTree = "<group>"; };
-		CAC53B1F15E22A07008DD063 /* Cell3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell3@2x.png"; path = "../images/Cell3@2x.png"; sourceTree = "<group>"; };
 		CAC53B2215E23116008DD063 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../images/Default.png; sourceTree = "<group>"; };
 		CAC53B2315E23116008DD063 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../images/Default@2x.png"; sourceTree = "<group>"; };
 		CAC53B2B15E23879008DD063 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "../images/Icon-Small-50.png"; sourceTree = "<group>"; };
@@ -193,8 +179,6 @@
 		CAC53B4715E23998008DD063 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		CAC53B4915E23C4B008DD063 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../images/Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		CAC53B4A15E23C4B008DD063 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "../images/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		CAF14AB415BC957C000AD7A8 /* Cell1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell1.png; path = ../images/Cell1.png; sourceTree = "<group>"; };
-		CAF14AB515BC957C000AD7A8 /* Cell1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell1@2x.png"; path = "../images/Cell1@2x.png"; sourceTree = "<group>"; };
 		CAF14ABA15BC95F9000AD7A8 /* MNGLResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNGLResources.h; path = UI/OpenGLES/MNGLResources.h; sourceTree = "<group>"; };
 		CAF14ABB15BC95F9000AD7A8 /* MNGLResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNGLResources.m; path = UI/OpenGLES/MNGLResources.m; sourceTree = "<group>"; };
 		CAF14AC315BC9B82000AD7A8 /* JZScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JZScene.h; path = Juiz/Scene/JZScene.h; sourceTree = "<group>"; };
@@ -424,8 +408,6 @@
 		CA8BF81015BC948200B7B572 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CA6579E415F7BED200C4351A /* Cell4.png */,
-				CA6579E515F7BED200C4351A /* Cell4@2x.png */,
 				CAC53B4915E23C4B008DD063 /* Default-Portrait@2x~ipad.png */,
 				CAC53B4A15E23C4B008DD063 /* Default-Portrait~ipad.png */,
 				CAC53B2B15E23879008DD063 /* Icon-Small-50.png */,
@@ -433,18 +415,12 @@
 				CAC53B2D15E23879008DD063 /* Icon-Small@2x.png */,
 				CAC53B2215E23116008DD063 /* Default.png */,
 				CAC53B2315E23116008DD063 /* Default@2x.png */,
-				CAC53B1E15E22A07008DD063 /* Cell3.png */,
-				CAC53B1F15E22A07008DD063 /* Cell3@2x.png */,
 				CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */,
 				CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */,
-				CAA99D5915C0721D002B85D2 /* Cell2.png */,
-				CAA99D5A15C0721D002B85D2 /* Cell2@2x.png */,
 				CAA99D4415C05127002B85D2 /* Cell1EffectBorn.png */,
 				CAA99D4515C05127002B85D2 /* Cell1EffectBorn@2x.png */,
 				CAF14AE915BEB2AC000AD7A8 /* Background1.png */,
 				CAF14AEA15BEB2AC000AD7A8 /* Background1@2x.png */,
-				CAF14AB415BC957C000AD7A8 /* Cell1.png */,
-				CAF14AB515BC957C000AD7A8 /* Cell1@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -609,19 +585,13 @@
 				CA8BF7C715BC8B2900B7B572 /* InfoPlist.strings in Resources */,
 				CA8BF7F815BC8C1A00B7B572 /* MNMainViewController_iPad.xib in Resources */,
 				CA8BF7FD15BC8C7D00B7B572 /* MNMainViewController_iPhone.xib in Resources */,
-				CAF14AB615BC957C000AD7A8 /* Cell1.png in Resources */,
-				CAF14AB715BC957C000AD7A8 /* Cell1@2x.png in Resources */,
 				CAF14AEB15BEB2AC000AD7A8 /* Background1.png in Resources */,
 				CAF14AEC15BEB2AC000AD7A8 /* Background1@2x.png in Resources */,
 				CAA99D4615C05127002B85D2 /* Cell1EffectBorn.png in Resources */,
 				CAA99D4715C05127002B85D2 /* Cell1EffectBorn@2x.png in Resources */,
-				CAA99D5B15C0721D002B85D2 /* Cell2.png in Resources */,
-				CAA99D5C15C0721D002B85D2 /* Cell2@2x.png in Resources */,
 				CAA99D6315C07E62002B85D2 /* Cell1EffectDie.png in Resources */,
 				CAA99D6415C07E62002B85D2 /* Cell1EffectDie@2x.png in Resources */,
 				CAC53B0D15E1DABD008DD063 /* Localizable.strings in Resources */,
-				CAC53B2015E22A07008DD063 /* Cell3.png in Resources */,
-				CAC53B2115E22A07008DD063 /* Cell3@2x.png in Resources */,
 				CAC53B2415E23116008DD063 /* Default.png in Resources */,
 				CAC53B2515E23116008DD063 /* Default@2x.png in Resources */,
 				CAC53B3115E2387A008DD063 /* Icon-Small-50.png in Resources */,
@@ -633,8 +603,6 @@
 				CAC53B4815E23998008DD063 /* Icon-72@2x.png in Resources */,
 				CAC53B4B15E23C4B008DD063 /* Default-Portrait@2x~ipad.png in Resources */,
 				CAC53B4C15E23C4B008DD063 /* Default-Portrait~ipad.png in Resources */,
-				CA6579E615F7BED200C4351A /* Cell4.png in Resources */,
-				CA6579E715F7BED200C4351A /* Cell4@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

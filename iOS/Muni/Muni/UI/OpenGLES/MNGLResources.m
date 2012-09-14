@@ -9,7 +9,6 @@
 #import "MNGLResources.h"
 #import "JZUtility.h"
 
-#define kMNBasicCellTextureCount 0
 #define kMNRandomCellTexturePathAreaSize 256
 #define kMNRandomCellTextureContextSize (kMNRandomCellTexturePathAreaSize * 3)
 #define kMNRandomCellTextureMaxLineWidth (kMNRandomCellTexturePathAreaSize * 0.1)
@@ -164,11 +163,7 @@ static JZGLTexture *makeRandomCellTexture() {
 - (id)init {
 	if (self = [super init]) {
 		_backgroundTexture = [[JZGLTexture alloc] initWithImageNamed:@"Background1.png"];
-		int basicCellTextureCount = MIN(kMNBasicCellTextureCount, kMNCellTypeCount);
-		for (int i = 0; i < basicCellTextureCount; ++i) {
-			_cellTextures[i] = [[JZGLTexture alloc] initWithImageNamed:[NSString stringWithFormat:@"Cell%d.png", i + 1]];
-		}
-		for (int i = basicCellTextureCount; i < kMNCellTypeCount; ++i) {
+		for (int i = 0; i < kMNCellTypeCount; ++i) {
 			_cellTextures[i] = makeRandomCellTexture();
 		}
 		_cellEffectBornTexture = [[JZGLTexture alloc] initWithImageNamed:@"Cell1EffectBorn.png"];
