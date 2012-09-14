@@ -7,6 +7,7 @@
 //
 
 #import "MNStandardCell.h"
+#import "JZUtility.h"
 
 @implementation MNStandardCell
 
@@ -19,6 +20,8 @@
 @synthesize movingRadian = _movingRadian;
 @synthesize sight = _sight;
 @synthesize center = _center;
+@synthesize angle = _angle;
+@synthesize rotationRadian = _rotationRadian;
 @synthesize actionSources = _actionSources;
 @synthesize lastMovedDistance = _lastMovedDistance;
 @synthesize lastMovedRadian = _lastMovedRadian;
@@ -40,18 +43,14 @@
 }
 
 - (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
-	int decisionMoveWithoutTarget = MNRandomInt(0, 100);
+	int decisionMoveWithoutTarget = MNRandomInt(0, 3);
 	MNCellAction *(^sourceWithoutTarget)(id<MNCell>, id<MNEnvironment>);
-	if (decisionMoveWithoutTarget < 25) {
+	if (decisionMoveWithoutTarget == 0) {
 		int maxIntervalFrames = MNRandomInt(0, 100);
 		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveRandomWalk alloc] initWithMaxIntervalFrames:maxIntervalFrames withEnvironment:environment];
 		};
-	} else if (decisionMoveWithoutTarget < 50) {
-		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMoveStraight alloc] init];
-		};
-	} else if (decisionMoveWithoutTarget < 75) {
+	} else if (decisionMoveWithoutTarget < 1) {
 		sourceWithoutTarget =  ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveFloat alloc] init];
 		};
@@ -157,22 +156,22 @@
 }
 
 - (void)realMove:(id<MNEnvironment>)environment {
-	_center = MNMovedPoint(MNMovedPoint(_center, _radianForFix, _distanceForFix), _movingRadian, _movingSpeed);
+	_center = JZMovedPoint(JZMovedPoint(_center, _radianForFix, _distanceForFix), _movingRadian, _movingSpeed);
 	_distanceForFix = 0;
 	[self fixPositionWithEnvironment:environment];
 }
 
 - (void)moveFor:(double)radian withForce:(double)force {
 	CGPoint pointMoved = CGPointMake(_center.x + ((sin(_movingRadian) * _movingSpeed) + (sin(radian) * force)), _center.y + ((cos(_movingRadian) * _movingSpeed) + (cos(radian) * force)));
-	_movingSpeed = MNDistanceOfPoints(_center, pointMoved);
-	_movingRadian = MNRadianFromPoints(_center, pointMoved);
+	_movingSpeed = JZDistanceOfPoints(_center, pointMoved);
+	_movingRadian = JZRadianFromPoints(_center, pointMoved);
 
 }
 
 - (void)moveFor:(double)radian withTargetSpeed:(double)targetSpeed {
-	CGPoint movingPoint = MNMovedPoint(_center, _movingRadian, _movingSpeed);
-	CGPoint targetPoint = MNMovedPoint(_center, radian, targetSpeed);
-	[self moveFor:MNRadianFromPoints(movingPoint, targetPoint) withForce:MIN(MNDistanceOfPoints(movingPoint, targetPoint), _speed * 0.2 * (1 - _density))];
+	CGPoint movingPoint = JZMovedPoint(_center, _movingRadian, _movingSpeed);
+	CGPoint targetPoint = JZMovedPoint(_center, radian, targetSpeed);
+	[self moveFor:JZRadianFromPoints(movingPoint, targetPoint) withForce:MIN(JZDistanceOfPoints(movingPoint, targetPoint), _speed * 0.2 * (1 - _density))];
 }
 
 - (void)moveFor:(double)radian {
@@ -184,17 +183,36 @@
 }
 
 - (void)stop {
-	[self moveFor:MNInvertRadian(_movingRadian) withTargetSpeed:0];
+	[self moveFor:JZInvertRadian(_movingRadian) withTargetSpeed:0];
 }
 
 - (void)moveTowards:(CGPoint)point {
-	[self moveFor:MNRadianFromPoints(_center, point)];
+	[self moveFor:JZRadianFromPoints(_center, point)];
 }
 
 - (void)moveForFix:(double)radian distance:(double)distance {
 	CGPoint pointMoved = CGPointMake(_center.x + ((sin(_radianForFix) * _distanceForFix) + (sin(radian) * distance)), _center.y + ((cos(_radianForFix) * _distanceForFix) + (cos(radian) * distance)));
-	_distanceForFix = MNDistanceOfPoints(_center, pointMoved);
-	_radianForFix = MNRadianFromPoints(_center, pointMoved);
+	_distanceForFix = JZDistanceOfPoints(_center, pointMoved);
+	_radianForFix = JZRadianFromPoints(_center, pointMoved);
+}
+
+- (void)rotateFor:(double)radian {
+	if (_rotationRadian == 0) {
+		while (radian < 0) radian += M_PI * 2;
+		while (radian >= M_PI * 2) radian -= M_PI * 2;
+		double angleDiff = _angle - radian;
+		if (abs(angleDiff) < M_PI) {
+			_angle -= MIN(angleDiff * 0.1, M_PI * 0.01);
+		} else {
+			_angle += MIN(angleDiff * 0.1, M_PI * 0.01);
+		}
+		while (_angle < 0) _angle += M_PI * 2;
+		while (_angle >= M_PI * 2) _angle -= M_PI * 2;
+	}
+}
+
+- (void)rotateTowards:(CGPoint)point {
+	[self rotateFor:JZRadianFromPoints(_center, point)];
 }
 
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment {
@@ -207,7 +225,9 @@
 		_speed = [self randomSpeed];
 		_movingSpeed = 0;
 		_movingRadian = MNRandomRadian();
-		_sight = MNDiagonalFromSize(environment.field.size) * MNRandomDouble(0.1, 0.5);
+		_angle = MNRandomRadian();
+		_rotationRadian  = MNRandomInt(0, 100) < 30 ? MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) : 0;
+		_sight = JZDiagonalFromSize(environment.field.size) * MNRandomDouble(0.1, 0.5);
 		_center = MNRandomPointInSize(environment.field.size);
 		[self fixPositionWithEnvironment:environment];
 		_eventBits = kMNCellEventBoned;
@@ -231,8 +251,10 @@
 		_speed = other.speed * MNRandomDouble(0.9, 1.1);
 		_movingSpeed = 0;
 		_movingRadian = MNRandomRadian();
+		_angle = other.angle;
+		_rotationRadian = other.rotationRadian;
 		_sight = other.sight * MNRandomDouble(0.9, 1.1);
-		_center = MNMovedPoint(other.center, MNRandomRadian(), other.radius);
+		_center = JZMovedPoint(other.center, MNRandomRadian(), other.radius);
 		[self fixPositionWithEnvironment:environment];
 		_eventBits = kMNCellEventBoned;
 		_previousEventBits = 0;
@@ -255,8 +277,10 @@
 		_speed = parent.speed;
 		_movingSpeed = 0;
 		_movingRadian = MNRandomRadian();
+		_angle = parent.angle;
+		_rotationRadian = parent.rotationRadian;
 		_sight = parent.sight;
-		_center = MNMovedPoint(parent.center, MNRandomRadian(), parent.radius);
+		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius);
 		[self fixPositionWithEnvironment:environment];
 		_eventBits = kMNCellEventBoned;
 		_previousEventBits = 0;
@@ -286,8 +310,10 @@
 		_speed = parent.speed * 2;
 		_movingSpeed = 0;
 		_movingRadian = MNRandomRadian();
+		_angle = parent.angle;
+		_rotationRadian = parent.rotationRadian;
 		_sight = parent.sight + distance;
-		_center = MNMovedPoint(parent.center, MNRandomRadian(), parent.radius + distance + self.radius);
+		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius + distance + self.radius);
 		[self fixPositionWithEnvironment:environment];
 		_eventBits = kMNCellEventBoned;
 		_previousEventBits = 0;
@@ -382,6 +408,14 @@
 - (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment {
 	_beat += 1;
 	if (_beat >= _maxBeat) _beat = 0;
+	if (_rotationRadian != 0) {
+		_angle += _rotationRadian;
+		if (_angle >= M_PI * 2) {
+			_angle -= M_PI * 2;
+		} else if (_angle < 0) {
+			_angle += M_PI * 2;
+		}
+	}
 	_previousEventBits = _eventBits;
 	_eventBits = 0;
 	_lastMovedRadian = _movingRadian;

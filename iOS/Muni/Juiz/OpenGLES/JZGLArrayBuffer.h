@@ -1,11 +1,3 @@
-//
-//  JZGLArrayBuffer.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/24/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>

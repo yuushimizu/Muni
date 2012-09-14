@@ -1,11 +1,3 @@
-//
-//  JZGLSprite.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/24/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/ES1/gl.h>
@@ -28,5 +20,6 @@
 - (void)setColor:(UIColor *)color;
 - (id)initWithTexture:(JZGLTexture *)texture;
 - (void)drawToRect:(CGRect)rect;
+- (void)drawToRect:(CGRect)rect withRotation:(double)radian;
 
 @end

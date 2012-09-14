@@ -7,6 +7,7 @@
 //
 
 #import "MNCellMoveWithTarget.h"
+#import "JZUtility.h"
 
 @implementation MNCellMoveWithTarget
 
@@ -35,7 +36,7 @@
 - (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
 	if (!_target || !_target.living) {
 		[self resetTargetWithCell:cell Environment:environment];
-	} else if (MNDistanceOfPoints(cell.center, _target.center) - cell.radius - _target.radius > cell.sight) {
+	} else if (JZDistanceOfPoints(cell.center, _target.center) - cell.radius - _target.radius > cell.sight) {
 		[self resetTargetWithCell:cell Environment:environment];
 	}
 	if (_target) {

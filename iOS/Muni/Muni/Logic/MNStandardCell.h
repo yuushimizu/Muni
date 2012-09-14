@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MNUtility.h"
 #import "MNCell.h"
 #import "MNEnvironment.h"
 #import "MNCellAttribute.h"
@@ -16,7 +15,6 @@
 #import "MNCellActionMakeMoon.h"
 #import "MNCellActionMakeTracer.h"
 #import "MNCellMoveRandomWalk.h"
-#import "MNCellMoveStraight.h"
 #import "MNCellMoveFloat.h"
 #import "MNCellMoveImmovable.h"
 #import "MNCellMoveApproachTarget.h"
@@ -37,6 +35,8 @@
 	double _movingRadian;
 	double _sight;
 	CGPoint _center;
+	double _angle;
+	double _rotationRadian;
 	int _eventBits;
 	int _previousEventBits;
 	NSArray *_actionSources;
@@ -50,6 +50,7 @@
 }
 
 @property (readonly) double speed;
+@property (readonly) double rotationRadian;
 @property (readonly) double movingRadian;
 @property (readonly) NSArray *actionSources;
 @property (readonly) double lastMovedRadian;

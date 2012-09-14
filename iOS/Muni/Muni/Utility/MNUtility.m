@@ -31,36 +31,3 @@ UIColor *MNRandomColor(void) {
 double MNRandomRadian(void) {
 	return MNRandomDouble(0, M_PI * 2);
 }
-
-double MNDistanceOfPoints(CGPoint point1, CGPoint point2) {
-	double x = point1.x - point2.x;
-	double y = point1.y - point2.y;
-	return sqrt(x * x + y * y);
-}
-
-double MNRadianFromPoints(CGPoint start, CGPoint destination) {
-	return atan2(destination.x - start.x, destination.y - start.y);
-}
-
-CGPoint MNManhattanDiffFromRadianAndDistance(double radian, double distance) {
-	return CGPointMake(sin(radian) * distance, cos(radian) * distance);
-}
-
-CGPoint MNMovedPoint(CGPoint start, double radian, double distance) {
-	CGPoint manhattanDiff = MNManhattanDiffFromRadianAndDistance(radian, distance);
-	return CGPointMake(start.x + manhattanDiff.x, start.y + manhattanDiff.y);
-}
-
-CGPoint MNMovedPointToDestination(CGPoint start, CGPoint destination, double moveDistance) {
-	double distance = MNDistanceOfPoints(start, destination);
-	if (distance <= moveDistance) return destination;
-	return MNMovedPoint(start, MNRadianFromPoints(start, destination), moveDistance);
-}
-
-double MNDiagonalFromSize(CGSize size) {
-	return sqrt(size.width * size.width + size.height * size.height);
-}
-
-double MNInvertRadian(double radian) {
-	return radian < M_PI ? radian + M_PI : radian - M_PI;
-}

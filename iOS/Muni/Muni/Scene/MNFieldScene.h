@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "JZScene.h"
 #import "MNStandardEnvironment.h"
+#import "MNStandardCell.h"
 #import "MNField.h"
 #import "MNGLResources.h"
 #import "JZGLSprite.h"

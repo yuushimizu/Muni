@@ -10,7 +10,7 @@
 #import "MNCellAttribute.h"
 #import "MNEnvironment.h"
 
-#define kMNCellTypeCount 3
+#define kMNCellTypeCount 50
 
 #define kMNCellEventBoned 1
 #define kMNCellEventDied 2
@@ -29,6 +29,7 @@
 @property (readonly) double sight;
 @property (readonly) BOOL living;
 @property (readonly) CGPoint center;
+@property (readonly) double angle;
 @property (readonly) double beatingRadius;
 
 - (void)moveFor:(double)radian withForce:(double)force;
@@ -36,6 +37,8 @@
 - (void)accelerate;
 - (void)stop;
 - (void)moveTowards:(CGPoint)point;
+- (void)rotateFor:(double)radian;
+- (void)rotateTowards:(CGPoint)point;
 - (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(id<MNEnvironment>)environment;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;

@@ -7,6 +7,7 @@
 //
 
 #import "MNCellMoveRandomWalk.h"
+#import "JZUtility.h"
 
 @implementation MNCellMoveRandomWalk
 
@@ -27,10 +28,11 @@
 	if (_restIntervalFrames > 0) {
 		_restIntervalFrames -= 1;
 		[cell stop];
-	} else if (MNDistanceOfPoints(cell.center, _destination) <= cell.radius) {
+	} else if (JZDistanceOfPoints(cell.center, _destination) <= cell.radius) {
 		[self resetDestinationWithEnvironment:environment];
 		[cell stop];
 	} else {
+		[cell rotateTowards:_destination];
 		[cell moveTowards:_destination];
 	}
 }

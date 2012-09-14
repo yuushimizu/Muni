@@ -7,6 +7,7 @@
 //
 
 #import "MNCellMoveMoon.h"
+#import "JZUtility.h"
 
 @implementation MNCellMoveMoon
 
@@ -19,7 +20,8 @@
 }
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withTarget:(id<MNCell>)target withEnvironment:(id<MNEnvironment>)environment {
-	[cell moveTowards:MNMovedPoint(target.center, MNRadianFromPoints(target.center, cell.center) + _radianIncrease, _distance + cell.radius + target.radius)];
+	[cell rotateTowards:target.center];
+	[cell moveTowards:JZMovedPoint(target.center, JZRadianFromPoints(target.center, cell.center) + _radianIncrease, _distance + cell.radius + target.radius)];
 }
 
 @end

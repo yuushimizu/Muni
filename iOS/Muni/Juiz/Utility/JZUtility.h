@@ -1,0 +1,10 @@
+double JZDistanceOfPoints(CGPoint point1, CGPoint point2);
+double JZRadianFromPoints(CGPoint start, CGPoint destination);
+CGPoint JZManhattanDiffFromRadianAndDistance(double radian, double distance);
+double JZRadianFromManhattanDiff(CGPoint manhattanDiff);
+double JZDistanceFromManhattanDiff(CGPoint manhattanDiff);
+CGPoint JZMovedPoint(CGPoint start, double radian, double distance);
+CGPoint JZMovedPointToDestination(CGPoint start, CGPoint destination, double distance);
+double JZDiagonalFromSize(CGSize size);
+double JZInvertRadian(double radian);
+CGPoint JZRotatedPoint(CGPoint source, CGPoint origin, double radian);

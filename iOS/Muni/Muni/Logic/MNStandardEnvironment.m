@@ -7,6 +7,7 @@
 //
 
 #import "MNStandardEnvironment.h"
+#import "JZUtility.h"
 
 @implementation MNStandardEnvironment
 
@@ -53,7 +54,7 @@
 	NSMutableArray *scanningResults = [NSMutableArray array];
 	for (id<MNCell> candidate in [_spatialIndex objectsForRect:CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2)]) {
 		if (candidate.living) {
-			double distanceFromCenter = MNDistanceOfPoints(center, candidate.center);
+			double distanceFromCenter = JZDistanceOfPoints(center, candidate.center);
 			if (distanceFromCenter - candidate.radius <= radius && (condition == nil || condition(candidate))) {
 				double distance = distanceFromCenter - candidate.radius;
 				int index = 0;
@@ -103,11 +104,11 @@
 		}
 		MNStandardCell * cell2 = cell;
 		if (cell1.living && cell2.living) {
-			double distance = MNDistanceOfPoints(cell1.center, cell2.center);
+			double distance = JZDistanceOfPoints(cell1.center, cell2.center);
 			double piledDistance = cell1.radius + cell2.radius - distance;
 			if (piledDistance > 0) {
-				double radian = MNRadianFromPoints(cell1.center, cell2.center);
-				double invertedRadian = MNInvertRadian(radian);
+				double radian = JZRadianFromPoints(cell1.center, cell2.center);
+				double invertedRadian = JZInvertRadian(radian);
 				double weight1 = cell1.weight;
 				double weight2 = cell2.weight;
 				[cell1 moveForFix:invertedRadian distance:piledDistance * (weight2 / (weight1 + weight2))];
@@ -146,7 +147,7 @@
 		[cell realMove:self];
 		[self updateSpatialIndexFor:cell];
 	}
-	if (_cells.count < _maxCellCount && (_cells.count == 0 || MNRandomDouble(0, _cells.count + 10) < _incidence)) {
+	if (_cells.count < _maxCellCount && (_cells.count < _maxCellCount / 20 || MNRandomDouble(0, _cells.count + 10) < _incidence)) {
 		[self addCell:[[MNStandardCell alloc] initByRandomWithEnvironment:self]];
 	}
 	[self addCellsFromQueue];

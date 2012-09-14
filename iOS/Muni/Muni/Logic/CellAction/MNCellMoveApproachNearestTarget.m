@@ -11,6 +11,7 @@
 @implementation MNCellMoveApproachNearestTarget
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withTarget:(id<MNCell>)target withEnvironment:(id<MNEnvironment>)environment {
+	[cell rotateTowards:target.center];
 	[cell moveTowards:target.center];
 }
 

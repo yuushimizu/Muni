@@ -9,7 +9,7 @@
 #import "MNFieldScene.h"
 
 static CGRect rectFromCell(id<MNCell> cell) {
-	const double radius = cell.beatingRadius;
+	const double radius = cell.beatingRadius * 1.3;
 	return CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2);
 }
 
@@ -112,7 +112,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 		JZGLSprite *cellSprite = _cellSprites[i];
 		[self setCellSpriteColor:cellSprite withCell:cell];
 		[cellSprite setTexture:[_resources cellTexture:cell.type]];
-		[cellSprite drawToRect:rectFromCell(cell)];
+		[cellSprite drawToRect:rectFromCell(cell) withRotation:cell.angle];
 		i += 1;
 	}
 	[self drawEffects];

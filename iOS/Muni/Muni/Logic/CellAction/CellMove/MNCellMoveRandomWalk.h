@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MNCellAction.h"
-#import "MNUtility.h"
 #import "MNCell.h"
 
 @interface MNCellMoveRandomWalk : MNCellAction {

@@ -1,12 +1,5 @@
-//
-//  JZGLSprite.m
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/24/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import "JZGLSprite.h"
+#import "JZUtility.h"
 
 static void setTriangleStripVerticesFromRect(GLfloat *vertices, CGRect rect) {
 	const double left = rect.origin.x;
@@ -17,6 +10,22 @@ static void setTriangleStripVerticesFromRect(GLfloat *vertices, CGRect rect) {
 	vertices[2] = left; vertices[3] = bottom;
 	vertices[4] = right; vertices[5] = top;
 	vertices[6] = right; vertices[7] = bottom;
+}
+
+static void setTriangleStripVerticesFromRectWithRotation(GLfloat *vertices, CGRect rect, double radian) {
+	const double left = rect.origin.x;
+	const double right = left + rect.size.width;
+	const double top = rect.origin.y;
+	const double bottom = top + rect.size.height;
+	CGPoint center = CGPointMake(left + rect.size.width / 2, top + rect.size.height / 2);
+	CGPoint leftTop = JZRotatedPoint(CGPointMake(left, top), center, radian);
+	CGPoint leftBottom = JZRotatedPoint(CGPointMake(left, bottom), center, radian);
+	CGPoint rightTop = JZRotatedPoint(CGPointMake(right, top), center, radian);
+	CGPoint rightBottom = JZRotatedPoint(CGPointMake(right, bottom), center, radian);
+	vertices[0] = leftTop.x; vertices[1] = leftTop.y;
+	vertices[2] = leftBottom.x; vertices[3] = leftBottom.y;
+	vertices[4] = rightTop.x; vertices[5] = rightTop.y;
+	vertices[6] = rightBottom.x; vertices[7] = rightBottom.y;
 }
 
 @implementation JZGLSprite
@@ -72,6 +81,29 @@ static void setTriangleStripVerticesFromRect(GLfloat *vertices, CGRect rect) {
 
 - (void)drawToRect:(CGRect)rect {
 	setTriangleStripVerticesFromRect(_vertices, rect);
+	[_verticesBuffer bind];
+	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertices), _vertices, GL_DYNAMIC_DRAW);
+	glVertexPointer(2, GL_FLOAT, 0, 0);
+	[_verticesBuffer unbind];
+	if (_colored) {
+		glEnableClientState(GL_COLOR_ARRAY);
+		[_colorBuffer bind];
+		glColorPointer(4, GL_FLOAT, 0, 0);
+		[_colorBuffer unbind];
+	} else {
+		glDisableClientState(GL_COLOR_ARRAY);
+	}
+	if (_textured) {
+		[_texture bind];
+		[_textureVerticesBuffer bind];
+		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		[_textureVerticesBuffer unbind];
+	}
+}
+
+- (void)drawToRect:(CGRect)rect withRotation:(double)radian {
+	setTriangleStripVerticesFromRectWithRotation(_vertices, rect, radian);
 	[_verticesBuffer bind];
 	glBufferData(GL_ARRAY_BUFFER, sizeof(_vertices), _vertices, GL_DYNAMIC_DRAW);
 	glVertexPointer(2, GL_FLOAT, 0, 0);

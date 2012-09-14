@@ -7,11 +7,14 @@
 //
 
 #import "MNCellMoveEscapeTarget.h"
+#import "JZUtility.h"
 
 @implementation MNCellMoveEscapeTarget
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withTarget:(id<MNCell>)target withEnvironment:(id<MNEnvironment>)environment {
-	[cell moveFor:MNRadianFromPoints(target.center, cell.center)];
+	double radian = JZRadianFromPoints(target.center, cell.center);
+	[cell rotateFor:radian];
+	[cell moveFor:radian];
 }
 
 @end

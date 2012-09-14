@@ -29,6 +29,7 @@
 		CGPoint nextPoint = [[_positionsOfTarget objectAtIndex:0] CGPointValue];
 		[_positionsOfTarget removeObjectAtIndex:_intervalFrames];
 		[_positionsOfTarget insertObject:[NSValue valueWithCGPoint:target.center] atIndex:0];
+		[cell rotateTowards:nextPoint];
 		[cell moveTowards:nextPoint];
 	}
 }
