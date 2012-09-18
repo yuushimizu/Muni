@@ -22,5 +22,6 @@
 @property (readonly) JZGLTexture *cellEffectDieTexture;
 
 - (JZGLTexture *)cellTexture:(int)type;
+- (void)resetCellTextures;
 
 @end

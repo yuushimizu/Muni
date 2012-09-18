@@ -22,14 +22,10 @@
 @interface MNFieldScene : NSObject<JZScene> {
 	MNStandardEnvironment *_environment;
 	MNGLResources *_resources;
-	JZGLSprite *_backgroundSprite;
 	JZGLSprite *_cellSprites[kMNMaxCells];
 	NSMutableArray *_effects;
-	BOOL _firstMessageIsShown;
 }
 
-- (BOOL)firstMessageIsShownInPast;
-- (void)markAsShownFirstMessage;
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(CGSize)size withResources:(MNGLResources *)resources;
 
 @end

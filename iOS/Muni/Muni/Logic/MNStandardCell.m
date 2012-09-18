@@ -59,12 +59,12 @@
 			return [[MNCellMoveImmovable alloc] init];
 		};
 	}
-	if (MNRandomInt(0, 100) < 20) {
+	if (MNRandomInt(0, 100) < 10) {
 		return sourceWithoutTarget;
 	} else {
 		BOOL (^targetCondition)(id<MNCell> me, id<MNCell> other);
 		int decisionTargetCondition = MNRandomInt(0, 100);
-		if (decisionTargetCondition < 50) {
+		if (decisionTargetCondition < 75) {
 			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);};
 		} else {
 			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && ![me hostility:other]);};

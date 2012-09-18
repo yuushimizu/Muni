@@ -10,8 +10,12 @@
 #import "JZSceneDirector.h"
 #import "MNFieldScene.h"
 
-@interface MNSceneDirector : JZSceneDirector
+@interface MNSceneDirector : JZSceneDirector {
+	CGSize _size;
+	MNGLResources *_resources;
+}
 
 - (id)initWithGLView:(JZGLView *)glView withSize:(CGSize)size;
+- (void)reset;
 
 @end

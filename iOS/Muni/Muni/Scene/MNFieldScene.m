@@ -15,36 +15,14 @@ static CGRect rectFromCell(id<MNCell> cell) {
 
 @implementation MNFieldScene
 
-- (void)setupBackground:(CGSize)size {
-	_backgroundSprite = [[JZGLSprite alloc] initWithTexture:_resources.backgroundTexture];
-}
-
-- (NSString *)dataPath {
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsDirectory = [paths objectAtIndex:0];
-	return [documentsDirectory stringByAppendingPathComponent:@"game-data.plist"];
-}
-
-- (BOOL)firstMessageIsShownInPast {
-	NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:[self dataPath]];
-	if (data == nil) return NO;
-	return [[data objectForKey:@"first-message-is-shown"] boolValue];
-}
-
-- (void)markAsShownFirstMessage {
-	[[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"first-message-is-shown"] writeToFile:[self dataPath] atomically:YES];
-}
-
-- (id)initWithSize:(CGSize)size {
+- (id)initWithSize:(CGSize)size withResources:(MNGLResources *)resources {
 	if (self = [super init]) {
-		_resources = [[MNGLResources alloc] init];
+		_resources = resources;
 		_environment = [[MNStandardEnvironment alloc] initWithSize:size withMaxCellCount:kMNMaxCells];
-		[self setupBackground:size];
 		for (int i = 0; i < kMNMaxCells; ++i) {
 			_cellSprites[i] = [[JZGLSprite alloc] init];
 		}
 		_effects = [NSMutableArray array];
-		_firstMessageIsShown = [self firstMessageIsShownInPast];
 	}
 	return self;
 }
@@ -59,11 +37,6 @@ static CGRect rectFromCell(id<MNCell> cell) {
 }
 
 - (void)sendFrame {
-	if (!_firstMessageIsShown) {
-		[[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"FirstMessageTitle", @"") message:NSLocalizedString(@"FirstMessageBody", @"") delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"FirstMessageButton", @""), nil] show];
-		_firstMessageIsShown = YES;
-		[self markAsShownFirstMessage];
-	}
 	for (id<MNCell> cell in _environment.cells) {
 		if ([cell eventOccurred:kMNCellEventBoned]) {
 			[_effects addObject:[[MNCellBornEffect alloc] initWithCell:cell withResources:_resources]];
@@ -73,10 +46,6 @@ static CGRect rectFromCell(id<MNCell> cell) {
 	}
 	[_environment sendFrame];
 	[self sendEffectFrame];
-}
-
-- (void)drawBackground {
-	[_backgroundSprite drawToRect:CGRectMake(0, 0, _environment.field.size.width, _environment.field.size.height)];
 }
 
 - (void)drawEffects {
@@ -106,7 +75,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 }
 
 - (void)draw {
-	[self drawBackground];
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	int i = 0;
 	for (id<MNCell> cell in _environment.cells) {
 		JZGLSprite *cellSprite = _cellSprites[i];

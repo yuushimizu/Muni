@@ -12,6 +12,8 @@
 
 - (id)initWithFrame:(CGRect)frame {
 	if (self = [super initWithFrame:frame]) {
+		self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.0f];
+		self.opaque = NO;
 	}
 	return self;
 }

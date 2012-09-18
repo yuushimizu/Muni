@@ -18,8 +18,6 @@
 		CA02DCA015C481DF0070B1F5 /* MNCellMoveFloat.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9415C47FE20070B1F5 /* MNCellMoveFloat.m */; };
 		CA02DCA115C481E30070B1F5 /* MNCellMoveRandomWalk.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9615C47FE20070B1F5 /* MNCellMoveRandomWalk.m */; };
 		CA02DCA215C481E80070B1F5 /* MNCellMoveApproachTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9815C47FE20070B1F5 /* MNCellMoveApproachTarget.m */; };
-		CA2C3D2F15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D2E15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m */; };
-		CA2C3D3215CA5301003E1299 /* MNCellMoveWithTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3115CA5301003E1299 /* MNCellMoveWithTarget.m */; };
 		CA2C3D3515CA5F21003E1299 /* MNCellMoveWithNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3415CA5F21003E1299 /* MNCellMoveWithNearestTarget.m */; };
 		CA2C3D3B15CA654E003E1299 /* MNCellMoveEscapeTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3A15CA6547003E1299 /* MNCellMoveEscapeTarget.m */; };
 		CA2C3D3E15CA6753003E1299 /* MNCellMoveEscapeNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3D15CA6752003E1299 /* MNCellMoveEscapeNearestTarget.m */; };
@@ -53,6 +51,39 @@
 		CAA99D6315C07E62002B85D2 /* Cell1EffectDie.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */; };
 		CAA99D6415C07E62002B85D2 /* Cell1EffectDie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */; };
 		CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */; };
+		CABD557C1603338700023742 /* MNMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD557B1603338700023742 /* MNMenuView.m */; };
+		CABD557F1603B73000023742 /* MNStandardCellSource.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD557E1603B72F00023742 /* MNStandardCellSource.m */; };
+		CABD5583160712A600023742 /* ButtonReset.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5581160712A600023742 /* ButtonReset.png */; };
+		CABD5584160712A600023742 /* ButtonReset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5582160712A600023742 /* ButtonReset@2x.png */; };
+		CABD5587160712B000023742 /* ButtonChangeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5585160712B000023742 /* ButtonChangeBackground.png */; };
+		CABD5588160712B000023742 /* ButtonChangeBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5586160712B000023742 /* ButtonChangeBackground@2x.png */; };
+		CABD559016071E7800023742 /* MNCellMoveApproachNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD558D16071E7600023742 /* MNCellMoveApproachNearestTarget.m */; };
+		CABD559116071E7800023742 /* MNCellMoveWithTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD558F16071E7800023742 /* MNCellMoveWithTarget.m */; };
+		CABD55921607213D00023742 /* MNCellMoveApproachNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD558D16071E7600023742 /* MNCellMoveApproachNearestTarget.m */; };
+		CABD55931607214300023742 /* MNCellMoveWithTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD558F16071E7800023742 /* MNCellMoveWithTarget.m */; };
+		CABD559F1607313100023742 /* MNChangeBackgroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD559E1607313100023742 /* MNChangeBackgroundViewController.m */; };
+		CABD55AE16073D4F00023742 /* Background1-Thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55A216073D4F00023742 /* Background1-Thumb.png */; };
+		CABD55AF16073D4F00023742 /* Background1-Thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55A316073D4F00023742 /* Background1-Thumb@2x.png */; };
+		CABD55B016073D4F00023742 /* Background1.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55A416073D4F00023742 /* Background1.png */; };
+		CABD55B116073D4F00023742 /* Background1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55A516073D4F00023742 /* Background1@2x.png */; };
+		CABD55B216073D4F00023742 /* Background2-Thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55A616073D4F00023742 /* Background2-Thumb.png */; };
+		CABD55B316073D4F00023742 /* Background2-Thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55A716073D4F00023742 /* Background2-Thumb@2x.png */; };
+		CABD55B416073D4F00023742 /* Background2.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55A816073D4F00023742 /* Background2.png */; };
+		CABD55B516073D4F00023742 /* Background2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55A916073D4F00023742 /* Background2@2x.png */; };
+		CABD55B616073D4F00023742 /* Background3-Thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55AA16073D4F00023742 /* Background3-Thumb.png */; };
+		CABD55B716073D4F00023742 /* Background3-Thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55AB16073D4F00023742 /* Background3-Thumb@2x.png */; };
+		CABD55B816073D4F00023742 /* Background3.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55AC16073D4F00023742 /* Background3.png */; };
+		CABD55B916073D4F00023742 /* Background3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55AD16073D4F00023742 /* Background3@2x.png */; };
+		CABD55BE160741A800023742 /* Background4-Thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55BA160741A800023742 /* Background4-Thumb.png */; };
+		CABD55BF160741A800023742 /* Background4-Thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55BB160741A800023742 /* Background4-Thumb@2x.png */; };
+		CABD55C0160741A800023742 /* Background4.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55BC160741A800023742 /* Background4.png */; };
+		CABD55C1160741A800023742 /* Background4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55BD160741A800023742 /* Background4@2x.png */; };
+		CABD55C61607446300023742 /* Background5-Thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55C21607446300023742 /* Background5-Thumb.png */; };
+		CABD55C71607446300023742 /* Background5-Thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55C31607446300023742 /* Background5-Thumb@2x.png */; };
+		CABD55C81607446300023742 /* Background5.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55C41607446300023742 /* Background5.png */; };
+		CABD55C91607446300023742 /* Background5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55C51607446300023742 /* Background5@2x.png */; };
+		CABD55D016089AE200023742 /* BackgroundCamera-Thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55CE16089AE200023742 /* BackgroundCamera-Thumb.png */; };
+		CABD55D116089AE200023742 /* BackgroundCamera-Thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD55CF16089AE200023742 /* BackgroundCamera-Thumb@2x.png */; };
 		CAC53B0D15E1DABD008DD063 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B0F15E1DABD008DD063 /* Localizable.strings */; };
 		CAC53B2415E23116008DD063 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B2215E23116008DD063 /* Default.png */; };
 		CAC53B2515E23116008DD063 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC53B2315E23116008DD063 /* Default@2x.png */; };
@@ -73,8 +104,6 @@
 		CAF14ADA15BDDDAD000AD7A8 /* JZGLArrayBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF14AD915BDDDAC000AD7A8 /* JZGLArrayBuffer.m */; };
 		CAF14AE015BE48C2000AD7A8 /* JZGLSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF14ADF15BE48C2000AD7A8 /* JZGLSprite.m */; };
 		CAF14AE315BE6C34000AD7A8 /* MNSceneDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF14AE215BE6C34000AD7A8 /* MNSceneDirector.m */; };
-		CAF14AEB15BEB2AC000AD7A8 /* Background1.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AE915BEB2AC000AD7A8 /* Background1.png */; };
-		CAF14AEC15BEB2AC000AD7A8 /* Background1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAF14AEA15BEB2AC000AD7A8 /* Background1@2x.png */; };
 		CAF27A6615CA84C400CC6E19 /* MNCellActionMakeMoon.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF27A6515CA84C400CC6E19 /* MNCellActionMakeMoon.m */; };
 		CAF27A6A15CBAC9B00CC6E19 /* MNCellMoveTraceTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF27A6915CBAC9B00CC6E19 /* MNCellMoveTraceTarget.m */; };
 		CAF27A6D15D0615800CC6E19 /* MNCellActionMakeTracer.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF27A6C15D0615800CC6E19 /* MNCellActionMakeTracer.m */; };
@@ -110,10 +139,6 @@
 		CA02DC9615C47FE20070B1F5 /* MNCellMoveRandomWalk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveRandomWalk.m; path = Logic/CellAction/CellMove/MNCellMoveRandomWalk.m; sourceTree = "<group>"; };
 		CA02DC9715C47FE20070B1F5 /* MNCellMoveApproachTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveApproachTarget.h; path = Logic/CellAction/CellMove/MNCellMoveApproachTarget.h; sourceTree = "<group>"; };
 		CA02DC9815C47FE20070B1F5 /* MNCellMoveApproachTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveApproachTarget.m; path = Logic/CellAction/CellMove/MNCellMoveApproachTarget.m; sourceTree = "<group>"; };
-		CA2C3D2D15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveApproachNearestTarget.h; path = Logic/CellAction/MNCellMoveApproachNearestTarget.h; sourceTree = "<group>"; };
-		CA2C3D2E15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveApproachNearestTarget.m; path = Logic/CellAction/MNCellMoveApproachNearestTarget.m; sourceTree = "<group>"; };
-		CA2C3D3015CA5300003E1299 /* MNCellMoveWithTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCellMoveWithTarget.h; sourceTree = "<group>"; };
-		CA2C3D3115CA5301003E1299 /* MNCellMoveWithTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCellMoveWithTarget.m; sourceTree = "<group>"; };
 		CA2C3D3315CA5F20003E1299 /* MNCellMoveWithNearestTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveWithNearestTarget.h; path = Logic/CellAction/CellMove/MNCellMoveWithNearestTarget.h; sourceTree = "<group>"; };
 		CA2C3D3415CA5F21003E1299 /* MNCellMoveWithNearestTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveWithNearestTarget.m; path = Logic/CellAction/CellMove/MNCellMoveWithNearestTarget.m; sourceTree = "<group>"; };
 		CA2C3D3915CA6544003E1299 /* MNCellMoveEscapeTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveEscapeTarget.h; path = Logic/CellAction/CellMove/MNCellMoveEscapeTarget.h; sourceTree = "<group>"; };
@@ -165,6 +190,42 @@
 		CAA99D8715C1AFCF002B85D2 /* MNStandardEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNStandardEnvironment.h; path = Logic/MNStandardEnvironment.h; sourceTree = "<group>"; };
 		CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNStandardEnvironment.m; path = Logic/MNStandardEnvironment.m; sourceTree = "<group>"; };
 		CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNEnvironment.h; path = Logic/MNEnvironment.h; sourceTree = "<group>"; };
+		CABD557A1603338700023742 /* MNMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNMenuView.h; path = UI/MNMenuView.h; sourceTree = "<group>"; };
+		CABD557B1603338700023742 /* MNMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNMenuView.m; path = UI/MNMenuView.m; sourceTree = "<group>"; };
+		CABD557D1603B72F00023742 /* MNStandardCellSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNStandardCellSource.h; path = Logic/MNStandardCellSource.h; sourceTree = "<group>"; };
+		CABD557E1603B72F00023742 /* MNStandardCellSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNStandardCellSource.m; path = Logic/MNStandardCellSource.m; sourceTree = "<group>"; };
+		CABD5581160712A600023742 /* ButtonReset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonReset.png; path = ../images/ButtonReset.png; sourceTree = "<group>"; };
+		CABD5582160712A600023742 /* ButtonReset@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonReset@2x.png"; path = "../images/ButtonReset@2x.png"; sourceTree = "<group>"; };
+		CABD5585160712B000023742 /* ButtonChangeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonChangeBackground.png; path = ../images/ButtonChangeBackground.png; sourceTree = "<group>"; };
+		CABD5586160712B000023742 /* ButtonChangeBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonChangeBackground@2x.png"; path = "../images/ButtonChangeBackground@2x.png"; sourceTree = "<group>"; };
+		CABD558C16071E7600023742 /* MNCellMoveApproachNearestTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveApproachNearestTarget.h; path = Logic/CellAction/CellMove/MNCellMoveApproachNearestTarget.h; sourceTree = "<group>"; };
+		CABD558D16071E7600023742 /* MNCellMoveApproachNearestTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveApproachNearestTarget.m; path = Logic/CellAction/CellMove/MNCellMoveApproachNearestTarget.m; sourceTree = "<group>"; };
+		CABD558E16071E7700023742 /* MNCellMoveWithTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveWithTarget.h; path = Logic/CellAction/CellMove/MNCellMoveWithTarget.h; sourceTree = "<group>"; };
+		CABD558F16071E7800023742 /* MNCellMoveWithTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveWithTarget.m; path = Logic/CellAction/CellMove/MNCellMoveWithTarget.m; sourceTree = "<group>"; };
+		CABD559D1607313100023742 /* MNChangeBackgroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNChangeBackgroundViewController.h; path = UI/MNChangeBackgroundViewController.h; sourceTree = "<group>"; };
+		CABD559E1607313100023742 /* MNChangeBackgroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNChangeBackgroundViewController.m; path = UI/MNChangeBackgroundViewController.m; sourceTree = "<group>"; };
+		CABD55A216073D4F00023742 /* Background1-Thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background1-Thumb.png"; path = "../images/Background/Background1-Thumb.png"; sourceTree = "<group>"; };
+		CABD55A316073D4F00023742 /* Background1-Thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background1-Thumb@2x.png"; path = "../images/Background/Background1-Thumb@2x.png"; sourceTree = "<group>"; };
+		CABD55A416073D4F00023742 /* Background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background1.png; path = ../images/Background/Background1.png; sourceTree = "<group>"; };
+		CABD55A516073D4F00023742 /* Background1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background1@2x.png"; path = "../images/Background/Background1@2x.png"; sourceTree = "<group>"; };
+		CABD55A616073D4F00023742 /* Background2-Thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background2-Thumb.png"; path = "../images/Background/Background2-Thumb.png"; sourceTree = "<group>"; };
+		CABD55A716073D4F00023742 /* Background2-Thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background2-Thumb@2x.png"; path = "../images/Background/Background2-Thumb@2x.png"; sourceTree = "<group>"; };
+		CABD55A816073D4F00023742 /* Background2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background2.png; path = ../images/Background/Background2.png; sourceTree = "<group>"; };
+		CABD55A916073D4F00023742 /* Background2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background2@2x.png"; path = "../images/Background/Background2@2x.png"; sourceTree = "<group>"; };
+		CABD55AA16073D4F00023742 /* Background3-Thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background3-Thumb.png"; path = "../images/Background/Background3-Thumb.png"; sourceTree = "<group>"; };
+		CABD55AB16073D4F00023742 /* Background3-Thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background3-Thumb@2x.png"; path = "../images/Background/Background3-Thumb@2x.png"; sourceTree = "<group>"; };
+		CABD55AC16073D4F00023742 /* Background3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background3.png; path = ../images/Background/Background3.png; sourceTree = "<group>"; };
+		CABD55AD16073D4F00023742 /* Background3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background3@2x.png"; path = "../images/Background/Background3@2x.png"; sourceTree = "<group>"; };
+		CABD55BA160741A800023742 /* Background4-Thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background4-Thumb.png"; path = "../images/Background/Background4-Thumb.png"; sourceTree = "<group>"; };
+		CABD55BB160741A800023742 /* Background4-Thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background4-Thumb@2x.png"; path = "../images/Background/Background4-Thumb@2x.png"; sourceTree = "<group>"; };
+		CABD55BC160741A800023742 /* Background4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background4.png; path = ../images/Background/Background4.png; sourceTree = "<group>"; };
+		CABD55BD160741A800023742 /* Background4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background4@2x.png"; path = "../images/Background/Background4@2x.png"; sourceTree = "<group>"; };
+		CABD55C21607446300023742 /* Background5-Thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background5-Thumb.png"; path = "../images/Background/Background5-Thumb.png"; sourceTree = "<group>"; };
+		CABD55C31607446300023742 /* Background5-Thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background5-Thumb@2x.png"; path = "../images/Background/Background5-Thumb@2x.png"; sourceTree = "<group>"; };
+		CABD55C41607446300023742 /* Background5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background5.png; path = ../images/Background/Background5.png; sourceTree = "<group>"; };
+		CABD55C51607446300023742 /* Background5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background5@2x.png"; path = "../images/Background/Background5@2x.png"; sourceTree = "<group>"; };
+		CABD55CE16089AE200023742 /* BackgroundCamera-Thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackgroundCamera-Thumb.png"; path = "../images/Background/BackgroundCamera-Thumb.png"; sourceTree = "<group>"; };
+		CABD55CF16089AE200023742 /* BackgroundCamera-Thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BackgroundCamera-Thumb@2x.png"; path = "../images/Background/BackgroundCamera-Thumb@2x.png"; sourceTree = "<group>"; };
 		CAC53B0C15E1DAA5008DD063 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = /Users/yuu/Development/nyampass/muni/iOS/Muni/MuniTests/ja.lproj/InfoPlist.strings; sourceTree = "<absolute>"; };
 		CAC53B0E15E1DABD008DD063 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CAC53B1015E1DAC5008DD063 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -197,8 +258,6 @@
 		CAF14ADF15BE48C2000AD7A8 /* JZGLSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JZGLSprite.m; path = Juiz/OpenGLES/JZGLSprite.m; sourceTree = "<group>"; };
 		CAF14AE115BE6C34000AD7A8 /* MNSceneDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNSceneDirector.h; path = Scene/MNSceneDirector.h; sourceTree = "<group>"; };
 		CAF14AE215BE6C34000AD7A8 /* MNSceneDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNSceneDirector.m; path = Scene/MNSceneDirector.m; sourceTree = "<group>"; };
-		CAF14AE915BEB2AC000AD7A8 /* Background1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Background1.png; path = ../images/Background1.png; sourceTree = "<group>"; };
-		CAF14AEA15BEB2AC000AD7A8 /* Background1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Background1@2x.png"; path = "../images/Background1@2x.png"; sourceTree = "<group>"; };
 		CAF27A6415CA84C400CC6E19 /* MNCellActionMakeMoon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellActionMakeMoon.h; path = Logic/CellAction/MNCellActionMakeMoon.h; sourceTree = "<group>"; };
 		CAF27A6515CA84C400CC6E19 /* MNCellActionMakeMoon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellActionMakeMoon.m; path = Logic/CellAction/MNCellActionMakeMoon.m; sourceTree = "<group>"; };
 		CAF27A6815CBAC9B00CC6E19 /* MNCellMoveTraceTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellMoveTraceTarget.h; path = Logic/CellAction/CellMove/MNCellMoveTraceTarget.h; sourceTree = "<group>"; };
@@ -355,6 +414,10 @@
 				CA8BF7F515BC8C1A00B7B572 /* MNMainViewController.m */,
 				CA8BF7F615BC8C1A00B7B572 /* MNMainViewController_iPad.xib */,
 				CA8BF7FB15BC8C7D00B7B572 /* MNMainViewController_iPhone.xib */,
+				CABD557A1603338700023742 /* MNMenuView.h */,
+				CABD557B1603338700023742 /* MNMenuView.m */,
+				CABD559D1607313100023742 /* MNChangeBackgroundViewController.h */,
+				CABD559E1607313100023742 /* MNChangeBackgroundViewController.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -375,6 +438,8 @@
 				CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */,
 				CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.m */,
 				CA02DC8B15C44E8B0070B1F5 /* MNCell.h */,
+				CABD557D1603B72F00023742 /* MNStandardCellSource.h */,
+				CABD557E1603B72F00023742 /* MNStandardCellSource.m */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -408,6 +473,8 @@
 		CA8BF81015BC948200B7B572 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CABD5594160723CA00023742 /* Background */,
+				CABD55801607126100023742 /* Button */,
 				CAC53B4915E23C4B008DD063 /* Default-Portrait@2x~ipad.png */,
 				CAC53B4A15E23C4B008DD063 /* Default-Portrait~ipad.png */,
 				CAC53B2B15E23879008DD063 /* Icon-Small-50.png */,
@@ -419,8 +486,6 @@
 				CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */,
 				CAA99D4415C05127002B85D2 /* Cell1EffectBorn.png */,
 				CAA99D4515C05127002B85D2 /* Cell1EffectBorn@2x.png */,
-				CAF14AE915BEB2AC000AD7A8 /* Background1.png */,
-				CAF14AEA15BEB2AC000AD7A8 /* Background1@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -452,6 +517,10 @@
 		CAA99D6B15C0C01B002B85D2 /* Move */ = {
 			isa = PBXGroup;
 			children = (
+				CABD558C16071E7600023742 /* MNCellMoveApproachNearestTarget.h */,
+				CABD558D16071E7600023742 /* MNCellMoveApproachNearestTarget.m */,
+				CABD558E16071E7700023742 /* MNCellMoveWithTarget.h */,
+				CABD558F16071E7800023742 /* MNCellMoveWithTarget.m */,
 				CA02DC9115C47FE20070B1F5 /* MNCellMoveImmovable.h */,
 				CA02DC9215C47FE20070B1F5 /* MNCellMoveImmovable.m */,
 				CA02DC9315C47FE20070B1F5 /* MNCellMoveFloat.h */,
@@ -460,10 +529,6 @@
 				CA02DC9615C47FE20070B1F5 /* MNCellMoveRandomWalk.m */,
 				CA02DC9715C47FE20070B1F5 /* MNCellMoveApproachTarget.h */,
 				CA02DC9815C47FE20070B1F5 /* MNCellMoveApproachTarget.m */,
-				CA2C3D2D15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.h */,
-				CA2C3D2E15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m */,
-				CA2C3D3015CA5300003E1299 /* MNCellMoveWithTarget.h */,
-				CA2C3D3115CA5301003E1299 /* MNCellMoveWithTarget.m */,
 				CA2C3D3315CA5F20003E1299 /* MNCellMoveWithNearestTarget.h */,
 				CA2C3D3415CA5F21003E1299 /* MNCellMoveWithNearestTarget.m */,
 				CA2C3D3915CA6544003E1299 /* MNCellMoveEscapeTarget.h */,
@@ -476,6 +541,46 @@
 				CAF27A6915CBAC9B00CC6E19 /* MNCellMoveTraceTarget.m */,
 			);
 			name = Move;
+			sourceTree = "<group>";
+		};
+		CABD55801607126100023742 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				CABD5585160712B000023742 /* ButtonChangeBackground.png */,
+				CABD5586160712B000023742 /* ButtonChangeBackground@2x.png */,
+				CABD5581160712A600023742 /* ButtonReset.png */,
+				CABD5582160712A600023742 /* ButtonReset@2x.png */,
+			);
+			name = Button;
+			sourceTree = "<group>";
+		};
+		CABD5594160723CA00023742 /* Background */ = {
+			isa = PBXGroup;
+			children = (
+				CABD55CE16089AE200023742 /* BackgroundCamera-Thumb.png */,
+				CABD55CF16089AE200023742 /* BackgroundCamera-Thumb@2x.png */,
+				CABD55C21607446300023742 /* Background5-Thumb.png */,
+				CABD55C31607446300023742 /* Background5-Thumb@2x.png */,
+				CABD55C41607446300023742 /* Background5.png */,
+				CABD55C51607446300023742 /* Background5@2x.png */,
+				CABD55BA160741A800023742 /* Background4-Thumb.png */,
+				CABD55BB160741A800023742 /* Background4-Thumb@2x.png */,
+				CABD55BC160741A800023742 /* Background4.png */,
+				CABD55BD160741A800023742 /* Background4@2x.png */,
+				CABD55A216073D4F00023742 /* Background1-Thumb.png */,
+				CABD55A316073D4F00023742 /* Background1-Thumb@2x.png */,
+				CABD55A416073D4F00023742 /* Background1.png */,
+				CABD55A516073D4F00023742 /* Background1@2x.png */,
+				CABD55A616073D4F00023742 /* Background2-Thumb.png */,
+				CABD55A716073D4F00023742 /* Background2-Thumb@2x.png */,
+				CABD55A816073D4F00023742 /* Background2.png */,
+				CABD55A916073D4F00023742 /* Background2@2x.png */,
+				CABD55AA16073D4F00023742 /* Background3-Thumb.png */,
+				CABD55AB16073D4F00023742 /* Background3-Thumb@2x.png */,
+				CABD55AC16073D4F00023742 /* Background3.png */,
+				CABD55AD16073D4F00023742 /* Background3@2x.png */,
+			);
+			name = Background;
 			sourceTree = "<group>";
 		};
 		CAF14AB915BC95D0000AD7A8 /* OpenGLES */ = {
@@ -585,8 +690,6 @@
 				CA8BF7C715BC8B2900B7B572 /* InfoPlist.strings in Resources */,
 				CA8BF7F815BC8C1A00B7B572 /* MNMainViewController_iPad.xib in Resources */,
 				CA8BF7FD15BC8C7D00B7B572 /* MNMainViewController_iPhone.xib in Resources */,
-				CAF14AEB15BEB2AC000AD7A8 /* Background1.png in Resources */,
-				CAF14AEC15BEB2AC000AD7A8 /* Background1@2x.png in Resources */,
 				CAA99D4615C05127002B85D2 /* Cell1EffectBorn.png in Resources */,
 				CAA99D4715C05127002B85D2 /* Cell1EffectBorn@2x.png in Resources */,
 				CAA99D6315C07E62002B85D2 /* Cell1EffectDie.png in Resources */,
@@ -603,6 +706,32 @@
 				CAC53B4815E23998008DD063 /* Icon-72@2x.png in Resources */,
 				CAC53B4B15E23C4B008DD063 /* Default-Portrait@2x~ipad.png in Resources */,
 				CAC53B4C15E23C4B008DD063 /* Default-Portrait~ipad.png in Resources */,
+				CABD5583160712A600023742 /* ButtonReset.png in Resources */,
+				CABD5584160712A600023742 /* ButtonReset@2x.png in Resources */,
+				CABD5587160712B000023742 /* ButtonChangeBackground.png in Resources */,
+				CABD5588160712B000023742 /* ButtonChangeBackground@2x.png in Resources */,
+				CABD55AE16073D4F00023742 /* Background1-Thumb.png in Resources */,
+				CABD55AF16073D4F00023742 /* Background1-Thumb@2x.png in Resources */,
+				CABD55B016073D4F00023742 /* Background1.png in Resources */,
+				CABD55B116073D4F00023742 /* Background1@2x.png in Resources */,
+				CABD55B216073D4F00023742 /* Background2-Thumb.png in Resources */,
+				CABD55B316073D4F00023742 /* Background2-Thumb@2x.png in Resources */,
+				CABD55B416073D4F00023742 /* Background2.png in Resources */,
+				CABD55B516073D4F00023742 /* Background2@2x.png in Resources */,
+				CABD55B616073D4F00023742 /* Background3-Thumb.png in Resources */,
+				CABD55B716073D4F00023742 /* Background3-Thumb@2x.png in Resources */,
+				CABD55B816073D4F00023742 /* Background3.png in Resources */,
+				CABD55B916073D4F00023742 /* Background3@2x.png in Resources */,
+				CABD55BE160741A800023742 /* Background4-Thumb.png in Resources */,
+				CABD55BF160741A800023742 /* Background4-Thumb@2x.png in Resources */,
+				CABD55C0160741A800023742 /* Background4.png in Resources */,
+				CABD55C1160741A800023742 /* Background4@2x.png in Resources */,
+				CABD55C61607446300023742 /* Background5-Thumb.png in Resources */,
+				CABD55C71607446300023742 /* Background5-Thumb@2x.png in Resources */,
+				CABD55C81607446300023742 /* Background5.png in Resources */,
+				CABD55C91607446300023742 /* Background5@2x.png in Resources */,
+				CABD55D016089AE200023742 /* BackgroundCamera-Thumb.png in Resources */,
+				CABD55D116089AE200023742 /* BackgroundCamera-Thumb@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +766,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CABD55931607214300023742 /* MNCellMoveWithTarget.m in Sources */,
+				CABD55921607213D00023742 /* MNCellMoveApproachNearestTarget.m in Sources */,
 				CA02DCA215C481E80070B1F5 /* MNCellMoveApproachTarget.m in Sources */,
 				CA02DCA115C481E30070B1F5 /* MNCellMoveRandomWalk.m in Sources */,
 				CA02DCA015C481DF0070B1F5 /* MNCellMoveFloat.m in Sources */,
@@ -665,8 +796,6 @@
 				CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.m in Sources */,
 				CA02DC8715C423D80070B1F5 /* MNCellAction.m in Sources */,
 				CA02DC8E15C458B80070B1F5 /* MNCellActionMultiply.m in Sources */,
-				CA2C3D2F15CA46F1003E1299 /* MNCellMoveApproachNearestTarget.m in Sources */,
-				CA2C3D3215CA5301003E1299 /* MNCellMoveWithTarget.m in Sources */,
 				CA2C3D3515CA5F21003E1299 /* MNCellMoveWithNearestTarget.m in Sources */,
 				CA2C3D3B15CA654E003E1299 /* MNCellMoveEscapeTarget.m in Sources */,
 				CA2C3D3E15CA6753003E1299 /* MNCellMoveEscapeNearestTarget.m in Sources */,
@@ -675,6 +804,9 @@
 				CAF27A6A15CBAC9B00CC6E19 /* MNCellMoveTraceTarget.m in Sources */,
 				CAF27A6D15D0615800CC6E19 /* MNCellActionMakeTracer.m in Sources */,
 				CA6579EC15F7C05D00C4351A /* JZUtility.m in Sources */,
+				CABD557C1603338700023742 /* MNMenuView.m in Sources */,
+				CABD557F1603B73000023742 /* MNStandardCellSource.m in Sources */,
+				CABD559F1607313100023742 /* MNChangeBackgroundViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,6 +821,8 @@
 				CA02DC9B15C47FE20070B1F5 /* MNCellMoveFloat.m in Sources */,
 				CA02DC9C15C47FE20070B1F5 /* MNCellMoveRandomWalk.m in Sources */,
 				CA02DC9D15C47FE20070B1F5 /* MNCellMoveApproachTarget.m in Sources */,
+				CABD559016071E7800023742 /* MNCellMoveApproachNearestTarget.m in Sources */,
+				CABD559116071E7800023742 /* MNCellMoveWithTarget.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

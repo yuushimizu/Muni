@@ -66,9 +66,9 @@ static double maxLengthOfLineFromPointInPathArea(CGPoint start, double angle) {
 }
 
 static void addRandomPath(CGContextRef context) {
-	int type = MNRandomInt(0, 3);
+	int type = MNRandomInt(0, 4);
 	if (type == 0) { // arc
-		double radius = MNRandomDouble(kMNRandomCellTexturePathAreaMin, (kMNRandomCellTexturePathAreaMax - kMNRandomCellTexturePathAreaMin) / 2);
+		double radius = MNRandomDouble(kMNRandomCellTexturePathAreaMin, (kMNRandomCellTexturePathAreaMax - kMNRandomCellTexturePathAreaMin) / 2 - kMNRandomCellTexturePathAreaMin);
 		double x = MNRandomDouble(kMNRandomCellTexturePathAreaMin + radius, kMNRandomCellTexturePathAreaMax - radius);
 		double y = MNRandomDouble(kMNRandomCellTexturePathAreaMin + radius , kMNRandomCellTexturePathAreaMax - radius);
 		double radian;
@@ -99,6 +99,10 @@ static void addRandomPath(CGContextRef context) {
 		CGContextAddLineToPoint(context, point2.x, point2.y);
 		CGContextAddLineToPoint(context, point3.x, point3.y);
 		CGContextAddLineToPoint(context, point4.x, point4.y);
+	} else if (type == 2) { // triangle
+		CGContextMoveToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
+		CGContextAddLineToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
+		CGContextAddLineToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
 	} else { // line
 		CGContextSetLineWidth(context, MNRandomDouble(kMNRandomCellTextureMaxLineWidth / 2, kMNRandomCellTextureMaxLineWidth));
 		CGContextMoveToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
@@ -112,7 +116,8 @@ static CGRect drawRandomCellPart(CGContextRef context) {
 	addRandomPath(context);
 	CGRect boundingBox = CGContextGetPathBoundingBox(context);
 	CGContextClosePath(context);
-	CGContextDrawPath(context, kCGPathFillStroke);
+	CGPathDrawingMode mode = MNRandomInt(0, 100) < 10 ? kCGPathStroke : kCGPathFillStroke;
+	CGContextDrawPath(context, mode);
 	return boundingBox;
 }
 
@@ -163,9 +168,7 @@ static JZGLTexture *makeRandomCellTexture() {
 - (id)init {
 	if (self = [super init]) {
 		_backgroundTexture = [[JZGLTexture alloc] initWithImageNamed:@"Background1.png"];
-		for (int i = 0; i < kMNCellTypeCount; ++i) {
-			_cellTextures[i] = makeRandomCellTexture();
-		}
+		[self resetCellTextures];
 		_cellEffectBornTexture = [[JZGLTexture alloc] initWithImageNamed:@"Cell1EffectBorn.png"];
 		_cellEffectDieTexture = [[JZGLTexture alloc] initWithImageNamed:@"Cell1EffectDie.png"];
 	}
@@ -174,6 +177,12 @@ static JZGLTexture *makeRandomCellTexture() {
 
 - (JZGLTexture *)cellTexture:(int)type {
 	return _cellTextures[type];
+}
+
+- (void)resetCellTextures {
+	for (int i = 0; i < kMNCellTypeCount; ++i) {
+		_cellTextures[i] = makeRandomCellTexture();
+	}
 }
 
 @end

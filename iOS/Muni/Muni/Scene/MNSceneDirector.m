@@ -11,9 +11,16 @@
 @implementation MNSceneDirector
 
 - (id)initWithGLView:(JZGLView *)glView withSize:(CGSize)size {
-	if (self = [super initWithGLView:glView	withScene:[[MNFieldScene alloc] initWithSize:size] withTargetFPS:30]) {
+	_size = size;
+	_resources = [[MNGLResources alloc] init];
+	if (self = [super initWithGLView:glView	withScene:[[MNFieldScene alloc] initWithSize:size withResources:_resources] withTargetFPS:30]) {
 	}
 	return self;
+}
+
+- (void)reset {
+	[_resources resetCellTextures];
+	[self changeSceneTo:[[MNFieldScene alloc] initWithSize:_size withResources:_resources]];
 }
 
 @end
