@@ -7,6 +7,7 @@
 //
 
 #import "MNSceneDirector.h"
+#import "MNResetScene.h"
 
 @implementation MNSceneDirector
 
@@ -19,6 +20,10 @@
 }
 
 - (void)reset {
+	[self changeSceneTo:[[MNResetScene alloc] initWithSceneHandler:self]];
+}
+
+- (void)doReset {
 	[_resources resetCellTextures];
 	[self changeSceneTo:[[MNFieldScene alloc] initWithSize:_size withResources:_resources]];
 }

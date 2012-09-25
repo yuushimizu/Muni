@@ -10,16 +10,11 @@
 
 @implementation MNCellAttribute
 
-@synthesize red = _red;
-@synthesize green = _green;
-@synthesize blue = _blue;
+@synthesize hue = _hue;
 
-- (id)initWithRed:(double)red withGreen:(double)green withBlue:(double)blue {
+- (id)initWithHue:(double)hue {
 	if (self = [super init]) {
-		double max = MAX(MAX(red, green), blue);
-		_red = red / max;
-		_green = green / max;
-		_blue = blue / max;
+		_hue = MIN(MAX(0, hue), 1.0);
 	}
 	return self;
 }

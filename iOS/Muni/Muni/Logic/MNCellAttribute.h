@@ -9,15 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface MNCellAttribute : NSObject {
-	double _red;
-	double _green;
-	double _blue;
+	double _hue;
 }
 
-@property (readonly) double red;
-@property (readonly) double green;
-@property (readonly) double blue;
+@property (readonly) double hue;
 
-- (id)initWithRed:(double)red withGreen:(double)green withBlue:(double)blue;
+- (id)initWithHue:(double)hue;
 
 @end

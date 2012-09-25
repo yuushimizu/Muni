@@ -29,7 +29,11 @@
 }
 
 - (void)hideMenuView {
-	_menuView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+	_menuView.alpha = 0;
+}
+
+- (void)showMenuView {
+	_menuView.alpha = 1;
 }
 
 #pragma mark - View lifecycle
@@ -43,8 +47,9 @@
 	MNGLView *glView = [[MNGLView alloc] initWithFrame:self.view.frame];
 	_sceneDirector = [[MNSceneDirector alloc] initWithGLView:glView withSize:self.view.frame.size];
 	[self.view addSubview:glView];
-	_menuView = [[MNMenuView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height) withDelegate:self];
+	_menuView = [[MNMenuView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y , self.view.frame.size.width, self.view.frame.size.height) withDelegate:self];
 	[self.view addSubview:_menuView];
+	[self hideMenuView];
 	[_sceneDirector start];
 }
 
@@ -80,19 +85,22 @@
 }
 
 - (void)backgroundChanged:(UIImage *)backgroundImage {
-	if (backgroundImage) _backgroundImageView.image = backgroundImage;
 	[self hideMenuView];
+	if (backgroundImage) {
+		_backgroundImageView.image = backgroundImage;
+		[_backgroundImageView setNeedsDisplay];
+	}
 	[_sceneDirector start];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	[UIView beginAnimations:nil context:context];
-	[UIView setAnimationDuration:0.3];
-	if (CGRectEqualToRect(_menuView.frame, self.view.frame)) {
+	[UIView setAnimationDuration:0.2];
+	if (_menuView.alpha == 1) {
 		[self hideMenuView];
 	} else {
-		_menuView.frame = self.view.frame;
+		[self showMenuView];
 	}
 	[UIView commitAnimations];
 }

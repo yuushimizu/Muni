@@ -9,6 +9,16 @@
 #import "MNStandardCell.h"
 #import "JZUtility.h"
 
+#define kMNCellMinDensity 0.2
+#define kMNCellMaxDensity 0.9
+
+static int randomType() {
+	static int nextType = 0;
+	int type = nextType;
+	nextType = (nextType + 1) % kMNCellTypeCount;
+	return type;
+}
+
 @implementation MNStandardCell
 
 @synthesize type = _type;
@@ -39,7 +49,7 @@
 }
 
 - (MNCellAttribute *)randomAttribute {
-	return [[MNCellAttribute alloc] initWithRed:MNRandomDouble(0, 1) withGreen:MNRandomDouble(0, 1) withBlue:MNRandomDouble(0, 1)];
+	return [[MNCellAttribute alloc] initWithHue:MNRandomDouble(0, 1)];
 }
 
 - (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
@@ -217,10 +227,10 @@
 
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
-		_type = MNRandomInt(0, kMNCellTypeCount);
+		_type = randomType();
 		_maxEnergy = [self randomEnergy];
 		_energy = _maxEnergy * MNRandomDouble(0.5, 0.9);
-		_density = MNRandomDouble(0.2, 0.9);
+		_density = MNRandomDouble(kMNCellMinDensity, kMNCellMaxDensity);
 		_attribute = [self randomAttribute];
 		_speed = [self randomSpeed];
 		_movingSpeed = 0;
@@ -244,10 +254,10 @@
 - (id)initByOther:(MNStandardCell *)other withEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
 		_type = other.type;
-		_energy = other.energy * MNRandomDouble(0.9, 1.1);
 		_maxEnergy = other.maxEnergy * MNRandomDouble(0.9, 1.1);
-		_density = other.density * MNRandomDouble(0.9, 1.1);
-		_attribute = [[MNCellAttribute alloc] initWithRed:other.attribute.red * MNRandomDouble(0.9, 1.1) withGreen:other.attribute.green * MNRandomDouble(0.9, 1.1) withBlue:other.attribute.blue * MNRandomDouble(0.9, 1.1)];
+		_energy = _maxEnergy * other.energy / other.maxEnergy;
+		_density = MAX(MIN(kMNCellMaxDensity, other.density * MNRandomDouble(0.9, 1.1)), kMNCellMinDensity);
+		_attribute = [[MNCellAttribute alloc] initWithHue:other.attribute.hue * MNRandomDouble(0.9, 1.1)];
 		_speed = other.speed * MNRandomDouble(0.9, 1.1);
 		_movingSpeed = 0;
 		_movingRadian = MNRandomRadian();
@@ -345,7 +355,8 @@
 }
 
 - (BOOL)hostility:(id<MNCell>)other {
-	return fabs(other.attribute.red - _attribute.red) > 0.4 || fabs(other.attribute.green - _attribute.green) > 0.4 || fabs(other.attribute.blue - _attribute.blue) > 0.4;
+	double hueDistance = MIN(fabs(other.attribute.hue - _attribute.hue), MIN(fabs(other.attribute.hue - (_attribute.hue - 1.0)), fabs(other.attribute.hue - (_attribute.hue + 1.0))));
+	return hueDistance > 0.3;
 }
 
 - (void)decreaseEnergy:(double)energy {
@@ -420,7 +431,7 @@
 	_eventBits = 0;
 	_lastMovedRadian = _movingRadian;
 	_lastMovedDistance = _movingSpeed;
-	[self decreaseEnergy:self.weight * 0.05];
+	[self decreaseEnergy:self.weight * 0.03];
 	if (self.living) for (MNCellAction *action in _actions) {
 		[action sendFrameWithCell:self withEnvironment:environment];
 	}

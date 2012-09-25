@@ -23,6 +23,9 @@
 		CA2C3D3E15CA6753003E1299 /* MNCellMoveEscapeNearestTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D3D15CA6752003E1299 /* MNCellMoveEscapeNearestTarget.m */; };
 		CA2C3D4115CA6945003E1299 /* MNCellMoveMoon.m in Sources */ = {isa = PBXBuildFile; fileRef = CA2C3D4015CA6944003E1299 /* MNCellMoveMoon.m */; };
 		CA6579EC15F7C05D00C4351A /* JZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CA6579EB15F7C05D00C4351A /* JZUtility.m */; };
+		CA7F4CD7160E99DC000C75B0 /* MNResetScene.m in Sources */ = {isa = PBXBuildFile; fileRef = CA7F4CD6160E99DC000C75B0 /* MNResetScene.m */; };
+		CA7F4CDB160E9FC1000C75B0 /* ButtonSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7F4CD9160E9FC1000C75B0 /* ButtonSettings.png */; };
+		CA7F4CDC160E9FC1000C75B0 /* ButtonSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA7F4CDA160E9FC1000C75B0 /* ButtonSettings@2x.png */; };
 		CA8BF7BD15BC8B2900B7B572 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */; };
 		CA8BF7BF15BC8B2900B7B572 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */; };
 		CA8BF7C115BC8B2900B7B572 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8BF7C015BC8B2900B7B572 /* CoreGraphics.framework */; };
@@ -52,7 +55,6 @@
 		CAA99D6415C07E62002B85D2 /* Cell1EffectDie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */; };
 		CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */; };
 		CABD557C1603338700023742 /* MNMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD557B1603338700023742 /* MNMenuView.m */; };
-		CABD557F1603B73000023742 /* MNStandardCellSource.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD557E1603B72F00023742 /* MNStandardCellSource.m */; };
 		CABD5583160712A600023742 /* ButtonReset.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5581160712A600023742 /* ButtonReset.png */; };
 		CABD5584160712A600023742 /* ButtonReset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5582160712A600023742 /* ButtonReset@2x.png */; };
 		CABD5587160712B000023742 /* ButtonChangeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5585160712B000023742 /* ButtonChangeBackground.png */; };
@@ -149,6 +151,11 @@
 		CA2C3D4015CA6944003E1299 /* MNCellMoveMoon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellMoveMoon.m; path = Logic/CellAction/CellMove/MNCellMoveMoon.m; sourceTree = "<group>"; };
 		CA6579EA15F7C05D00C4351A /* JZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JZUtility.h; path = Juiz/Utility/JZUtility.h; sourceTree = "<group>"; };
 		CA6579EB15F7C05D00C4351A /* JZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JZUtility.m; path = Juiz/Utility/JZUtility.m; sourceTree = "<group>"; };
+		CA7F4CD5160E99DC000C75B0 /* MNResetScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNResetScene.h; path = Scene/MNResetScene.h; sourceTree = "<group>"; };
+		CA7F4CD6160E99DC000C75B0 /* MNResetScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNResetScene.m; path = Scene/MNResetScene.m; sourceTree = "<group>"; };
+		CA7F4CD8160E9ADA000C75B0 /* MNSceneHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNSceneHandler.h; path = Scene/MNSceneHandler.h; sourceTree = "<group>"; };
+		CA7F4CD9160E9FC1000C75B0 /* ButtonSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonSettings.png; path = ../images/ButtonSettings.png; sourceTree = "<group>"; };
+		CA7F4CDA160E9FC1000C75B0 /* ButtonSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonSettings@2x.png"; path = "../images/ButtonSettings@2x.png"; sourceTree = "<group>"; };
 		CA8BF7B815BC8B2900B7B572 /* Muni.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muni.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA8BF7BC15BC8B2900B7B572 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CA8BF7BE15BC8B2900B7B572 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -192,8 +199,6 @@
 		CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNEnvironment.h; path = Logic/MNEnvironment.h; sourceTree = "<group>"; };
 		CABD557A1603338700023742 /* MNMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNMenuView.h; path = UI/MNMenuView.h; sourceTree = "<group>"; };
 		CABD557B1603338700023742 /* MNMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNMenuView.m; path = UI/MNMenuView.m; sourceTree = "<group>"; };
-		CABD557D1603B72F00023742 /* MNStandardCellSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNStandardCellSource.h; path = Logic/MNStandardCellSource.h; sourceTree = "<group>"; };
-		CABD557E1603B72F00023742 /* MNStandardCellSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNStandardCellSource.m; path = Logic/MNStandardCellSource.m; sourceTree = "<group>"; };
 		CABD5581160712A600023742 /* ButtonReset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonReset.png; path = ../images/ButtonReset.png; sourceTree = "<group>"; };
 		CABD5582160712A600023742 /* ButtonReset@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonReset@2x.png"; path = "../images/ButtonReset@2x.png"; sourceTree = "<group>"; };
 		CABD5585160712B000023742 /* ButtonChangeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonChangeBackground.png; path = ../images/ButtonChangeBackground.png; sourceTree = "<group>"; };
@@ -438,8 +443,6 @@
 				CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */,
 				CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.m */,
 				CA02DC8B15C44E8B0070B1F5 /* MNCell.h */,
-				CABD557D1603B72F00023742 /* MNStandardCellSource.h */,
-				CABD557E1603B72F00023742 /* MNStandardCellSource.m */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -546,6 +549,8 @@
 		CABD55801607126100023742 /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				CA7F4CD9160E9FC1000C75B0 /* ButtonSettings.png */,
+				CA7F4CDA160E9FC1000C75B0 /* ButtonSettings@2x.png */,
 				CABD5585160712B000023742 /* ButtonChangeBackground.png */,
 				CABD5586160712B000023742 /* ButtonChangeBackground@2x.png */,
 				CABD5581160712A600023742 /* ButtonReset.png */,
@@ -602,6 +607,9 @@
 				CAF14AD615BD53AE000AD7A8 /* MNFieldScene.m */,
 				CAF14AE115BE6C34000AD7A8 /* MNSceneDirector.h */,
 				CAF14AE215BE6C34000AD7A8 /* MNSceneDirector.m */,
+				CA7F4CD5160E99DC000C75B0 /* MNResetScene.h */,
+				CA7F4CD6160E99DC000C75B0 /* MNResetScene.m */,
+				CA7F4CD8160E9ADA000C75B0 /* MNSceneHandler.h */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -661,7 +669,7 @@
 		CA8BF7AF15BC8B2800B7B572 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = CA8BF7B215BC8B2800B7B572 /* Build configuration list for PBXProject "Muni" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -732,6 +740,8 @@
 				CABD55C91607446300023742 /* Background5@2x.png in Resources */,
 				CABD55D016089AE200023742 /* BackgroundCamera-Thumb.png in Resources */,
 				CABD55D116089AE200023742 /* BackgroundCamera-Thumb@2x.png in Resources */,
+				CA7F4CDB160E9FC1000C75B0 /* ButtonSettings.png in Resources */,
+				CA7F4CDC160E9FC1000C75B0 /* ButtonSettings@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -805,8 +815,8 @@
 				CAF27A6D15D0615800CC6E19 /* MNCellActionMakeTracer.m in Sources */,
 				CA6579EC15F7C05D00C4351A /* JZUtility.m in Sources */,
 				CABD557C1603338700023742 /* MNMenuView.m in Sources */,
-				CABD557F1603B73000023742 /* MNStandardCellSource.m in Sources */,
 				CABD559F1607313100023742 /* MNChangeBackgroundViewController.m in Sources */,
+				CA7F4CD7160E99DC000C75B0 /* MNResetScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -872,7 +882,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: YUU SHIMIZU";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -881,7 +891,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA2CF044-53B7-44A7-AC3C-7C82B2744A35";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -922,7 +932,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: YUU SHIMIZU (WQ93C5U8N8)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -937,6 +947,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "12826A69-83C6-4F6F-88D9-6B980C38A27B";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

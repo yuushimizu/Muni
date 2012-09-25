@@ -13,9 +13,9 @@
 - (id)initWithFrame:(CGRect)frame withDelegate:(id<MNMenuViewDelegate>)delegate {
     self = [super initWithFrame:frame];
     if (self) {
-		double width = 64;
-		double height = 64;
-		double gap = 10;
+		double width = MIN(64, frame.size.width * 0.2);
+		double height = width;
+		double gap = floor(width / 6);
 		double left = gap;
 		double top = frame.size.height - height - gap;
 		UIButton *resetButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -26,7 +26,7 @@
 		UIButton *changeBackgroundButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		left += width + gap;
 		changeBackgroundButton.frame = CGRectMake(left, top, width, height);
-		[changeBackgroundButton setImage:[UIImage imageNamed:@"ButtonChangeBackground"] forState:UIControlStateNormal];
+		[changeBackgroundButton setImage:[UIImage imageNamed:@"ButtonSettings"] forState:UIControlStateNormal];
 		[changeBackgroundButton addTarget:delegate action:@selector(changeBackgroundButtonPressed) forControlEvents:UIControlEventTouchUpInside];
 		[self addSubview:changeBackgroundButton];
     }

@@ -58,19 +58,9 @@ static CGRect rectFromCell(id<MNCell> cell) {
 	} else if ([cell eventOccurred:kMNCellEventDamaged]) {
 		[sprite setColorWithRed:1.0 withGreen:1.0 withBlue:1.0 withAlpha:1.0];
 	} else {
-		double red = cell.attribute.red;
-		double green = cell.attribute.green;
-		double blue = cell.attribute.blue;
-		if (cell.density < 0.5) {
-			red += (1.0 - red) * (0.5 - cell.density);
-			green += (1.0 - green) * (0.5 - cell.density);
-			blue += (1.0 - blue) * (0.5 - cell.density);
-		} else {
-			red *= 1.5 - cell.density;
-			green *= 1.5 - cell.density;
-			blue *= 1.5 - cell.density;
-		}
-		[sprite setColorWithRed:red withGreen:green withBlue:blue withAlpha:1.0];
+		double saturation = 0.5 + (cell.energy / cell.maxEnergy / 2);
+		double brightness = MAX(0, MIN(1.0, 1.3 - cell.density));
+		[sprite setColor:[UIColor colorWithHue:cell.attribute.hue saturation:saturation brightness:brightness alpha:1.0]];
 	}
 }
 

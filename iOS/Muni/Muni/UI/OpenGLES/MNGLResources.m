@@ -43,7 +43,7 @@ static void setupContext(CGContextRef context) {
 	CGContextSetLineJoin(context, randomLineJoin());
 	double strokeColor = MNRandomDouble(0.1, 0.3);
 	CGContextSetRGBStrokeColor(context, strokeColor, strokeColor, strokeColor, 1);
-	double fillColor = MNRandomDouble(0.5, 1.0);
+	double fillColor = MNRandomDouble(0.8, 1.0);
 	CGContextSetRGBFillColor(context, fillColor, fillColor, fillColor, 1);
 }
 

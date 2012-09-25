@@ -147,7 +147,7 @@
 		[cell realMove:self];
 		[self updateSpatialIndexFor:cell];
 	}
-	if (_cells.count < _maxCellCount && (_cells.count < _maxCellCount / 20 || MNRandomDouble(0, _cells.count + 10) < _incidence)) {
+	if (_cells.count < _maxCellCount && (_cells.count < _maxCellCount / 30 || MNRandomDouble(0, _cells.count + 10) < _incidence)) {
 		[self addCell:[[MNStandardCell alloc] initByRandomWithEnvironment:self]];
 	}
 	[self addCellsFromQueue];

@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "JZSceneDirector.h"
+#import "MNSceneHandler.h"
 #import "MNFieldScene.h"
 
-@interface MNSceneDirector : JZSceneDirector {
+@interface MNSceneDirector : JZSceneDirector<MNSceneHandler> {
 	CGSize _size;
 	MNGLResources *_resources;
 }
