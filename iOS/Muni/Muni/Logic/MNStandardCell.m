@@ -211,7 +211,8 @@ static int randomType() {
 		while (radian < 0) radian += M_PI * 2;
 		while (radian >= M_PI * 2) radian -= M_PI * 2;
 		double angleDiff = _angle - radian;
-		if (abs(angleDiff) < M_PI) {
+		while (angleDiff < 0) angleDiff += M_PI * 2;
+		if (angleDiff < M_PI) {
 			_angle -= MIN(angleDiff * 0.1, M_PI * 0.01);
 		} else {
 			_angle += MIN(angleDiff * 0.1, M_PI * 0.01);
@@ -356,7 +357,7 @@ static int randomType() {
 
 - (BOOL)hostility:(id<MNCell>)other {
 	double hueDistance = MIN(fabs(other.attribute.hue - _attribute.hue), MIN(fabs(other.attribute.hue - (_attribute.hue - 1.0)), fabs(other.attribute.hue - (_attribute.hue + 1.0))));
-	return hueDistance > 0.3;
+	return hueDistance > 0.2;
 }
 
 - (void)decreaseEnergy:(double)energy {
