@@ -18,11 +18,11 @@
 #import "MNCellMoveFloat.h"
 #import "MNCellMoveImmovable.h"
 #import "MNCellMoveApproachTarget.h"
-#import "MNCellMoveEscapeTarget.h"
+#import "MNCellMoveEscape.h"
 #import "MNCellMoveApproachNearestTarget.h"
-#import "MNCellMoveEscapeNearestTarget.h"
 #import "MNCellMoveTraceTarget.h"
 #import "MNCellMoveMoon.h"
+#import "MNCellActionConditional.h"
 
 @interface MNStandardCell : NSObject<MNCell> {
 	int _type;

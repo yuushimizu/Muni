@@ -10,8 +10,8 @@
 
 @implementation MNCellMoveTraceTarget
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withIntervalFrames:(int)intervalFrames withEnvironment:(id<MNEnvironment>)environment {
-	if (self = [super initWithCell:cell withCondition:condition withMoveWithoutTarget:moveWihtoutTarget withEnvironment:environment]) {
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withIntervalFrames:(int)intervalFrames {
+	if (self = [super initWithCell:cell withCondition:condition withMoveWithoutTarget:moveWihtoutTarget]) {
 		_intervalFrames = intervalFrames;
 		_positionsOfTarget = [NSMutableArray arrayWithCapacity:intervalFrames + 1];
 	}

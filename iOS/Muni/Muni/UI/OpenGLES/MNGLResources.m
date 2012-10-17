@@ -51,9 +51,9 @@ static double maxLengthOfLineFromPointInPathArea(CGPoint start, double angle) {
 	double angleSin = sin(angle);
 	double angleCos = cos(angle);
 	if (angleSin == 0) {
-		return angleCos > 0 ? MNRandomDouble(start.y, kMNRandomCellTexturePathAreaMax) : MNRandomDouble(kMNRandomCellTexturePathAreaMin, start.y);
+		return angleCos > 0 ? kMNRandomCellTexturePathAreaMax - start.y : start.y - kMNRandomCellTexturePathAreaMin;
 	} else if (angleCos == 0) {
-		return angleSin > 0 ? MNRandomDouble(start.x, kMNRandomCellTexturePathAreaMax) : MNRandomDouble(kMNRandomCellTexturePathAreaMin, start.x);
+		return angleSin > 0 ? kMNRandomCellTexturePathAreaMax - start.x : start.x - kMNRandomCellTexturePathAreaMin;
 	} else {
 		double xForMaxY = start.x + angleSin * (angleCos > 0 ? kMNRandomCellTexturePathAreaMax - start.y : start.y - kMNRandomCellTexturePathAreaMin);
 		if ((angleCos > 0 && xForMaxY <= kMNRandomCellTexturePathAreaMax) || (angleCos < 0 && xForMaxY >= kMNRandomCellTexturePathAreaMin)) {
@@ -66,9 +66,9 @@ static double maxLengthOfLineFromPointInPathArea(CGPoint start, double angle) {
 }
 
 static void addRandomPath(CGContextRef context) {
-	int type = MNRandomInt(0, 4);
+	int type = MNRandomInt(0, 3);
 	if (type == 0) { // arc
-		double radius = MNRandomDouble(kMNRandomCellTexturePathAreaMin, (kMNRandomCellTexturePathAreaMax - kMNRandomCellTexturePathAreaMin) / 2 - kMNRandomCellTexturePathAreaMin);
+		double radius = MNRandomDouble(0.1, 1) * ((kMNRandomCellTexturePathAreaMax - kMNRandomCellTexturePathAreaMin) / 2);
 		double x = MNRandomDouble(kMNRandomCellTexturePathAreaMin + radius, kMNRandomCellTexturePathAreaMax - radius);
 		double y = MNRandomDouble(kMNRandomCellTexturePathAreaMin + radius , kMNRandomCellTexturePathAreaMax - radius);
 		double radian;
@@ -91,9 +91,8 @@ static void addRandomPath(CGContextRef context) {
 	} else if (type == 1) { // rect with angle
 		CGPoint point1 = CGPointMake(MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
 		double angle = MNRandomRadian();
-		angle = M_PI_4;
-		CGPoint point2 = JZMovedPoint(point1, angle, maxLengthOfLineFromPointInPathArea(point1, angle));
-		CGPoint point3 = JZMovedPoint(point2, angle + M_PI_2, MIN(maxLengthOfLineFromPointInPathArea(point1, angle + M_PI_2), maxLengthOfLineFromPointInPathArea(point2, angle + M_PI_2)));
+		CGPoint point2 = JZMovedPoint(point1, angle, MNRandomDouble(0.1, 1) * maxLengthOfLineFromPointInPathArea(point1, angle));
+		CGPoint point3 = JZMovedPoint(point2, angle + M_PI_2, MNRandomDouble(0.1, 1) * MIN(maxLengthOfLineFromPointInPathArea(point1, angle + M_PI_2), maxLengthOfLineFromPointInPathArea(point2, angle + M_PI_2)));
 		CGPoint point4 = JZMovedPoint(point1, angle + M_PI_2, JZDistanceOfPoints(point2, point3));
 		CGContextMoveToPoint(context, point1.x, point1.y);
 		CGContextAddLineToPoint(context, point2.x, point2.y);
@@ -102,10 +101,6 @@ static void addRandomPath(CGContextRef context) {
 	} else if (type == 2) { // triangle
 		CGContextMoveToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
 		CGContextAddLineToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
-		CGContextAddLineToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
-	} else { // line
-		CGContextSetLineWidth(context, MNRandomDouble(kMNRandomCellTextureMaxLineWidth / 2, kMNRandomCellTextureMaxLineWidth));
-		CGContextMoveToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
 		CGContextAddLineToPoint(context, MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
 	}
 }

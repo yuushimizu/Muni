@@ -52,70 +52,88 @@ static int randomType() {
 	return [[MNCellAttribute alloc] initWithHue:MNRandomDouble(0, 1)];
 }
 
-- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
-	int decisionMoveWithoutTarget = MNRandomInt(0, 3);
-	MNCellAction *(^sourceWithoutTarget)(id<MNCell>, id<MNEnvironment>);
-	if (decisionMoveWithoutTarget == 0) {
+- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomStandaloneMoveSource {
+	int type = MNRandomInt(0, 100);
+	if (type < 50) {
 		int maxIntervalFrames = MNRandomInt(0, 100);
-		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveRandomWalk alloc] initWithMaxIntervalFrames:maxIntervalFrames withEnvironment:environment];
 		};
-	} else if (decisionMoveWithoutTarget < 1) {
-		sourceWithoutTarget =  ^(id<MNCell> cell, id<MNEnvironment> environment) {
+	} else if (type < 75) {
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveFloat alloc] init];
 		};
 	} else {
-		sourceWithoutTarget = ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveImmovable alloc] init];
 		};
 	}
-	if (MNRandomInt(0, 100) < 10) {
-		return sourceWithoutTarget;
+}
+
+- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomRelativeMoveSource:(MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))standaloneMoveSource {
+	BOOL (^targetCondition)(id<MNCell> me, id<MNCell> other);
+	int type = MNRandomInt(0, 100);
+	if (type < 75) {
+		targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);};
 	} else {
-		BOOL (^targetCondition)(id<MNCell> me, id<MNCell> other);
-		int decisionTargetCondition = MNRandomInt(0, 100);
-		if (decisionTargetCondition < 75) {
-			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);};
-		} else {
-			targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && ![me hostility:other]);};
-		}
-		int decisionMoveWithTarget = MNRandomInt(0, 120);
-		if (decisionMoveWithTarget < 20) {
-			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-				return [[MNCellMoveApproachTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
-			};
-		} else if (decisionMoveWithTarget < 40) {
-			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-				return [[MNCellMoveEscapeTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
-			};
-		} else if (decisionMoveWithTarget < 60) {
-			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-				return [[MNCellMoveApproachNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
-			};
-		} else if (decisionMoveWithTarget < 80) {
-			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-				return [[MNCellMoveEscapeNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withEnvironment:environment];
-			};
-		} else if (decisionMoveWithTarget < 100) {
-			int intervalFrames = MNRandomInt(30, 150);
-			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-				return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withIntervalFrames:intervalFrames withEnvironment:environment];
-			};
-		} else {
-			double distanceRate = MNRandomDouble(1, 4);
-			double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
-			return ^(id<MNCell> cell, id<MNEnvironment> environment) {
-				return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:sourceWithoutTarget(cell, environment) withDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease withEnvironment:environment];
-			};
-		}
+		targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && ![me hostility:other]);};
+	}
+	int decisionMoveWithTarget = MNRandomInt(0, 100);
+	if (decisionMoveWithTarget < 20) {
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveApproachTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment)];
+		};
+	} else if (decisionMoveWithTarget < 40) {
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveEscape alloc] initWithCell:cell withCondition:targetCondition withMoveWhenNotEscape:standaloneMoveSource(cell, environment)];
+		};
+	} else if (decisionMoveWithTarget < 60) {
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveApproachNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment)];
+		};
+	} else if (decisionMoveWithTarget < 80) {
+		int intervalFrames = MNRandomInt(30, 150);
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment) withIntervalFrames:intervalFrames];
+		};
+	} else {
+		double distanceRate = MNRandomDouble(1, 4);
+		double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment) withDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease];
+		};
+	}
+}
+
+- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSourceWithoutCondition {
+	MNCellAction *(^standaloneMoveSource)(id<MNCell>, id<MNEnvironment>) = [self randomStandaloneMoveSource];
+	if (MNRandomInt(0, 100) < 10) {
+		return standaloneMoveSource;
+	} else {
+		return [self randomRelativeMoveSource:standaloneMoveSource];
+	}
+}
+
+- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
+	MNCellAction *(^moveSourceWithoutCondition)(id<MNCell>, id<MNEnvironment>) = [self randomMoveSourceWithoutCondition];
+	if (MNRandomInt(0, 100) < 75) {
+		return moveSourceWithoutCondition;
+	} else {
+		double energyBoundingRate = MNRandomDouble(0.3, 0.7);
+		MNCellAction *(^falseMoveSource)(id<MNCell>, id<MNEnvironment>) = [self randomMoveSourceWithoutCondition];
+		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+			return [[MNCellActionConditional alloc] initWithCondition:^(id<MNCell> cell) {
+				return (BOOL) ((cell.energy / cell.maxEnergy) < energyBoundingRate);
+			} withTrueAction:moveSourceWithoutCondition(cell, environment) withFalseAction:falseMoveSource(cell, environment)];
+		};
 	}
 }
 
 - (NSArray *)randomActionSources {
 	NSMutableArray *actionSources = [NSMutableArray arrayWithObject:[self randomMoveSource]];
 	if (MNRandomInt(0, 100) < 75) {
-		int maxCount = MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2) * MNRandomInt(1, 2);
-		double incidence = 0.012;
+		int maxCount = MNRandomInt(1, 3) * MNRandomInt(1, 3) * MNRandomInt(1, 3) * MNRandomInt(1, 3);
+		double incidence = MNRandomDouble(0.005, 0.015) - ((double) _maxEnergy / 1000000);
 		[actionSources addObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellActionMultiply alloc] initWithMaxCount:maxCount withIncidence:incidence];
 		}];
@@ -210,12 +228,19 @@ static int randomType() {
 	if (_rotationRadian == 0) {
 		while (radian < 0) radian += M_PI * 2;
 		while (radian >= M_PI * 2) radian -= M_PI * 2;
-		double angleDiff = _angle - radian;
-		while (angleDiff < 0) angleDiff += M_PI * 2;
-		if (angleDiff < M_PI) {
-			_angle -= MIN(angleDiff * 0.1, M_PI * 0.01);
+		double clockwiseDiff;
+		double counterclockwiseDiff;
+		if (_angle < radian) {
+			clockwiseDiff = radian - _angle;
+			counterclockwiseDiff = _angle + M_PI * 2 - radian;
 		} else {
-			_angle += MIN(angleDiff * 0.1, M_PI * 0.01);
+			clockwiseDiff = radian + M_PI * 2 - _angle;
+			counterclockwiseDiff = _angle - radian;
+		}
+		if (fabs(clockwiseDiff) > fabs(counterclockwiseDiff)) {
+			_angle += MIN(counterclockwiseDiff * 0.1, -M_PI * 0.01);
+		} else {
+			_angle += MIN(clockwiseDiff * 0.1, M_PI * 0.01);
 		}
 		while (_angle < 0) _angle += M_PI * 2;
 		while (_angle >= M_PI * 2) _angle -= M_PI * 2;
@@ -297,7 +322,7 @@ static int randomType() {
 		_previousEventBits = 0;
 		MNCellAction *(^moveSourceWithoutTarget)(id<MNCell>, id<MNEnvironment>) = [self randomMoveSource];
 		MNCellAction *(^moveSoure)(id<MNCell>, id<MNEnvironment>) = ^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:moveSourceWithoutTarget(cell, environment) withIntervalFrames:intervalFrames withEnvironment:environment];
+			return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:moveSourceWithoutTarget(cell, environment) withIntervalFrames:intervalFrames];
 		};
 		MNCellAction *(^makeTracerSource)(id<MNCell>, id<MNEnvironment>) = ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellActionMakeTracer alloc] initWithIntervalFrames:intervalFrames withIncidence:0.001];
@@ -329,7 +354,7 @@ static int randomType() {
 		_eventBits = kMNCellEventBoned;
 		_previousEventBits = 0;
 		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
-			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:[[MNCellMoveFloat alloc] init] withDistance:distance withRadianIncrease:radianIncrease withEnvironment:environment];
+			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:[[MNCellMoveFloat alloc] init] withDistance:distance withRadianIncrease:radianIncrease];
 		}];
 		[self resetActionsWithEnvironment:environment];
 		_distanceForFix = 0;
@@ -357,7 +382,7 @@ static int randomType() {
 
 - (BOOL)hostility:(id<MNCell>)other {
 	double hueDistance = MIN(fabs(other.attribute.hue - _attribute.hue), MIN(fabs(other.attribute.hue - (_attribute.hue - 1.0)), fabs(other.attribute.hue - (_attribute.hue + 1.0))));
-	return hueDistance > 0.2;
+	return hueDistance > 0.15;
 }
 
 - (void)decreaseEnergy:(double)energy {
@@ -379,8 +404,9 @@ static int randomType() {
 }
 
 - (BOOL)multiplyWithEnvironment:(id<MNEnvironment>)environment {
-	if (self.energy < self.maxEnergy * 0.2) return NO;
-	[self decreaseEnergy:self.maxEnergy * 0.15];
+	double cost = self.maxEnergy * 0.25;
+	if (self.energy < cost * 2) return NO;
+	[self decreaseEnergy:cost];
 	MNStandardCell *newCell = [[MNStandardCell alloc] initByOther:self withEnvironment:environment];
 	[environment addCell:newCell];
 	return YES;

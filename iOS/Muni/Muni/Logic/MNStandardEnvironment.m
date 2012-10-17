@@ -81,7 +81,7 @@
 - (void)applyCellsDying {
 	for (id<MNCell> deadCell in _cells) {
 		if (!deadCell.living) {
-			double totalHealEnergy = deadCell.maxEnergy;
+			double totalHealEnergy = deadCell.maxEnergy * 0.5;
 			NSArray *healTargetScanningResults = [self cellsInCircle:deadCell.center withRadius:deadCell.radius * 3 withCondition:^(id<MNCell> cell){return (BOOL) (deadCell != cell && [cell hostility:deadCell]);}];
 			double totalDistance = 0;
 			for (MNCellScanningResult *scanningResult in healTargetScanningResults) {
@@ -111,26 +111,29 @@
 				double invertedRadian = JZInvertRadian(radian);
 				double weight1 = cell1.weight;
 				double weight2 = cell2.weight;
-				[cell1 moveForFix:invertedRadian distance:piledDistance * (weight2 / (weight1 + weight2))];
-				[cell2 moveForFix:radian distance:piledDistance * (weight1 / (weight2 + weight1))];
 				if ([cell1 hostility:cell2]) {
-					double totalKnockedbackdDistance = MAX(cell1.lastMovedDistance * cos(radian - cell1.lastMovedRadian) + cell2.lastMovedDistance * cos(invertedRadian - cell2.lastMovedRadian), MIN(cell1.radius, cell2.radius) * 0.1);
-					double minKnockedbackDistance = totalKnockedbackdDistance * 0.1;
-					double restKnockedbackDistance = totalKnockedbackdDistance * 0.8;
+					[cell1 moveForFix:invertedRadian distance:piledDistance / 2 * (weight2 / (weight1 + weight2))];
+					[cell2 moveForFix:radian distance:piledDistance / 2 * (weight1 / (weight2 + weight1))];
+					double totalKnockbackDistance = MIN(piledDistance / 2, 5);
+					double minKnockbackDistance = totalKnockbackDistance * 0.1;
+					double restKnockbackDistance = totalKnockbackDistance - minKnockbackDistance * 2;
 					double density1 = cell1.density;
 					double density2 = cell2.density;
 					if (![cell1 eventOccurredPrevious:kMNCellEventDamaged]) {
-						double knockedback1 = minKnockedbackDistance + (restKnockedbackDistance * (density2	/ (density1 + density2)));
-						[cell1 moveFor:invertedRadian withForce:knockedback1];
-						double damage = knockedback1 * 10;
+						double knockback1 = minKnockbackDistance + (restKnockbackDistance * (density2	/ (density1 + density2)));
+						[cell1 moveFor:invertedRadian withForce:knockback1];
+						double damage = knockback1 * 50;
 						[cell1 damage:damage];
 					}
 					if (![cell2 eventOccurredPrevious:kMNCellEventDamaged]) {
-						double knockedback2 = minKnockedbackDistance + (restKnockedbackDistance * (density1 / (density2 + density1)));
-						[cell2 moveFor:radian withForce:knockedback2];
-						double damage = knockedback2 * 10;
+						double knockback2 = minKnockbackDistance + (restKnockbackDistance * (density1 / (density2 + density1)));
+						[cell2 moveFor:radian withForce:knockback2];
+						double damage = knockback2 * 50;
 						[cell2 damage:damage];
 					}
+				} else {
+					[cell1 moveForFix:invertedRadian distance:piledDistance * (weight2 / (weight1 + weight2))];
+					[cell2 moveForFix:radian distance:piledDistance * (weight1 / (weight2 + weight1))];
 				}
 			}
 		}

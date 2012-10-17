@@ -58,7 +58,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 	} else if ([cell eventOccurred:kMNCellEventDamaged]) {
 		[sprite setColorWithRed:1.0 withGreen:1.0 withBlue:1.0 withAlpha:1.0];
 	} else {
-		double saturation = 0.2 + (cell.energy / cell.maxEnergy);
+		double saturation = MAX(0, (cell.energy / cell.maxEnergy) * 2);
 		double brightness = MAX(0, MIN(1.0, 1.3 - cell.density));
 		[sprite setColor:[UIColor colorWithHue:cell.attribute.hue saturation:saturation brightness:brightness alpha:1.0]];
 	}

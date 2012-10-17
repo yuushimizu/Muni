@@ -10,7 +10,7 @@
 
 @implementation MNCellMoveWithNearestTarget
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withEnvironment:(id<MNEnvironment>)environment {
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget {
 	if (self = [super init]) {
 		_targetCondition = condition;
 		_moveWithoutTarget = moveWihtoutTarget;

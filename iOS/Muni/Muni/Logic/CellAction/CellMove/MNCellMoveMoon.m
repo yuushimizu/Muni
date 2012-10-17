@@ -11,8 +11,8 @@
 
 @implementation MNCellMoveMoon
 
-- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment {
-	if (self = [super initWithCell:cell withCondition:condition withMoveWithoutTarget:moveWihtoutTarget withEnvironment:environment]) {
+- (id)initWithCell:(id<MNCell>)cell withCondition:(BOOL (^)(id<MNCell>, id<MNCell>))condition withMoveWithoutTarget:(MNCellAction *)moveWihtoutTarget withDistance:(double)distance withRadianIncrease:(double)radianIncrease {
+	if (self = [super initWithCell:cell withCondition:condition withMoveWithoutTarget:moveWihtoutTarget]) {
 		_distance = distance;
 		_radianIncrease = radianIncrease;
 	}
