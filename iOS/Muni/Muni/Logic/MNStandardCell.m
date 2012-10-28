@@ -1,11 +1,3 @@
-//
-//  MNStandardCell.m
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/23/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import "MNStandardCell.h"
 #import "JZUtility.h"
 
@@ -22,6 +14,7 @@ static int randomType() {
 @implementation MNStandardCell
 
 @synthesize type = _type;
+@synthesize age = _age;
 @synthesize maxEnergy = _maxEnergy;
 @synthesize energy = _energy;
 @synthesize density = _density;
@@ -251,6 +244,18 @@ static int randomType() {
 	[self rotateFor:JZRadianFromPoints(_center, point)];
 }
 
+- (id)init {
+	if (self = [super init]) {
+		_age = 0;
+		_movingSpeed = 0;
+		_movingRadian = MNRandomRadian();
+		_previousEventBits = 0;
+		_distanceForFix = 0;
+		_beat = 0;
+	}
+	return self;
+}
+
 - (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment {
 	if (self = [super init]) {
 		_type = randomType();
@@ -259,20 +264,14 @@ static int randomType() {
 		_density = MNRandomDouble(kMNCellMinDensity, kMNCellMaxDensity);
 		_attribute = [self randomAttribute];
 		_speed = [self randomSpeed];
-		_movingSpeed = 0;
-		_movingRadian = MNRandomRadian();
 		_angle = MNRandomRadian();
 		_rotationRadian  = MNRandomInt(0, 100) < 30 ? MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) : 0;
 		_sight = JZDiagonalFromSize(environment.field.size) * MNRandomDouble(0.1, 0.5);
 		_center = MNRandomPointInSize(environment.field.size);
 		[self fixPositionWithEnvironment:environment];
-		_eventBits = kMNCellEventBoned;
-		_previousEventBits = 0;
 		_actionSources = [self randomActionSources];
 		[self resetActionsWithEnvironment:environment];
-		_distanceForFix = 0;
 		_maxBeat = MNRandomInt(5, 60) * 2;
-		_beat = 0;
 	}
 	return self;
 }
@@ -285,18 +284,13 @@ static int randomType() {
 		_density = MAX(MIN(kMNCellMaxDensity, other.density * MNRandomDouble(0.9, 1.1)), kMNCellMinDensity);
 		_attribute = [[MNCellAttribute alloc] initWithHue:other.attribute.hue * MNRandomDouble(0.9, 1.1)];
 		_speed = other.speed * MNRandomDouble(0.9, 1.1);
-		_movingSpeed = 0;
-		_movingRadian = MNRandomRadian();
 		_angle = other.angle;
 		_rotationRadian = other.rotationRadian;
 		_sight = other.sight * MNRandomDouble(0.9, 1.1);
 		_center = JZMovedPoint(other.center, MNRandomRadian(), other.radius);
 		[self fixPositionWithEnvironment:environment];
-		_eventBits = kMNCellEventBoned;
-		_previousEventBits = 0;
 		_actionSources = other.actionSources;
 		[self resetActionsWithEnvironment:environment];
-		_distanceForFix = 0;
 		_maxBeat = other.maxBeat;
 		_beat = other.beat;
 	}
@@ -311,15 +305,11 @@ static int randomType() {
 		_density = parent.density;
 		_attribute = parent.attribute;
 		_speed = parent.speed;
-		_movingSpeed = 0;
-		_movingRadian = MNRandomRadian();
 		_angle = parent.angle;
 		_rotationRadian = parent.rotationRadian;
 		_sight = parent.sight;
 		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius);
 		[self fixPositionWithEnvironment:environment];
-		_eventBits = kMNCellEventBoned;
-		_previousEventBits = 0;
 		MNCellAction *(^moveSourceWithoutTarget)(id<MNCell>, id<MNEnvironment>) = [self randomMoveSource];
 		MNCellAction *(^moveSoure)(id<MNCell>, id<MNEnvironment>) = ^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:moveSourceWithoutTarget(cell, environment) withIntervalFrames:intervalFrames];
@@ -329,7 +319,6 @@ static int randomType() {
 		};
 		_actionSources = [NSArray arrayWithObjects:moveSoure, makeTracerSource, nil];
 		[self resetActionsWithEnvironment:environment];
-		_distanceForFix = 0;
 		_maxBeat = parent.maxBeat;
 		_beat = parent.beat;
 	}
@@ -344,20 +333,15 @@ static int randomType() {
 		_density = parent.density;
 		_attribute = parent.attribute;
 		_speed = parent.speed * 2;
-		_movingSpeed = 0;
-		_movingRadian = MNRandomRadian();
 		_angle = parent.angle;
 		_rotationRadian = parent.rotationRadian;
 		_sight = parent.sight + distance;
 		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius + distance + self.radius);
 		[self fixPositionWithEnvironment:environment];
-		_eventBits = kMNCellEventBoned;
-		_previousEventBits = 0;
 		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
 			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:[[MNCellMoveFloat alloc] init] withDistance:distance withRadianIncrease:radianIncrease];
 		}];
 		[self resetActionsWithEnvironment:environment];
-		_distanceForFix = 0;
 		_maxBeat = parent.maxBeat;
 		_beat = parent.beat;
 	}
@@ -400,7 +384,6 @@ static int randomType() {
 
 - (void)heal:(double)energy {
 	_energy = MIN(_energy + energy, _maxEnergy);
-	_eventBits |= kMNCellEventHealed;
 }
 
 - (BOOL)multiplyWithEnvironment:(id<MNEnvironment>)environment {
@@ -444,6 +427,7 @@ static int randomType() {
 }
 
 - (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment {
+	_age += 1;
 	_beat += 1;
 	if (_beat >= _maxBeat) _beat = 0;
 	if (_rotationRadian != 0) {

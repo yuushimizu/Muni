@@ -9,7 +9,7 @@
 #import "MNFieldScene.h"
 
 static CGRect rectFromCell(id<MNCell> cell) {
-	const double radius = cell.beatingRadius * 1.3;
+	const double radius = cell.beatingRadius * 1.3 * MIN(cell.age / 5.0, 1);
 	return CGRectMake(cell.center.x - radius, cell.center.y - radius, radius * 2, radius * 2);
 }
 
@@ -38,9 +38,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 
 - (void)sendFrame {
 	for (id<MNCell> cell in _environment.cells) {
-		if ([cell eventOccurred:kMNCellEventBoned]) {
-			[_effects addObject:[[MNCellBornEffect alloc] initWithCell:cell withResources:_resources]];
-		} else if ([cell eventOccurred:kMNCellEventDied]) {
+		if ([cell eventOccurred:kMNCellEventDied]) {
 			[_effects addObject:[[MNCellDieEffect alloc] initWithCell:cell withResources:_resources]];
 		}
 	}
@@ -53,9 +51,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 }
 
 - (void)setCellSpriteColor:(JZGLSprite *)sprite withCell:(id<MNCell>)cell {
-	if ([cell eventOccurred:kMNCellEventHealed]) {
-		[sprite setColorWithRed:0.0 withGreen:0.7 withBlue:1.0 withAlpha:1.0];
-	} else if ([cell eventOccurred:kMNCellEventDamaged]) {
+	if ([cell eventOccurred:kMNCellEventDamaged]) {
 		[sprite setColorWithRed:1.0 withGreen:1.0 withBlue:1.0 withAlpha:1.0];
 	} else {
 		double saturation = MAX(0, (cell.energy / cell.maxEnergy) * 2);

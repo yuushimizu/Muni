@@ -13,7 +13,10 @@
 - (id)initWithCell:(id<MNCell>)cell withResources:(MNGLResources *)resources {
 	if (self = [super initWithCenter:cell.center]) {
 		_initialRadius = cell.radius;
-		_sprite = [[JZGLSprite alloc] initWithTexture:resources.cellEffectDieTexture];
+		_sprite = [[JZGLSprite alloc] initWithTexture:[resources cellTexture:cell.type]];
+		double saturation = 0.3;
+		double brightness = MAX(0, MIN(1.0, 1.3 - cell.density));
+		[_sprite setColor:[UIColor colorWithHue:cell.attribute.hue saturation:saturation brightness:brightness alpha:1]];
 	}
 	return self;
 }
@@ -24,7 +27,7 @@
 }
 
 - (void)draw {
-	double radius = _initialRadius + _initialRadius * self.age;
+	double radius = _initialRadius + _initialRadius * self.age * 0.5;
 	[_sprite drawToRect:CGRectMake(self.center.x - radius, self.center.y - radius, radius * 2, radius * 2)];
 }
 

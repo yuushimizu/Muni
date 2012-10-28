@@ -1,11 +1,3 @@
-//
-//  MNStandardCell.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/23/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import "MNCell.h"
 #import "MNEnvironment.h"
@@ -26,6 +18,7 @@
 
 @interface MNStandardCell : NSObject<MNCell> {
 	int _type;
+	long _age;
 	double _maxEnergy;
 	double _energy;
 	double _density;

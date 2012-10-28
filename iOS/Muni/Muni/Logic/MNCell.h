@@ -12,14 +12,14 @@
 
 #define kMNCellTypeCount 50
 
-#define kMNCellEventBoned 1
 #define kMNCellEventDied 2
 #define kMNCellEventDamaged 4
-#define kMNCellEventHealed 8
+#define kMNCellEventCharged 8
 
 @protocol MNCell <NSObject>
 
 @property (readonly) int type;
+@property (readonly) long age;
 @property (readonly) double maxEnergy;
 @property (readonly) double energy;
 @property (readonly) double radius;
