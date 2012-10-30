@@ -45,14 +45,9 @@
 		CA8BF80415BC8FC900B7B572 /* MNStandardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BF80315BC8FC900B7B572 /* MNStandardCell.m */; };
 		CA8BF80A15BC90A600B7B572 /* MNField.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BF80915BC90A600B7B572 /* MNField.m */; };
 		CA8BF80F15BC941E00B7B572 /* JZGLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8BF80E15BC941E00B7B572 /* JZGLTexture.m */; };
-		CAA99D4615C05127002B85D2 /* Cell1EffectBorn.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D4415C05127002B85D2 /* Cell1EffectBorn.png */; };
-		CAA99D4715C05127002B85D2 /* Cell1EffectBorn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D4515C05127002B85D2 /* Cell1EffectBorn@2x.png */; };
 		CAA99D4E15C05CE6002B85D2 /* MNEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D4D15C05CE6002B85D2 /* MNEffect.m */; };
-		CAA99D5115C05CFA002B85D2 /* MNCellBornEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D5015C05CFA002B85D2 /* MNCellBornEffect.m */; };
 		CAA99D5815C06A17002B85D2 /* MNEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D4D15C05CE6002B85D2 /* MNEffect.m */; };
 		CAA99D6015C078D7002B85D2 /* MNUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D5F15C078D7002B85D2 /* MNUtility.m */; };
-		CAA99D6315C07E62002B85D2 /* Cell1EffectDie.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */; };
-		CAA99D6415C07E62002B85D2 /* Cell1EffectDie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */; };
 		CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */; };
 		CABD557C1603338700023742 /* MNMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CABD557B1603338700023742 /* MNMenuView.m */; };
 		CABD5583160712A600023742 /* ButtonReset.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5581160712A600023742 /* ButtonReset.png */; };
@@ -184,16 +179,10 @@
 		CA8BF80915BC90A600B7B572 /* MNField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNField.m; path = Logic/MNField.m; sourceTree = "<group>"; };
 		CA8BF80D15BC941E00B7B572 /* JZGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JZGLTexture.h; path = Juiz/OpenGLES/JZGLTexture.h; sourceTree = "<group>"; };
 		CA8BF80E15BC941E00B7B572 /* JZGLTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JZGLTexture.m; path = Juiz/OpenGLES/JZGLTexture.m; sourceTree = "<group>"; };
-		CAA99D4415C05127002B85D2 /* Cell1EffectBorn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell1EffectBorn.png; path = ../images/Cell1EffectBorn.png; sourceTree = "<group>"; };
-		CAA99D4515C05127002B85D2 /* Cell1EffectBorn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell1EffectBorn@2x.png"; path = "../images/Cell1EffectBorn@2x.png"; sourceTree = "<group>"; };
 		CAA99D4C15C05CE6002B85D2 /* MNEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNEffect.h; path = Scene/Effect/MNEffect.h; sourceTree = "<group>"; };
 		CAA99D4D15C05CE6002B85D2 /* MNEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNEffect.m; path = Scene/Effect/MNEffect.m; sourceTree = "<group>"; };
-		CAA99D4F15C05CFA002B85D2 /* MNCellBornEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellBornEffect.h; path = Scene/Effect/MNCellBornEffect.h; sourceTree = "<group>"; };
-		CAA99D5015C05CFA002B85D2 /* MNCellBornEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNCellBornEffect.m; path = Scene/Effect/MNCellBornEffect.m; sourceTree = "<group>"; };
 		CAA99D5E15C078D7002B85D2 /* MNUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNUtility.h; path = Utility/MNUtility.h; sourceTree = "<group>"; };
 		CAA99D5F15C078D7002B85D2 /* MNUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNUtility.m; path = Utility/MNUtility.m; sourceTree = "<group>"; };
-		CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cell1EffectDie.png; path = ../images/Cell1EffectDie.png; sourceTree = "<group>"; };
-		CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Cell1EffectDie@2x.png"; path = "../images/Cell1EffectDie@2x.png"; sourceTree = "<group>"; };
 		CAA99D8715C1AFCF002B85D2 /* MNStandardEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNStandardEnvironment.h; path = Logic/MNStandardEnvironment.h; sourceTree = "<group>"; };
 		CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MNStandardEnvironment.m; path = Logic/MNStandardEnvironment.m; sourceTree = "<group>"; };
 		CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNEnvironment.h; path = Logic/MNEnvironment.h; sourceTree = "<group>"; };
@@ -487,10 +476,6 @@
 				CAC53B2D15E23879008DD063 /* Icon-Small@2x.png */,
 				CAC53B2215E23116008DD063 /* Default.png */,
 				CAC53B2315E23116008DD063 /* Default@2x.png */,
-				CAA99D6115C07E62002B85D2 /* Cell1EffectDie.png */,
-				CAA99D6215C07E62002B85D2 /* Cell1EffectDie@2x.png */,
-				CAA99D4415C05127002B85D2 /* Cell1EffectBorn.png */,
-				CAA99D4515C05127002B85D2 /* Cell1EffectBorn@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -502,8 +487,6 @@
 				CAF4F96615C1BD020018353B /* MNCellDieEffect.m */,
 				CAA99D4C15C05CE6002B85D2 /* MNEffect.h */,
 				CAA99D4D15C05CE6002B85D2 /* MNEffect.m */,
-				CAA99D4F15C05CFA002B85D2 /* MNCellBornEffect.h */,
-				CAA99D5015C05CFA002B85D2 /* MNCellBornEffect.m */,
 			);
 			name = Effect;
 			sourceTree = "<group>";
@@ -698,10 +681,6 @@
 				CA8BF7C715BC8B2900B7B572 /* InfoPlist.strings in Resources */,
 				CA8BF7F815BC8C1A00B7B572 /* MNMainViewController_iPad.xib in Resources */,
 				CA8BF7FD15BC8C7D00B7B572 /* MNMainViewController_iPhone.xib in Resources */,
-				CAA99D4615C05127002B85D2 /* Cell1EffectBorn.png in Resources */,
-				CAA99D4715C05127002B85D2 /* Cell1EffectBorn@2x.png in Resources */,
-				CAA99D6315C07E62002B85D2 /* Cell1EffectDie.png in Resources */,
-				CAA99D6415C07E62002B85D2 /* Cell1EffectDie@2x.png in Resources */,
 				CAC53B0D15E1DABD008DD063 /* Localizable.strings in Resources */,
 				CAC53B2415E23116008DD063 /* Default.png in Resources */,
 				CAC53B2515E23116008DD063 /* Default@2x.png in Resources */,
@@ -798,7 +777,6 @@
 				CAF14ADA15BDDDAD000AD7A8 /* JZGLArrayBuffer.m in Sources */,
 				CAF14AE015BE48C2000AD7A8 /* JZGLSprite.m in Sources */,
 				CAF14AE315BE6C34000AD7A8 /* MNSceneDirector.m in Sources */,
-				CAA99D5115C05CFA002B85D2 /* MNCellBornEffect.m in Sources */,
 				CAA99D6015C078D7002B85D2 /* MNUtility.m in Sources */,
 				CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.m in Sources */,
 				CAF4F96415C1BCE30018353B /* MNSpatialIndex.m in Sources */,
@@ -891,10 +869,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA2CF044-53B7-44A7-AC3C-7C82B2744A35";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "20A25F1A-98C3-4DFC-9B84-D9E39D321ED0";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
+				VALIDATE_PRODUCT = NO;
 			};
 			name = Distribution;
 		};
@@ -932,7 +910,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: YUU SHIMIZU (WQ93C5U8N8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -947,7 +925,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "12826A69-83C6-4F6F-88D9-6B980C38A27B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -959,7 +937,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

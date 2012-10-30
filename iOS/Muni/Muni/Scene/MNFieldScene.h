@@ -14,7 +14,6 @@
 #import "MNGLResources.h"
 #import "JZGLSprite.h"
 #import "MNEffect.h"
-#import "MNCellBornEffect.h"
 #import "MNCellDieEffect.h"
 
 #define kMNMaxCells 100

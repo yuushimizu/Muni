@@ -14,6 +14,7 @@
 @interface MNCellDieEffect : MNEffect {
 	double _initialRadius;
 	JZGLSprite *_sprite;
+	double _radian;
 }
 
 - (id)initWithCell:(id<MNCell>)cell withResources:(MNGLResources *)resources;
