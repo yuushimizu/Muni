@@ -1,6 +1,7 @@
 #import "MNCellMoveEscape.h"
 #import "MNCellScanningResult.h"
 #import "JZUtility.h"
+#import "MNUtility.h"
 
 @implementation MNCellMoveEscape
 
@@ -27,14 +28,14 @@
 			xDestination -= pointWithMaxDistance.x() - scanningResult.cell.center.x();
 			yDestination -= pointWithMaxDistance.y() - scanningResult.cell.center.y();
 		}
-		if (cellX > environment.field.size.width() / 2) {
-			double distanceToWall = environment.field.size.width() - cellX;
+		if (cellX > environment.field.size().width() / 2) {
+			double distanceToWall = environment.field.size().width() - cellX;
 			if (distanceToWall < maxDistance / 2) xDestination = cellX;
 		} else {
 			if (cellX < maxDistance / 2) xDestination = cellX;
 		}
-		if (cellY > environment.field.size.height() / 2) {
-			double distanceToWall = environment.field.size.height() - cellY;
+		if (cellY > environment.field.size().height() / 2) {
+			double distanceToWall = environment.field.size().height() - cellY;
 			if (distanceToWall < maxDistance / 2) yDestination = cellY;
 		} else {
 			if (cellY < maxDistance / 2) yDestination = cellY;

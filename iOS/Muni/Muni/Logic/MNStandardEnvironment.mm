@@ -8,12 +8,12 @@
 
 - (id)initWithSize:(const juiz::Size &)size withMaxCellCount:(int)maxCellCount {
 	if (self = [super init]) {
-		_field = [[MNField alloc] initWithSize:size];
+		_field = muni::Field(size);
 		_cells = [NSMutableArray array];
 		_maxCellCount = maxCellCount;
 		_addedCellsQueue = [NSMutableArray array];
 		_incidence = 0.07 * (size.width() * size.height()) / (480.0 * 320.0);
-		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size withBlockCount:juiz::Size(16, 16)];
+		_spatialIndex = [[MNSpatialIndex alloc] initWithTotalSize:_field.size() withBlockCount:juiz::Size(16, 16)];
 	}
 	return self;
 }

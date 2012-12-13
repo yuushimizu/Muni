@@ -1,10 +1,11 @@
 #import "MNCellMoveRandomWalk.h"
 #import "JZUtility.h"
+#import "MNUtility.h"
 
 @implementation MNCellMoveRandomWalk
 
 - (void)resetDestinationWithEnvironment:(id<MNEnvironment>)environment {
-	_destination = MNRandomPointInSize(environment.field.size);
+	_destination = MNRandomPointInSize(environment.field.size());
 	_restIntervalFrames = _maxIntervalFrames * MNRandomDouble(0.5, 1.0);
 }
 

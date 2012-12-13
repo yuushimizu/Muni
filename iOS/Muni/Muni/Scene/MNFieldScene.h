@@ -3,7 +3,7 @@
 #import "JZScene.h"
 #import "MNStandardEnvironment.h"
 #import "MNStandardCell.h"
-#import "MNField.h"
+#import "Field.h"
 #import "MNGLResources.h"
 #import "JZGLSprite.h"
 #import "MNEffect.h"

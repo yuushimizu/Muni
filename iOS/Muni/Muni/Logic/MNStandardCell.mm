@@ -163,15 +163,15 @@ static int randomType() {
 	if (_center.x() < radius) {
 		_center.x(radius);
 		_movingRadian = -_movingRadian;
-	} else if (_center.x() > environment.field.size.width() - radius) {
-		_center.x(environment.field.size.width() - radius);
+	} else if (_center.x() > environment.field.size().width() - radius) {
+		_center.x(environment.field.size().width() - radius);
 		_movingRadian = -_movingRadian;
 	}
 	if (_center.y() < radius) {
 		_center.y(radius);
 		_movingRadian = -M_PI - _movingRadian;
-	} else if (_center.y() > environment.field.size.height() - radius) {
-		_center.y(environment.field.size.height() - radius);
+	} else if (_center.y() > environment.field.size().height() - radius) {
+		_center.y(environment.field.size().height() - radius);
 		_movingRadian = -M_PI - _movingRadian;
 	}
 }
@@ -266,8 +266,8 @@ static int randomType() {
 		_speed = [self randomSpeed];
 		_angle = MNRandomRadian();
 		_rotationRadian  = MNRandomInt(0, 100) < 30 ? MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) : 0;
-		_sight = JZDiagonalFromSize(environment.field.size) * MNRandomDouble(0.1, 0.5);
-		_center = MNRandomPointInSize(environment.field.size);
+		_sight = JZDiagonalFromSize(environment.field.size()) * MNRandomDouble(0.1, 0.5);
+		_center = MNRandomPointInSize(environment.field.size());
 		[self fixPositionWithEnvironment:environment];
 		_actionSources = [self randomActionSources];
 		[self resetActionsWithEnvironment:environment];

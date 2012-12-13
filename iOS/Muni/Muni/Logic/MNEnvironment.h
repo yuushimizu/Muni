@@ -1,12 +1,12 @@
 #import <Foundation/Foundation.h>
 #import "juiz.h"
-#import "MNField.h"
+#import "Field.h"
 
 @protocol MNCell;
 
 @protocol MNEnvironment <NSObject>
 
-@property (readonly) MNField *field;
+@property (readonly) muni::Field field;
 @property (readonly) NSArray *cells;
 
 - (void)sendFrame;
