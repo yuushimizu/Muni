@@ -1,11 +1,3 @@
-//
-//  MNCellMoveTraceTarget.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 8/3/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import "MNCellMoveWithTarget.h"
 
 @interface MNCellMoveTraceTarget : MNCellMoveWithTarget {

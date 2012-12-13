@@ -1,12 +1,5 @@
-//
-//  MNStandardEnvironment.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/27/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
+#import "juiz.h"
 #import "MNEnvironment.h"
 #import "MNStandardCell.h"
 #import "MNSpatialIndex.h"
@@ -21,6 +14,6 @@
 	MNSpatialIndex *_spatialIndex;
 }
 
-- (id)initWithSize:(CGSize)size withMaxCellCount:(int)maxCellCount;
+- (id)initWithSize:(const juiz::Size &)size withMaxCellCount:(int)maxCellCount;
 
 @end

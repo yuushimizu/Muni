@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "juiz.h"
 #import "MNCell.h"
 #import "MNEnvironment.h"
 #import "MNCellAttribute.h"
@@ -27,7 +28,7 @@
 	double _movingSpeed;
 	double _movingRadian;
 	double _sight;
-	CGPoint _center;
+	juiz::Point _center;
 	double _angle;
 	double _rotationRadian;
 	int _eventBits;

@@ -1,20 +1,13 @@
-//
-//  MNField.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/23/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
+#import "juiz.h"
 #import "MNUtility.h"
 
 @interface MNField : NSObject {
-	CGSize _size;
+	juiz::Size _size;
 }
 
-@property (readonly) CGSize size;
+@property (readonly) juiz::Size size;
 
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(const juiz::Size &)size;
 
 @end

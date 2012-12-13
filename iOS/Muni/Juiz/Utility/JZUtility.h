@@ -1,10 +1,12 @@
-double JZDistanceOfPoints(CGPoint point1, CGPoint point2);
-double JZRadianFromPoints(CGPoint start, CGPoint destination);
-CGPoint JZManhattanDiffFromRadianAndDistance(double radian, double distance);
-double JZRadianFromManhattanDiff(CGPoint manhattanDiff);
-double JZDistanceFromManhattanDiff(CGPoint manhattanDiff);
-CGPoint JZMovedPoint(CGPoint start, double radian, double distance);
-CGPoint JZMovedPointToDestination(CGPoint start, CGPoint destination, double distance);
-double JZDiagonalFromSize(CGSize size);
-double JZInvertRadian(double radian);
-CGPoint JZRotatedPoint(CGPoint source, CGPoint origin, double radian);
+#import "juiz.h"
+
+const double JZDistanceOfPoints(const juiz::Point &point1, const juiz::Point &point2);
+const double JZRadianFromPoints(const juiz::Point &start, const juiz::Point &destination);
+const juiz::Point JZManhattanDiffFromRadianAndDistance(double radian, double distance);
+const double JZRadianFromManhattanDiff(const juiz::Point &manhattanDiff);
+const double JZDistanceFromManhattanDiff(const juiz::Point &manhattanDiff);
+const juiz::Point JZMovedPoint(const juiz::Point &start, double radian, double distance);
+const juiz::Point JZMovedPointToDestination(const juiz::Point &start, const juiz::Point &destination, double distance);
+const double JZDiagonalFromSize(const juiz::Size &size);
+const double JZInvertRadian(double radian);
+const juiz::Point JZRotatedPoint(const juiz::Point &source, const juiz::Point &origin, double radian);

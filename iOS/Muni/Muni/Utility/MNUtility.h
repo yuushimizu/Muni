@@ -1,14 +1,8 @@
-//
-//  MNUtility.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/26/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+#import "juiz.h"
 
-double MNRandomDouble(double min, double limit);
-int MNRandomInt(int min, int limit);
-BOOL MNRandomBool(void);
-CGPoint MNRandomPointInSize(CGSize size);
+const double MNRandomDouble(double min, double limit);
+const int MNRandomInt(int min, int limit);
+const BOOL MNRandomBool(void);
+const juiz::Point MNRandomPointInSize(const juiz::Size &size);
 UIColor *MNRandomColor(void);
-double MNRandomRadian(void);
+const double MNRandomRadian(void);

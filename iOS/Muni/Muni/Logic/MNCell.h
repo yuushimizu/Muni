@@ -1,12 +1,5 @@
-//
-//  MNCell.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/29/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
+#import "juiz.h"
 #import "MNCellAttribute.h"
 #import "MNEnvironment.h"
 
@@ -28,7 +21,7 @@
 @property (readonly) MNCellAttribute *attribute;
 @property (readonly) double sight;
 @property (readonly) BOOL living;
-@property (readonly) CGPoint center;
+@property (readonly) juiz::Point center;
 @property (readonly) double angle;
 @property (readonly) double beatingRadius;
 
@@ -36,9 +29,9 @@
 - (void)moveFor:(double)radian;
 - (void)accelerate;
 - (void)stop;
-- (void)moveTowards:(CGPoint)point;
+- (void)moveTowards:(const juiz::Point &)point;
 - (void)rotateFor:(double)radian;
-- (void)rotateTowards:(CGPoint)point;
+- (void)rotateTowards:(const juiz::Point &)point;
 - (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(id<MNEnvironment>)environment;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;

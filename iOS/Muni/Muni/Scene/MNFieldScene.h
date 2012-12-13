@@ -1,12 +1,5 @@
-//
-//  MNFieldScene.h
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/23/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
+#import "juiz.h"
 #import "JZScene.h"
 #import "MNStandardEnvironment.h"
 #import "MNStandardCell.h"
@@ -25,6 +18,6 @@
 	NSMutableArray *_effects;
 }
 
-- (id)initWithSize:(CGSize)size withResources:(MNGLResources *)resources;
+- (id)initWithSize:(const juiz::Size &)size withResources:(MNGLResources *)resources;
 
 @end
