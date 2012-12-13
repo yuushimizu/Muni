@@ -108,7 +108,7 @@
 		CAF4F96415C1BCE30018353B /* MNSpatialIndex.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96315C1BCE30018353B /* MNSpatialIndex.mm */; };
 		CAF4F96715C1BD020018353B /* MNCellDieEffect.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96615C1BD020018353B /* MNCellDieEffect.mm */; };
 		CAF4F96F15C1D2DC0018353B /* MNCellDieEffect.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F96615C1BD020018353B /* MNCellDieEffect.mm */; };
-		CAF4F98215C20D7A0018353B /* MNCellAttribute.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F98115C20D790018353B /* MNCellAttribute.mm */; };
+		CAF4F98215C20D7A0018353B /* CellFamily.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF4F98115C20D790018353B /* CellFamily.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -285,8 +285,8 @@
 		CAF4F96315C1BCE30018353B /* MNSpatialIndex.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNSpatialIndex.mm; path = Utility/MNSpatialIndex.mm; sourceTree = "<group>"; };
 		CAF4F96515C1BD020018353B /* MNCellDieEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellDieEffect.h; path = Scene/Effect/MNCellDieEffect.h; sourceTree = "<group>"; };
 		CAF4F96615C1BD020018353B /* MNCellDieEffect.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNCellDieEffect.mm; path = Scene/Effect/MNCellDieEffect.mm; sourceTree = "<group>"; };
-		CAF4F98015C20D790018353B /* MNCellAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellAttribute.h; path = Logic/MNCellAttribute.h; sourceTree = "<group>"; };
-		CAF4F98115C20D790018353B /* MNCellAttribute.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNCellAttribute.mm; path = Logic/MNCellAttribute.mm; sourceTree = "<group>"; };
+		CAF4F98015C20D790018353B /* CellFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellFamily.h; path = Logic/CellFamily.h; sourceTree = "<group>"; };
+		CAF4F98115C20D790018353B /* CellFamily.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CellFamily.cpp; path = Logic/CellFamily.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,8 +454,8 @@
 				CAA99D8715C1AFCF002B85D2 /* MNStandardEnvironment.h */,
 				CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.mm */,
 				CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */,
-				CAF4F98015C20D790018353B /* MNCellAttribute.h */,
-				CAF4F98115C20D790018353B /* MNCellAttribute.mm */,
+				CAF4F98015C20D790018353B /* CellFamily.h */,
+				CAF4F98115C20D790018353B /* CellFamily.cpp */,
 				CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */,
 				CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.mm */,
 				CA02DC8B15C44E8B0070B1F5 /* MNCell.h */,
@@ -838,7 +838,7 @@
 				CAA99D6015C078D7002B85D2 /* MNUtility.mm in Sources */,
 				CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.mm in Sources */,
 				CAF4F96415C1BCE30018353B /* MNSpatialIndex.mm in Sources */,
-				CAF4F98215C20D7A0018353B /* MNCellAttribute.mm in Sources */,
+				CAF4F98215C20D7A0018353B /* CellFamily.cpp in Sources */,
 				CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.mm in Sources */,
 				CA02DC8715C423D80070B1F5 /* MNCellAction.mm in Sources */,
 				CA02DC8E15C458B80070B1F5 /* MNCellActionMultiply.mm in Sources */,

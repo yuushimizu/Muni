@@ -16,7 +16,7 @@
 		_sprite = [[JZGLSprite alloc] initWithTexture:[resources cellTexture:cell.type]];
 		double saturation = 0.3;
 		double brightness = MAX(0, MIN(1.0, 1.3 - cell.density));
-		[_sprite setColor:[UIColor colorWithHue:cell.attribute.hue saturation:saturation brightness:brightness alpha:1]];
+		[_sprite setColor:[UIColor colorWithHue:cell.family.value() saturation:saturation brightness:brightness alpha:1]];
 		_radian = cell.angle;
 	}
 	return self;

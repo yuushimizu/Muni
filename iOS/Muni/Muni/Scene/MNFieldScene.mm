@@ -48,7 +48,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 	} else {
 		double saturation = MAX(0, (cell.energy / cell.maxEnergy) * 2);
 		double brightness = MAX(0, MIN(1.0, 1.3 - cell.density));
-		[sprite setColor:[UIColor colorWithHue:cell.attribute.hue saturation:saturation brightness:brightness alpha:1.0]];
+		[sprite setColor:[UIColor colorWithHue:cell.family.value() saturation:saturation brightness:brightness alpha:1.0]];
 	}
 }
 

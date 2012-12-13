@@ -2,7 +2,7 @@
 #import "juiz.h"
 #import "MNCell.h"
 #import "MNEnvironment.h"
-#import "MNCellAttribute.h"
+#import "CellFamily.h"
 #import "MNCellAction.h"
 #import "MNCellActionMultiply.h"
 #import "MNCellActionMakeMoon.h"
@@ -23,7 +23,7 @@
 	double _maxEnergy;
 	double _energy;
 	double _density;
-	MNCellAttribute *_attribute;
+	muni::CellFamily _family;
 	double _speed;
 	double _movingSpeed;
 	double _movingRadian;

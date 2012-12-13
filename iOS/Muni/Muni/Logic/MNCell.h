@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "juiz.h"
-#import "MNCellAttribute.h"
+#import "CellFamily.h"
 #import "MNEnvironment.h"
 
 #define kMNCellTypeCount 50
@@ -18,7 +18,7 @@
 @property (readonly) double radius;
 @property (readonly) double density;
 @property (readonly) double weight;
-@property (readonly) MNCellAttribute *attribute;
+@property (readonly) muni::CellFamily family;
 @property (readonly) double sight;
 @property (readonly) BOOL living;
 @property (readonly) juiz::Point center;

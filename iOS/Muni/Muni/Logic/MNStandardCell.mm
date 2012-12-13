@@ -18,7 +18,7 @@ static int randomType() {
 @synthesize maxEnergy = _maxEnergy;
 @synthesize energy = _energy;
 @synthesize density = _density;
-@synthesize attribute = _attribute;
+@synthesize family = _family;
 @synthesize speed = _speed;
 @synthesize movingRadian = _movingRadian;
 @synthesize sight = _sight;
@@ -41,8 +41,8 @@ static int randomType() {
 	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 2);
 }
 
-- (MNCellAttribute *)randomAttribute {
-	return [[MNCellAttribute alloc] initWithHue:MNRandomDouble(0, 1)];
+- (const muni::CellFamily)randomFamily {
+	return muni::CellFamily(MNRandomDouble(0, 1));
 }
 
 - (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomStandaloneMoveSource {
@@ -262,7 +262,7 @@ static int randomType() {
 		_maxEnergy = [self randomEnergy];
 		_energy = _maxEnergy * MNRandomDouble(0.5, 0.9);
 		_density = MNRandomDouble(kMNCellMinDensity, kMNCellMaxDensity);
-		_attribute = [self randomAttribute];
+		_family = [self randomFamily];
 		_speed = [self randomSpeed];
 		_angle = MNRandomRadian();
 		_rotationRadian  = MNRandomInt(0, 100) < 30 ? MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) : 0;
@@ -282,7 +282,7 @@ static int randomType() {
 		_maxEnergy = other.maxEnergy * MNRandomDouble(0.9, 1.1);
 		_energy = _maxEnergy * other.energy / other.maxEnergy;
 		_density = MAX(MIN(kMNCellMaxDensity, other.density * MNRandomDouble(0.9, 1.1)), kMNCellMinDensity);
-		_attribute = [[MNCellAttribute alloc] initWithHue:other.attribute.hue * MNRandomDouble(0.9, 1.1)];
+		_family = muni::CellFamily(other.family.value() * MNRandomDouble(0.9, 1.1));
 		_speed = other.speed * MNRandomDouble(0.9, 1.1);
 		_angle = other.angle;
 		_rotationRadian = other.rotationRadian;
@@ -303,7 +303,7 @@ static int randomType() {
 		_energy = parent.energy * 0.9;
 		_maxEnergy = parent.maxEnergy * 0.9;
 		_density = parent.density;
-		_attribute = parent.attribute;
+		_family = parent.family;
 		_speed = parent.speed;
 		_angle = parent.angle;
 		_rotationRadian = parent.rotationRadian;
@@ -331,7 +331,7 @@ static int randomType() {
 		_maxEnergy = parent.maxEnergy * 0.5;
 		_energy = _maxEnergy * 0.5;
 		_density = parent.density;
-		_attribute = parent.attribute;
+		_family = parent.family;
 		_speed = parent.speed * 2;
 		_angle = parent.angle;
 		_rotationRadian = parent.rotationRadian;
@@ -365,8 +365,7 @@ static int randomType() {
 }
 
 - (BOOL)hostility:(id<MNCell>)other {
-	double hueDistance = MIN(fabs(other.attribute.hue - _attribute.hue), MIN(fabs(other.attribute.hue - (_attribute.hue - 1.0)), fabs(other.attribute.hue - (_attribute.hue + 1.0))));
-	return hueDistance > 0.15;
+	return muni::hostility(_family, other.family);
 }
 
 - (void)decreaseEnergy:(double)energy {
