@@ -15,8 +15,8 @@ namespace juiz {
 			const double y() const;
 			const double y(const double y);
 		};
-		const bool operator ==(const Point &lhs, const Point &rhs);
-		const bool operator !=(const Point &lhs, const Point &rhs);
+		const bool operator==(const Point &lhs, const Point &rhs);
+		const bool operator!=(const Point &lhs, const Point &rhs);
 	}
 }
 

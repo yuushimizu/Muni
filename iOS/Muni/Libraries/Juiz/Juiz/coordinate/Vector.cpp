@@ -26,11 +26,11 @@ namespace juiz {
 			return this->magnitude_ = magnitude;
 		}
 		
-		const bool operator ==(const Vector &lhs, const Vector &rhs) {
+		const bool operator==(const Vector &lhs, const Vector &rhs) {
 			return lhs.direction() == rhs.direction() && lhs.magnitude() == rhs.magnitude();
 		}
 		
-		const bool operator !=(const Vector &lhs, const Vector &rhs) {
+		const bool operator!=(const Vector &lhs, const Vector &rhs) {
 			return !(lhs == rhs);
 		}
 	}

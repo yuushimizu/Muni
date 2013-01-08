@@ -10,7 +10,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 - (id)initWithSize:(const juiz::Size &)size withResources:(MNGLResources *)resources {
 	if (self = [super init]) {
 		_resources = resources;
-		_environment = [[MNStandardEnvironment alloc] initWithSize:size withMaxCellCount:kMNMaxCells];
+		_environment.reset(new muni::StandardEnvironment(size, kMNMaxCells));
 		for (int i = 0; i < kMNMaxCells; ++i) {
 			_cellSprites[i] = [[JZGLSprite alloc] init];
 		}
@@ -29,12 +29,12 @@ static CGRect rectFromCell(id<MNCell> cell) {
 }
 
 - (void)sendFrame {
-	for (id<MNCell> cell in _environment.cells) {
+	for (id<MNCell> cell : _environment->cells()) {
 		if ([cell eventOccurred:kMNCellEventDied]) {
 			[_effects addObject:[[MNCellDieEffect alloc] initWithCell:cell withResources:_resources]];
 		}
 	}
-	[_environment sendFrame];
+	_environment->send_frame();
 	[self sendEffectFrame];
 }
 
@@ -55,7 +55,7 @@ static CGRect rectFromCell(id<MNCell> cell) {
 - (void)draw {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	int i = 0;
-	for (id<MNCell> cell in _environment.cells) {
+	for (id<MNCell> cell : _environment->cells()) {
 		JZGLSprite *cellSprite = _cellSprites[i];
 		[self setCellSpriteColor:cellSprite withCell:cell];
 		[cellSprite setTexture:[_resources cellTexture:cell.type]];

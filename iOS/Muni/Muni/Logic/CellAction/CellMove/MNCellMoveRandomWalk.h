@@ -9,6 +9,6 @@
 	int _restIntervalFrames;
 }
 
-- (id)initWithMaxIntervalFrames:(int)maxIntervalFrames withEnvironment:(id<MNEnvironment>)environment;
+- (id)initWithMaxIntervalFrames:(int)maxIntervalFrames withEnvironment:(muni::Environment *)environment;
 
 @end

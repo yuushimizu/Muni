@@ -13,7 +13,7 @@ namespace muni {
 	    return this->value_;
     }
 
-    const bool hostility(const CellFamily &cellFamily1, const CellFamily &cellFamily2) {
-		return std::min(fabs(cellFamily1.value() - cellFamily2.value()), std::min(fabs(cellFamily1.value() - (cellFamily2.value() - 1.0)), fabs(cellFamily1.value() - (cellFamily2.value() + 1.0)))) > 0.15;
+    const bool hostility(const CellFamily &cell_family_1, const CellFamily &cell_family_2) {
+		return std::min(fabs(cell_family_1.value() - cell_family_2.value()), std::min(fabs(cell_family_1.value() - (cell_family_2.value() - 1.0)), fabs(cell_family_1.value() - (cell_family_2.value() + 1.0)))) > 0.15;
     }
 }

@@ -15,8 +15,8 @@ namespace juiz {
 			const double height() const;
 			const double height(const double height);
 		};
-		const bool operator ==(const Size &lhs, const Size &rhs);
-		const bool operator !=(const Size &lhs, const Size &rhs);
+		const bool operator==(const Size &lhs, const Size &rhs);
+		const bool operator!=(const Size &lhs, const Size &rhs);
 	}
 }
 

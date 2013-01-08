@@ -45,25 +45,25 @@ static int randomType() {
 	return muni::CellFamily(MNRandomDouble(0, 1));
 }
 
-- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomStandaloneMoveSource {
+- (MNCellAction *(^)(id<MNCell>, muni::Environment *))randomStandaloneMoveSource {
 	int type = MNRandomInt(0, 100);
 	if (type < 50) {
 		int maxIntervalFrames = MNRandomInt(0, 100);
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveRandomWalk alloc] initWithMaxIntervalFrames:maxIntervalFrames withEnvironment:environment];
 		};
 	} else if (type < 75) {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveFloat alloc] init];
 		};
 	} else {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveImmovable alloc] init];
 		};
 	}
 }
 
-- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomRelativeMoveSource:(MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))standaloneMoveSource {
+- (MNCellAction *(^)(id<MNCell>, muni::Environment *))randomRelativeMoveSource:(MNCellAction *(^)(id<MNCell>, muni::Environment *))standaloneMoveSource {
 	BOOL (^targetCondition)(id<MNCell> me, id<MNCell> other);
 	int type = MNRandomInt(0, 100);
 	if (type < 75) {
@@ -73,33 +73,33 @@ static int randomType() {
 	}
 	int decisionMoveWithTarget = MNRandomInt(0, 100);
 	if (decisionMoveWithTarget < 20) {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveApproachTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment)];
 		};
 	} else if (decisionMoveWithTarget < 40) {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveEscape alloc] initWithCell:cell withCondition:targetCondition withMoveWhenNotEscape:standaloneMoveSource(cell, environment)];
 		};
 	} else if (decisionMoveWithTarget < 60) {
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveApproachNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment)];
 		};
 	} else if (decisionMoveWithTarget < 80) {
 		int intervalFrames = MNRandomInt(30, 150);
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment) withIntervalFrames:intervalFrames];
 		};
 	} else {
 		double distanceRate = MNRandomDouble(1, 4);
 		double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment) withDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease];
 		};
 	}
 }
 
-- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSourceWithoutCondition {
-	MNCellAction *(^standaloneMoveSource)(id<MNCell>, id<MNEnvironment>) = [self randomStandaloneMoveSource];
+- (MNCellAction *(^)(id<MNCell>, muni::Environment *))randomMoveSourceWithoutCondition {
+	MNCellAction *(^standaloneMoveSource)(id<MNCell>, muni::Environment *) = [self randomStandaloneMoveSource];
 	if (MNRandomInt(0, 100) < 10) {
 		return standaloneMoveSource;
 	} else {
@@ -107,14 +107,14 @@ static int randomType() {
 	}
 }
 
-- (MNCellAction *(^)(id<MNCell>, id<MNEnvironment>))randomMoveSource {
-	MNCellAction *(^moveSourceWithoutCondition)(id<MNCell>, id<MNEnvironment>) = [self randomMoveSourceWithoutCondition];
+- (MNCellAction *(^)(id<MNCell>, muni::Environment *))randomMoveSource {
+	MNCellAction *(^moveSourceWithoutCondition)(id<MNCell>, muni::Environment *) = [self randomMoveSourceWithoutCondition];
 	if (MNRandomInt(0, 100) < 75) {
 		return moveSourceWithoutCondition;
 	} else {
 		double energyBoundingRate = MNRandomDouble(0.3, 0.7);
-		MNCellAction *(^falseMoveSource)(id<MNCell>, id<MNEnvironment>) = [self randomMoveSourceWithoutCondition];
-		return ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		MNCellAction *(^falseMoveSource)(id<MNCell>, muni::Environment *) = [self randomMoveSourceWithoutCondition];
+		return ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellActionConditional alloc] initWithCondition:^(id<MNCell> cell) {
 				return (BOOL) ((cell.energy / cell.maxEnergy) < energyBoundingRate);
 			} withTrueAction:moveSourceWithoutCondition(cell, environment) withFalseAction:falseMoveSource(cell, environment)];
@@ -127,7 +127,7 @@ static int randomType() {
 	if (MNRandomInt(0, 100) < 75) {
 		int maxCount = MNRandomInt(1, 3) * MNRandomInt(1, 3) * MNRandomInt(1, 3) * MNRandomInt(1, 3);
 		double incidence = MNRandomDouble(0.005, 0.015) - ((double) _maxEnergy / 1000000);
-		[actionSources addObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
+		[actionSources addObject:^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellActionMultiply alloc] initWithMaxCount:maxCount withIncidence:incidence];
 		}];
 	}
@@ -136,47 +136,47 @@ static int randomType() {
 		double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
 		int maxCount = MNRandomInt(1, 4) * MNRandomInt(1, 2);
 		double incidence = 0.002;
-		[actionSources addObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
+		[actionSources addObject:^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellActionMakeMoon alloc] initWithDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease withMaxCount:maxCount withIncidence:incidence];
 		}];
 	}
 	if (MNRandomInt(0, 100) < 10) {
 		int intervalFrames = MNRandomInt(30, 450);
 		double incidence = 0.003;
-		[actionSources addObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
+		[actionSources addObject:^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellActionMakeTracer alloc] initWithIntervalFrames:intervalFrames withIncidence:incidence];
 		}];
 	}
 	return actionSources;
 }
 
-- (void)resetActionsWithEnvironment:(id<MNEnvironment>)environment {
+- (void)resetActionsWithEnvironment:(muni::Environment *)environment {
 	NSMutableArray *actions = [NSMutableArray array];
-	for (MNCellAction *(^actionSource)(id<MNCell>, id<MNEnvironment>environment) in _actionSources) {
+	for (MNCellAction *(^actionSource)(id<MNCell>, muni::Environment *environment) in _actionSources) {
 		[actions addObject:actionSource(self, environment)];
 	}
 	_actions = actions;
 }
 
-- (void)fixPositionWithEnvironment:(id<MNEnvironment>)environment {
+- (void)fixPositionWithEnvironment:(muni::Environment *)environment {
 	double radius = self.radius;
 	if (_center.x() < radius) {
 		_center.x(radius);
 		_movingRadian = -_movingRadian;
-	} else if (_center.x() > environment.field.size().width() - radius) {
-		_center.x(environment.field.size().width() - radius);
+	} else if (_center.x() > environment->field().size().width() - radius) {
+		_center.x(environment->field().size().width() - radius);
 		_movingRadian = -_movingRadian;
 	}
 	if (_center.y() < radius) {
 		_center.y(radius);
 		_movingRadian = -M_PI - _movingRadian;
-	} else if (_center.y() > environment.field.size().height() - radius) {
-		_center.y(environment.field.size().height() - radius);
+	} else if (_center.y() > environment->field().size().height() - radius) {
+		_center.y(environment->field().size().height() - radius);
 		_movingRadian = -M_PI - _movingRadian;
 	}
 }
 
-- (void)realMove:(id<MNEnvironment>)environment {
+- (void)realMove:(muni::Environment *)environment {
 	_center = JZMovedPoint(JZMovedPoint(_center, _radianForFix, _distanceForFix), _movingRadian, _movingSpeed);
 	_distanceForFix = 0;
 	[self fixPositionWithEnvironment:environment];
@@ -256,7 +256,7 @@ static int randomType() {
 	return self;
 }
 
-- (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment {
+- (id)initByRandomWithEnvironment:(muni::Environment *)environment {
 	if (self = [super init]) {
 		_type = randomType();
 		_maxEnergy = [self randomEnergy];
@@ -266,8 +266,8 @@ static int randomType() {
 		_speed = [self randomSpeed];
 		_angle = MNRandomRadian();
 		_rotationRadian  = MNRandomInt(0, 100) < 30 ? MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) : 0;
-		_sight = JZDiagonalFromSize(environment.field.size()) * MNRandomDouble(0.1, 0.5);
-		_center = MNRandomPointInSize(environment.field.size());
+		_sight = JZDiagonalFromSize(environment->field().size()) * MNRandomDouble(0.1, 0.5);
+		_center = MNRandomPointInSize(environment->field().size());
 		[self fixPositionWithEnvironment:environment];
 		_actionSources = [self randomActionSources];
 		[self resetActionsWithEnvironment:environment];
@@ -276,7 +276,7 @@ static int randomType() {
 	return self;
 }
 
-- (id)initByOther:(MNStandardCell *)other withEnvironment:(id<MNEnvironment>)environment {
+- (id)initByOther:(MNStandardCell *)other withEnvironment:(muni::Environment *)environment {
 	if (self = [super init]) {
 		_type = other.type;
 		_maxEnergy = other.maxEnergy * MNRandomDouble(0.9, 1.1);
@@ -297,7 +297,7 @@ static int randomType() {
 	return self;
 }
 
-- (id)initAsTracerOf:(MNStandardCell *)parent withIntervalFrames:(int)intervalFrames withEnvironment:(id<MNEnvironment>)environment {
+- (id)initAsTracerOf:(MNStandardCell *)parent withIntervalFrames:(int)intervalFrames withEnvironment:(muni::Environment *)environment {
 	if (self = [super init]) {
 		_type = parent.type;
 		_energy = parent.energy * 0.9;
@@ -310,11 +310,11 @@ static int randomType() {
 		_sight = parent.sight;
 		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius);
 		[self fixPositionWithEnvironment:environment];
-		MNCellAction *(^moveSourceWithoutTarget)(id<MNCell>, id<MNEnvironment>) = [self randomMoveSource];
-		MNCellAction *(^moveSoure)(id<MNCell>, id<MNEnvironment>) = ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		MNCellAction *(^moveSourceWithoutTarget)(id<MNCell>, muni::Environment *) = [self randomMoveSource];
+		MNCellAction *(^moveSoure)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:moveSourceWithoutTarget(cell, environment) withIntervalFrames:intervalFrames];
 		};
-		MNCellAction *(^makeTracerSource)(id<MNCell>, id<MNEnvironment>) = ^(id<MNCell> cell, id<MNEnvironment> environment) {
+		MNCellAction *(^makeTracerSource)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellActionMakeTracer alloc] initWithIntervalFrames:intervalFrames withIncidence:0.001];
 		};
 		_actionSources = [NSArray arrayWithObjects:moveSoure, makeTracerSource, nil];
@@ -325,7 +325,7 @@ static int randomType() {
 	return self;
 }
 
-- (id)initAsMoonOf:(MNStandardCell *)parent withDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment {
+- (id)initAsMoonOf:(MNStandardCell *)parent withDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(muni::Environment *)environment {
 	if (self = [super init]) {
 		_type = parent.type;
 		_maxEnergy = parent.maxEnergy * 0.5;
@@ -338,7 +338,7 @@ static int randomType() {
 		_sight = parent.sight + distance;
 		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius + distance + self.radius);
 		[self fixPositionWithEnvironment:environment];
-		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, id<MNEnvironment> environment) {
+		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, muni::Environment *environment) {
 			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:[[MNCellMoveFloat alloc] init] withDistance:distance withRadianIncrease:radianIncrease];
 		}];
 		[self resetActionsWithEnvironment:environment];
@@ -360,8 +360,8 @@ static int randomType() {
 	return _energy > 0;
 }
 
-- (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell>))condition withEnvironment:(id<MNEnvironment>)environment {
-	return [environment cellsInCircle:_center withRadius:_sight + self.radius withCondition:condition];
+- (const std::vector<MNCellScanningResult *>)scanCellsWithCondition:(BOOL (^)(id<MNCell>))condition withEnvironment:(muni::Environment *)environment {
+	return environment->cells_in_circle(_center, _sight + self.radius, condition);
 }
 
 - (BOOL)hostility:(id<MNCell>)other {
@@ -385,30 +385,30 @@ static int randomType() {
 	_energy = MIN(_energy + energy, _maxEnergy);
 }
 
-- (BOOL)multiplyWithEnvironment:(id<MNEnvironment>)environment {
+- (BOOL)multiplyWithEnvironment:(muni::Environment *)environment {
 	double cost = self.maxEnergy * 0.25;
 	if (self.energy < cost * 2) return NO;
 	[self decreaseEnergy:cost];
 	MNStandardCell *newCell = [[MNStandardCell alloc] initByOther:self withEnvironment:environment];
-	[environment addCell:newCell];
+	environment->add_cell(newCell);
 	return YES;
 }
 
-- (BOOL)makeMoonWithDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment {
+- (BOOL)makeMoonWithDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(muni::Environment *)environment {
 	if (self.maxEnergy < 200) return NO;
 	if (self.energy < self.maxEnergy * 0.15) return NO;
 	[self decreaseEnergy:self.maxEnergy * 0.1];
 	MNStandardCell *moon = [[MNStandardCell alloc] initAsMoonOf:self withDistance:distance withRadianIncrease:radianIncrease withEnvironment:environment];
-	[environment addCell:moon];
+	environment->add_cell(moon);
 	return YES;
 }
 
-- (BOOL)makeTracerWithIntervalFrames:(int)intervalFrames withEnvironment:(id<MNEnvironment>)environment {
+- (BOOL)makeTracerWithIntervalFrames:(int)intervalFrames withEnvironment:(muni::Environment *)environment {
 	if (self.maxEnergy < 200) return NO;
 	if (self.energy < self.maxEnergy * 0.25) return NO;
 	[self decreaseEnergy:self.maxEnergy * 0.2];
 	MNStandardCell *newCell = [[MNStandardCell alloc] initAsTracerOf:self withIntervalFrames:intervalFrames withEnvironment:environment];
-	[environment addCell:newCell];
+	environment->add_cell(newCell);
 	return YES;
 }
 
@@ -425,7 +425,7 @@ static int randomType() {
 	return baseRadius + baseRadius * 0.05 * sin(M_PI * _beat / _maxBeat) - baseRadius * 0.025;
 }
 
-- (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithEnvironment:(muni::Environment *)environment {
 	_age += 1;
 	_beat += 1;
 	if (_beat >= _maxBeat) _beat = 0;

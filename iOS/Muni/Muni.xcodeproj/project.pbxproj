@@ -48,7 +48,7 @@
 		CAA99D4E15C05CE6002B85D2 /* MNEffect.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D4D15C05CE6002B85D2 /* MNEffect.mm */; };
 		CAA99D5815C06A17002B85D2 /* MNEffect.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D4D15C05CE6002B85D2 /* MNEffect.mm */; };
 		CAA99D6015C078D7002B85D2 /* MNUtility.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D5F15C078D7002B85D2 /* MNUtility.mm */; };
-		CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.mm */; };
+		CAA99D8915C1AFD1002B85D2 /* StandardEnvironment.mm in Sources */ = {isa = PBXBuildFile; fileRef = CAA99D8815C1AFD0002B85D2 /* StandardEnvironment.mm */; };
 		CABD557C1603338700023742 /* MNMenuView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CABD557B1603338700023742 /* MNMenuView.mm */; };
 		CABD5583160712A600023742 /* ButtonReset.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5581160712A600023742 /* ButtonReset.png */; };
 		CABD5584160712A600023742 /* ButtonReset@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CABD5582160712A600023742 /* ButtonReset@2x.png */; };
@@ -205,9 +205,9 @@
 		CAA99D4D15C05CE6002B85D2 /* MNEffect.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNEffect.mm; path = Scene/Effect/MNEffect.mm; sourceTree = "<group>"; };
 		CAA99D5E15C078D7002B85D2 /* MNUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNUtility.h; path = Utility/MNUtility.h; sourceTree = "<group>"; };
 		CAA99D5F15C078D7002B85D2 /* MNUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNUtility.mm; path = Utility/MNUtility.mm; sourceTree = "<group>"; };
-		CAA99D8715C1AFCF002B85D2 /* MNStandardEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNStandardEnvironment.h; path = Logic/MNStandardEnvironment.h; sourceTree = "<group>"; };
-		CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNStandardEnvironment.mm; path = Logic/MNStandardEnvironment.mm; sourceTree = "<group>"; };
-		CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNEnvironment.h; path = Logic/MNEnvironment.h; sourceTree = "<group>"; };
+		CAA99D8715C1AFCF002B85D2 /* StandardEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StandardEnvironment.h; path = Logic/StandardEnvironment.h; sourceTree = "<group>"; };
+		CAA99D8815C1AFD0002B85D2 /* StandardEnvironment.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = StandardEnvironment.mm; path = Logic/StandardEnvironment.mm; sourceTree = "<group>"; };
+		CAA99D8A15C1B4C3002B85D2 /* Environment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Environment.h; path = Logic/Environment.h; sourceTree = "<group>"; };
 		CABD557A1603338700023742 /* MNMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNMenuView.h; path = UI/MNMenuView.h; sourceTree = "<group>"; };
 		CABD557B1603338700023742 /* MNMenuView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNMenuView.mm; path = UI/MNMenuView.mm; sourceTree = "<group>"; };
 		CABD5581160712A600023742 /* ButtonReset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonReset.png; path = ../images/ButtonReset.png; sourceTree = "<group>"; };
@@ -451,9 +451,9 @@
 				CA8BF80315BC8FC900B7B572 /* MNStandardCell.mm */,
 				CA8BF80815BC90A600B7B572 /* Field.h */,
 				CA8BF80915BC90A600B7B572 /* Field.mm */,
-				CAA99D8715C1AFCF002B85D2 /* MNStandardEnvironment.h */,
-				CAA99D8815C1AFD0002B85D2 /* MNStandardEnvironment.mm */,
-				CAA99D8A15C1B4C3002B85D2 /* MNEnvironment.h */,
+				CAA99D8715C1AFCF002B85D2 /* StandardEnvironment.h */,
+				CAA99D8815C1AFD0002B85D2 /* StandardEnvironment.mm */,
+				CAA99D8A15C1B4C3002B85D2 /* Environment.h */,
 				CAF4F98015C20D790018353B /* CellFamily.h */,
 				CAF4F98115C20D790018353B /* CellFamily.mm */,
 				CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */,
@@ -836,7 +836,7 @@
 				CAF14AE015BE48C2000AD7A8 /* JZGLSprite.mm in Sources */,
 				CAF14AE315BE6C34000AD7A8 /* MNSceneDirector.mm in Sources */,
 				CAA99D6015C078D7002B85D2 /* MNUtility.mm in Sources */,
-				CAA99D8915C1AFD1002B85D2 /* MNStandardEnvironment.mm in Sources */,
+				CAA99D8915C1AFD1002B85D2 /* StandardEnvironment.mm in Sources */,
 				CAF4F96415C1BCE30018353B /* MNSpatialIndex.mm in Sources */,
 				CAF4F98215C20D7A0018353B /* CellFamily.mm in Sources */,
 				CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.mm in Sources */,
@@ -932,15 +932,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					./Libraries/Juiz/Juiz/include,
-					./Libraries/Juiz/Externals,
-				);
+				HEADER_SEARCH_PATHS = ./Libraries/Juiz/Juiz/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OTHER_CFLAGS = (
-					"-DNS_BLOCK_ASSERTIONS",
-					"-DDSFMT_MEXP=19937",
-				);
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "20A25F1A-98C3-4DFC-9B84-D9E39D321ED0";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -954,7 +948,9 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muni/Muni-Prefix.pch";
+				HEADER_SEARCH_PATHS = ./Libraries/Juiz/Juiz/include;
 				INFOPLIST_FILE = "Muni/Muni-Info.plist";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -999,12 +995,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					./Libraries/Juiz/Juiz/include,
-					./Libraries/Juiz/Externals,
-				);
+				HEADER_SEARCH_PATHS = ./Libraries/Juiz/Juiz/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OTHER_CFLAGS = "-DDSFMT_MEXP=19937";
+				OTHER_CFLAGS = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1026,15 +1019,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					./Libraries/Juiz/Juiz/include,
-					./Libraries/Juiz/Externals,
-				);
+				HEADER_SEARCH_PATHS = ./Libraries/Juiz/Juiz/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OTHER_CFLAGS = (
-					"-DNS_BLOCK_ASSERTIONS",
-					"-DDSFMT_MEXP=19937",
-				);
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1047,7 +1034,9 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muni/Muni-Prefix.pch";
+				HEADER_SEARCH_PATHS = ./Libraries/Juiz/Juiz/include;
 				INFOPLIST_FILE = "Muni/Muni-Info.plist";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1059,6 +1048,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Muni/Muni-Prefix.pch";
+				HEADER_SEARCH_PATHS = ./Libraries/Juiz/Juiz/include;
 				INFOPLIST_FILE = "Muni/Muni-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

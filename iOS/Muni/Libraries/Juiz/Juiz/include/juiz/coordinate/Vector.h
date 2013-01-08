@@ -16,8 +16,8 @@ namespace juiz {
 			const double magnitude() const;
 			const double magnitude(const double magnitude);
 		};
-		const bool operator ==(const Vector &lhs, const Vector &rhs);
-		const bool operator !=(const Vector &lhs, const Vector &rhs);
+		const bool operator==(const Vector &lhs, const Vector &rhs);
+		const bool operator!=(const Vector &lhs, const Vector &rhs);
 	}
 }
 

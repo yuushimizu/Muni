@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
+#import <vector>
 #import "juiz.h"
 #import "CellFamily.h"
-#import "MNEnvironment.h"
+#import "Environment.h"
 
 #define kMNCellTypeCount 50
 
@@ -32,15 +33,15 @@
 - (void)moveTowards:(const juiz::Point &)point;
 - (void)rotateFor:(double)radian;
 - (void)rotateTowards:(const juiz::Point &)point;
-- (NSArray *)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(id<MNEnvironment>)environment;
+- (const std::vector<MNCellScanningResult *>)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(muni::Environment *)environment;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;
 - (void)heal:(double)energy;
-- (BOOL)multiplyWithEnvironment:(id<MNEnvironment>)environment;
-- (BOOL)makeMoonWithDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(id<MNEnvironment>)environment;
-- (BOOL)makeTracerWithIntervalFrames:(int)intervalFrames withEnvironment:(id<MNEnvironment>)environment;
+- (BOOL)multiplyWithEnvironment:(muni::Environment *)environment;
+- (BOOL)makeMoonWithDistance:(double)distance withRadianIncrease:(double)radianIncrease withEnvironment:(muni::Environment *)environment;
+- (BOOL)makeTracerWithIntervalFrames:(int)intervalFrames withEnvironment:(muni::Environment *)environment;
 - (BOOL)eventOccurred:(int)event;
 - (BOOL)eventOccurredPrevious:(int)event;
-- (void)sendFrameWithEnvironment:(id<MNEnvironment>)environment;
+- (void)sendFrameWithEnvironment:(muni::Environment *)environment;
 
 @end

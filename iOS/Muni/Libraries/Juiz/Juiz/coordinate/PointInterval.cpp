@@ -25,11 +25,11 @@ namespace juiz {
 			return this->y_ = y;
 		}
 		
-		const bool operator ==(const PointInterval &lhs, const PointInterval &rhs) {
+		const bool operator==(const PointInterval &lhs, const PointInterval &rhs) {
 			return lhs.x() == rhs.x() && lhs.y() == rhs.y();
 		}
 		
-		const bool operator !=(const PointInterval &lhs, const PointInterval &rhs) {
+		const bool operator!=(const PointInterval &lhs, const PointInterval &rhs) {
 			return !(lhs == rhs);
 		}
 		

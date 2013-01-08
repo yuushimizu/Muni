@@ -24,11 +24,11 @@ namespace juiz {
 			return this->height_ = height;
 		}
 		
-		const bool operator ==(const Size &lhs, const Size &rhs) {
+		const bool operator==(const Size &lhs, const Size &rhs) {
 			return lhs.width() == rhs.width() && lhs.height() == rhs.height();
 		}
 		
-		const bool operator !=(const Size &lhs, const Size &rhs) {
+		const bool operator!=(const Size &lhs, const Size &rhs) {
 			return !(lhs == rhs);
 		}
 	}

@@ -24,11 +24,11 @@ namespace juiz {
 			return this->y_ = y;
 		}
 		
-		const bool operator ==(const Point &lhs, const Point &rhs) {
+		const bool operator==(const Point &lhs, const Point &rhs) {
 			return lhs.x() == rhs.x() && lhs.y() == rhs.y();
 		}
 		
-		const bool operator !=(const Point &lhs, const Point &rhs) {
+		const bool operator!=(const Point &lhs, const Point &rhs) {
 			return !(lhs == rhs);
 		}
 	}

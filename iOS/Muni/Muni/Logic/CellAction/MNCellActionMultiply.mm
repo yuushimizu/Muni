@@ -1,11 +1,3 @@
-//
-//  MNCellActionMultiply.m
-//  Muni
-//
-//  Created by Yuu Shimizu on 7/29/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #import "MNCellActionMultiply.h"
 
 @implementation MNCellActionMultiply
@@ -18,7 +10,7 @@
 	return self;
 }
 
-- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(muni::Environment *)environment {
 	if (_restCount <= 0) return;
 	if (MNRandomDouble(0, 1) >= _incidence) return;
 	if ([cell multiplyWithEnvironment:environment]) {

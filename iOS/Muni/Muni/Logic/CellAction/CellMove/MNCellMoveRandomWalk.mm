@@ -4,12 +4,12 @@
 
 @implementation MNCellMoveRandomWalk
 
-- (void)resetDestinationWithEnvironment:(id<MNEnvironment>)environment {
-	_destination = MNRandomPointInSize(environment.field.size());
+- (void)resetDestinationWithEnvironment:(muni::Environment *)environment {
+	_destination = MNRandomPointInSize(environment->field().size());
 	_restIntervalFrames = _maxIntervalFrames * MNRandomDouble(0.5, 1.0);
 }
 
-- (id)initWithMaxIntervalFrames:(int)maxIntervalFrames withEnvironment:(id<MNEnvironment>)environment {
+- (id)initWithMaxIntervalFrames:(int)maxIntervalFrames withEnvironment:(muni::Environment *)environment {
 	if (self = [super init]) {
 		_maxIntervalFrames = maxIntervalFrames;
 		[self resetDestinationWithEnvironment:environment];
@@ -17,7 +17,7 @@
 	return self;
 }
 
-- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(muni::Environment *)environment {
 	if (_restIntervalFrames > 0) {
 		_restIntervalFrames -= 1;
 		[cell stop];

@@ -13,29 +13,29 @@
 	return self;
 }
 
-- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
-	NSArray *scanningResults = [cell scanCellsWithCondition:^(id<MNCell> candidate) {
+- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(muni::Environment *)environment {
+	std::vector<MNCellScanningResult *> scanningResults = [cell scanCellsWithCondition:^(id<MNCell> candidate) {
 		return _escapeCondition(cell, candidate);
 	} withEnvironment:environment];
-	if (scanningResults.count > 0) {
+	if (scanningResults.size() > 0) {
 		double cellX = cell.center.x();
 		double cellY = cell.center.y();
 		double maxDistance = cell.radius + cell.sight;
 		double xDestination = cellX;
 		double yDestination = cellY;
-		for (MNCellScanningResult *scanningResult in scanningResults) {
+		for (MNCellScanningResult *scanningResult : scanningResults) {
 			const juiz::Point pointWithMaxDistance = JZMovedPoint(cell.center, JZRadianFromPoints(cell.center, scanningResult.cell.center), maxDistance);
 			xDestination -= pointWithMaxDistance.x() - scanningResult.cell.center.x();
 			yDestination -= pointWithMaxDistance.y() - scanningResult.cell.center.y();
 		}
-		if (cellX > environment.field.size().width() / 2) {
-			double distanceToWall = environment.field.size().width() - cellX;
+		if (cellX > environment->field().size().width() / 2) {
+			double distanceToWall = environment->field().size().width() - cellX;
 			if (distanceToWall < maxDistance / 2) xDestination = cellX;
 		} else {
 			if (cellX < maxDistance / 2) xDestination = cellX;
 		}
-		if (cellY > environment.field.size().height() / 2) {
-			double distanceToWall = environment.field.size().height() - cellY;
+		if (cellY > environment->field().size().height() / 2) {
+			double distanceToWall = environment->field().size().height() - cellY;
 			if (distanceToWall < maxDistance / 2) yDestination = cellY;
 		} else {
 			if (cellY < maxDistance / 2) yDestination = cellY;

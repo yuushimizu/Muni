@@ -17,7 +17,7 @@
 	for (int i = -1; i < _intervalFrames; ++i) [_positionsOfTarget addObject:firstPosition];
 }
 
-- (void)sendFrameWithCell:(id<MNCell>)cell withTarget:(id<MNCell>)target withEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell withTarget:(id<MNCell>)target withEnvironment:(muni::Environment *)environment {
 	const juiz::Point nextPosition = juiz::pointFromCGPoint([[_positionsOfTarget objectAtIndex:0] CGPointValue]);
 	if (target.center != nextPosition) {
 		[_positionsOfTarget removeObjectAtIndex:_intervalFrames];

@@ -16,8 +16,8 @@ namespace juiz {
 			const double y() const;
 			const double y(const double y);
 		};
-		const bool operator ==(const PointInterval &lhs, const PointInterval &rhs);
-		const bool operator !=(const PointInterval &lhs, const PointInterval &rhs);
+		const bool operator==(const PointInterval &lhs, const PointInterval &rhs);
+		const bool operator!=(const PointInterval &lhs, const PointInterval &rhs);
 		const double angle_of_point_interval(const PointInterval &point_interval);
 		const double distance_of_point_interval(const PointInterval &point_interval);
 	}

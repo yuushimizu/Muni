@@ -16,23 +16,16 @@
 		CA89371A16645D24003E855C /* libJuiz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA89370116645D23003E855C /* libJuiz.a */; };
 		CA89372016645D24003E855C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CA89371E16645D24003E855C /* InfoPlist.strings */; };
 		CA89372316645D24003E855C /* JuizTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CA89372216645D24003E855C /* JuizTests.m */; };
-		CA89376916646B85003E855C /* dSFMT.c in Sources */ = {isa = PBXBuildFile; fileRef = CA89376616646B85003E855C /* dSFMT.c */; };
-		CA89376A16646B85003E855C /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = CA89376816646B85003E855C /* test.c */; };
-		CA89376E166470D2003E855C /* RandomTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA89376D166470D2003E855C /* RandomTest.mm */; };
 		CA8937831664B484003E855C /* PointTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA8937821664B484003E855C /* PointTest.mm */; };
 		CA89378C1666C258003E855C /* PointIntervalTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA89378B1666C258003E855C /* PointIntervalTest.mm */; };
 		CA89378F1666CC63003E855C /* VectorTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA89378E1666CC63003E855C /* VectorTest.mm */; };
 		CA89379816681EC3003E855C /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379216681EC3003E855C /* Vector.cpp */; };
 		CA89379916681EC3003E855C /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379416681EC3003E855C /* Point.cpp */; };
 		CA89379A16681EC3003E855C /* PointInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379616681EC3003E855C /* PointInterval.cpp */; };
-		CA89379D16681ED2003E855C /* MersenneTwister.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379B16681ED2003E855C /* MersenneTwister.cpp */; };
-		CA90EE961672004D00D2AA99 /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA90EE941672004D00D2AA99 /* random.cpp */; };
 		CA90EE9A1672028500D2AA99 /* coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA90EE981672028500D2AA99 /* coordinate.cpp */; };
-		CACAD3DA167A4D8600CB51FC /* dSFMT.c in Sources */ = {isa = PBXBuildFile; fileRef = CA89376616646B85003E855C /* dSFMT.c */; };
 		CACAD3DC167A4D8A00CB51FC /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379216681EC3003E855C /* Vector.cpp */; };
 		CACAD3DD167A4D8E00CB51FC /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379416681EC3003E855C /* Point.cpp */; };
 		CACAD3DE167A4D9100CB51FC /* PointInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379616681EC3003E855C /* PointInterval.cpp */; };
-		CACAD3DF167A4D9500CB51FC /* MersenneTwister.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379B16681ED2003E855C /* MersenneTwister.cpp */; };
 		CACAD3E4167A4E3400CB51FC /* include in Resources */ = {isa = PBXBuildFile; fileRef = CACAD3E3167A4E3400CB51FC /* include */; };
 		CACAD3E7167A4FD500CB51FC /* Size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CACAD3E6167A4FD500CB51FC /* Size.cpp */; };
 		CACAD3EA167A4FF700CB51FC /* coordinate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CACAD3E9167A4FF700CB51FC /* coordinate.mm */; };
@@ -40,7 +33,6 @@
 		CACAD3F0167A505900CB51FC /* SizeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CACAD3EE167A505800CB51FC /* SizeTest.mm */; };
 		CACAD3F1167A508100CB51FC /* coordinate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CACAD3E9167A4FF700CB51FC /* coordinate.mm */; };
 		CACAD3F2167A508500CB51FC /* Size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CACAD3E6167A4FD500CB51FC /* Size.cpp */; };
-		CACAD3F3167A508B00CB51FC /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA90EE941672004D00D2AA99 /* random.cpp */; };
 		CACAD3F4167A508B00CB51FC /* coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA90EE981672028500D2AA99 /* coordinate.cpp */; };
 /* End PBXBuildFile section */
 
@@ -81,23 +73,6 @@
 		CA89371F16645D24003E855C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CA89372116645D24003E855C /* JuizTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JuizTests.h; sourceTree = "<group>"; };
 		CA89372216645D24003E855C /* JuizTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JuizTests.m; sourceTree = "<group>"; };
-		CA89375A16646B85003E855C /* dSFMT-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-common.h"; path = "Externals/dSFMT/dSFMT-common.h"; sourceTree = "<group>"; };
-		CA89375B16646B85003E855C /* dSFMT-params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params.h"; path = "Externals/dSFMT/dSFMT-params.h"; sourceTree = "<group>"; };
-		CA89375C16646B85003E855C /* dSFMT-params521.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params521.h"; path = "Externals/dSFMT/dSFMT-params521.h"; sourceTree = "<group>"; };
-		CA89375D16646B85003E855C /* dSFMT-params1279.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params1279.h"; path = "Externals/dSFMT/dSFMT-params1279.h"; sourceTree = "<group>"; };
-		CA89375E16646B85003E855C /* dSFMT-params2203.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params2203.h"; path = "Externals/dSFMT/dSFMT-params2203.h"; sourceTree = "<group>"; };
-		CA89375F16646B85003E855C /* dSFMT-params4253.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params4253.h"; path = "Externals/dSFMT/dSFMT-params4253.h"; sourceTree = "<group>"; };
-		CA89376016646B85003E855C /* dSFMT-params11213.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params11213.h"; path = "Externals/dSFMT/dSFMT-params11213.h"; sourceTree = "<group>"; };
-		CA89376116646B85003E855C /* dSFMT-params19937.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params19937.h"; path = "Externals/dSFMT/dSFMT-params19937.h"; sourceTree = "<group>"; };
-		CA89376216646B85003E855C /* dSFMT-params44497.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params44497.h"; path = "Externals/dSFMT/dSFMT-params44497.h"; sourceTree = "<group>"; };
-		CA89376316646B85003E855C /* dSFMT-params86243.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params86243.h"; path = "Externals/dSFMT/dSFMT-params86243.h"; sourceTree = "<group>"; };
-		CA89376416646B85003E855C /* dSFMT-params132049.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params132049.h"; path = "Externals/dSFMT/dSFMT-params132049.h"; sourceTree = "<group>"; };
-		CA89376516646B85003E855C /* dSFMT-params216091.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dSFMT-params216091.h"; path = "Externals/dSFMT/dSFMT-params216091.h"; sourceTree = "<group>"; };
-		CA89376616646B85003E855C /* dSFMT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dSFMT.c; path = Externals/dSFMT/dSFMT.c; sourceTree = "<group>"; };
-		CA89376716646B85003E855C /* dSFMT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dSFMT.h; path = Externals/dSFMT/dSFMT.h; sourceTree = "<group>"; };
-		CA89376816646B85003E855C /* test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = test.c; path = Externals/dSFMT/test.c; sourceTree = "<group>"; };
-		CA89376C166470D2003E855C /* RandomTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomTest.h; sourceTree = "<group>"; };
-		CA89376D166470D2003E855C /* RandomTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RandomTest.mm; sourceTree = "<group>"; };
 		CA8937811664B483003E855C /* PointTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointTest.h; sourceTree = "<group>"; };
 		CA8937821664B484003E855C /* PointTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PointTest.mm; sourceTree = "<group>"; };
 		CA89378A1666C258003E855C /* PointIntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointIntervalTest.h; sourceTree = "<group>"; };
@@ -107,8 +82,6 @@
 		CA89379216681EC3003E855C /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vector.cpp; path = coordinate/Vector.cpp; sourceTree = "<group>"; };
 		CA89379416681EC3003E855C /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Point.cpp; path = coordinate/Point.cpp; sourceTree = "<group>"; };
 		CA89379616681EC3003E855C /* PointInterval.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PointInterval.cpp; path = coordinate/PointInterval.cpp; sourceTree = "<group>"; };
-		CA89379B16681ED2003E855C /* MersenneTwister.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MersenneTwister.cpp; path = random/MersenneTwister.cpp; sourceTree = "<group>"; };
-		CA90EE941672004D00D2AA99 /* random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random.cpp; sourceTree = "<group>"; };
 		CA90EE981672028500D2AA99 /* coordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coordinate.cpp; sourceTree = "<group>"; };
 		CACAD3E3167A4E3400CB51FC /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
 		CACAD3E6167A4FD500CB51FC /* Size.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Size.cpp; path = coordinate/Size.cpp; sourceTree = "<group>"; };
@@ -145,7 +118,6 @@
 		CA8936F616645D23003E855C = {
 			isa = PBXGroup;
 			children = (
-				CA89372F16645DC4003E855C /* Externals */,
 				CA89370616645D23003E855C /* Juiz */,
 				CA89371B16645D24003E855C /* JuizTests */,
 				CA89370316645D23003E855C /* Frameworks */,
@@ -178,9 +150,7 @@
 				CACAD3E8167A4FEB00CB51FC /* iOS */,
 				CACAD3E3167A4E3400CB51FC /* include */,
 				CA89379116680773003E855C /* coordinate */,
-				CA8937901668076C003E855C /* random */,
 				CA89370716645D23003E855C /* Supporting Files */,
-				CA90EE941672004D00D2AA99 /* random.cpp */,
 				CA90EE981672028500D2AA99 /* coordinate.cpp */,
 			);
 			path = Juiz;
@@ -204,8 +174,6 @@
 				CA89372116645D24003E855C /* JuizTests.h */,
 				CA89372216645D24003E855C /* JuizTests.m */,
 				CA89371C16645D24003E855C /* Supporting Files */,
-				CA89376C166470D2003E855C /* RandomTest.h */,
-				CA89376D166470D2003E855C /* RandomTest.mm */,
 				CA8937811664B483003E855C /* PointTest.h */,
 				CA8937821664B484003E855C /* PointTest.mm */,
 				CA89378A1666C258003E855C /* PointIntervalTest.h */,
@@ -227,44 +195,6 @@
 				CA89371E16645D24003E855C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		CA89372F16645DC4003E855C /* Externals */ = {
-			isa = PBXGroup;
-			children = (
-				CA89373116645DCA003E855C /* dSFMT */,
-			);
-			name = Externals;
-			sourceTree = "<group>";
-		};
-		CA89373116645DCA003E855C /* dSFMT */ = {
-			isa = PBXGroup;
-			children = (
-				CA89375A16646B85003E855C /* dSFMT-common.h */,
-				CA89375B16646B85003E855C /* dSFMT-params.h */,
-				CA89375C16646B85003E855C /* dSFMT-params521.h */,
-				CA89375D16646B85003E855C /* dSFMT-params1279.h */,
-				CA89375E16646B85003E855C /* dSFMT-params2203.h */,
-				CA89375F16646B85003E855C /* dSFMT-params4253.h */,
-				CA89376016646B85003E855C /* dSFMT-params11213.h */,
-				CA89376116646B85003E855C /* dSFMT-params19937.h */,
-				CA89376216646B85003E855C /* dSFMT-params44497.h */,
-				CA89376316646B85003E855C /* dSFMT-params86243.h */,
-				CA89376416646B85003E855C /* dSFMT-params132049.h */,
-				CA89376516646B85003E855C /* dSFMT-params216091.h */,
-				CA89376616646B85003E855C /* dSFMT.c */,
-				CA89376716646B85003E855C /* dSFMT.h */,
-				CA89376816646B85003E855C /* test.c */,
-			);
-			name = dSFMT;
-			sourceTree = "<group>";
-		};
-		CA8937901668076C003E855C /* random */ = {
-			isa = PBXGroup;
-			children = (
-				CA89379B16681ED2003E855C /* MersenneTwister.cpp */,
-			);
-			name = random;
 			sourceTree = "<group>";
 		};
 		CA89379116680773003E855C /* coordinate */ = {
@@ -385,12 +315,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CACAD3DF167A4D9500CB51FC /* MersenneTwister.cpp in Sources */,
 				CACAD3DE167A4D9100CB51FC /* PointInterval.cpp in Sources */,
 				CACAD3DD167A4D8E00CB51FC /* Point.cpp in Sources */,
 				CACAD3DC167A4D8A00CB51FC /* Vector.cpp in Sources */,
-				CACAD3DA167A4D8600CB51FC /* dSFMT.c in Sources */,
-				CA90EE961672004D00D2AA99 /* random.cpp in Sources */,
 				CA90EE9A1672028500D2AA99 /* coordinate.cpp in Sources */,
 				CACAD3E7167A4FD500CB51FC /* Size.cpp in Sources */,
 				CACAD3EA167A4FF700CB51FC /* coordinate.mm in Sources */,
@@ -401,21 +328,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CACAD3F3167A508B00CB51FC /* random.cpp in Sources */,
 				CACAD3F4167A508B00CB51FC /* coordinate.cpp in Sources */,
 				CACAD3F2167A508500CB51FC /* Size.cpp in Sources */,
 				CACAD3F1167A508100CB51FC /* coordinate.mm in Sources */,
 				CA89372316645D24003E855C /* JuizTests.m in Sources */,
-				CA89376916646B85003E855C /* dSFMT.c in Sources */,
-				CA89376A16646B85003E855C /* test.c in Sources */,
-				CA89376E166470D2003E855C /* RandomTest.mm in Sources */,
 				CA8937831664B484003E855C /* PointTest.mm in Sources */,
 				CA89378C1666C258003E855C /* PointIntervalTest.mm in Sources */,
 				CA89378F1666CC63003E855C /* VectorTest.mm in Sources */,
 				CA89379816681EC3003E855C /* Vector.cpp in Sources */,
 				CA89379916681EC3003E855C /* Point.cpp in Sources */,
 				CA89379A16681EC3003E855C /* PointInterval.cpp in Sources */,
-				CA89379D16681ED2003E855C /* MersenneTwister.cpp in Sources */,
 				CA6D70CC1676D99A00FEBFB6 /* CoordinateTest.mm in Sources */,
 				CA6D70D01676E4BD00FEBFB6 /* TestUtility.mm in Sources */,
 				CACAD3EF167A505900CB51FC /* iOSCoordinateTest.mm in Sources */,
@@ -466,12 +388,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					./Externals,
-					./Juiz/include,
-				);
+				HEADER_SEARCH_PATHS = ./Juiz/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				OTHER_CFLAGS = "-DDSFMT_MEXP=19937";
+				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -490,12 +409,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					./Externals,
-					./Juiz/include,
-				);
+				HEADER_SEARCH_PATHS = ./Juiz/include;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				OTHER_CFLAGS = "-DDSFMT_MEXP=19937";
+				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

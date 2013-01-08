@@ -10,7 +10,7 @@ namespace muni {
 		explicit CellFamily(const double value);
 		const double value() const;
 	};
-	const bool hostility(const CellFamily &cellFamily1, const CellFamily &cellFamily2);
+	const bool hostility(const CellFamily &cell_family_1, const CellFamily &cell_family_2);
 }
 
 #endif /* defined(__Muni__CellFamily__) */

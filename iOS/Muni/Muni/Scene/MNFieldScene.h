@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
+#import <memory>
 #import "juiz.h"
 #import "JZScene.h"
-#import "MNStandardEnvironment.h"
+#import "StandardEnvironment.h"
 #import "MNStandardCell.h"
 #import "Field.h"
 #import "MNGLResources.h"
@@ -12,7 +13,7 @@
 #define kMNMaxCells 100
 
 @interface MNFieldScene : NSObject<JZScene> {
-	MNStandardEnvironment *_environment;
+	std::shared_ptr<muni::StandardEnvironment> _environment;
 	MNGLResources *_resources;
 	JZGLSprite *_cellSprites[kMNMaxCells];
 	NSMutableArray *_effects;

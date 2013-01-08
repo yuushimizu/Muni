@@ -13,7 +13,7 @@
 	return self;
 }
 
-- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(muni::Environment *)environment {
 	if (_restCount <= 0 || MNRandomDouble(0, 1) >= _incidence) return;
 	if ([cell makeMoonWithDistance:_distance withRadianIncrease:_radianIncrease withEnvironment:environment]) {
 		_restCount -= 1;

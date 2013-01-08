@@ -12,7 +12,7 @@
 	return self;
 }
 
-- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(muni::Environment *)environment {
 	if (_generated || MNRandomDouble(0, 1) >= _incidence) return;
 	if ([cell makeTracerWithIntervalFrames:_intervalFrames withEnvironment:environment]) {
 		_generated = YES;

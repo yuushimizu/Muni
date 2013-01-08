@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "juiz.h"
 #import "MNCell.h"
-#import "MNEnvironment.h"
+#import "Environment.h"
 #import "CellFamily.h"
 #import "MNCellAction.h"
 #import "MNCellActionMultiply.h"
@@ -52,9 +52,9 @@
 @property (readonly) int maxBeat;
 @property (readonly) int beat;
 
-- (id)initByRandomWithEnvironment:(id<MNEnvironment>)environment;
-- (id)initByOther:(MNStandardCell *)other withEnvironment:(id<MNEnvironment>)environment;
-- (void)realMove:(id<MNEnvironment>)environment;
+- (id)initByRandomWithEnvironment:(muni::Environment *)environment;
+- (id)initByOther:(MNStandardCell *)other withEnvironment:(muni::Environment *)environment;
+- (void)realMove:(muni::Environment *)environment;
 - (void)moveForFix:(double)radian distance:(double)distance;
 
 @end

@@ -1,11 +1,3 @@
-//
-//  MNCellActionConditional.m
-//  Muni
-//
-//  Created by Yuu Shimizu on 10/4/12.
-//
-//
-
 #import "MNCellActionConditional.h"
 
 @implementation MNCellActionConditional
@@ -19,7 +11,7 @@
 	return self;
 }
 
-- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(id<MNEnvironment>)environment {
+- (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(muni::Environment *)environment {
 	[(_condition(cell) ? _trueAction : false) sendFrameWithCell:cell withEnvironment:environment];
 }
 

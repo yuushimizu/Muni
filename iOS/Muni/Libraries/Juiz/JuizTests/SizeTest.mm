@@ -1,8 +1,26 @@
 #import "SizeTest.h"
 
+#include <random>
+
 @implementation SizeTest
 
 - (void)testDefaultConstructor {
+	std::mt19937 random(0);
+	NSLog(@"========= random: %d", random());
+	NSLog(@"========= random: %d", random());
+	NSLog(@"========= random: %lf", std::bind(std::uniform_real_distribution<double>(0, 1), random)());
+	NSLog(@"========= random: %d", random());
+	NSLog(@"========= random: %d", random());
+	NSLog(@"========= random: %lf", std::bind(std::uniform_real_distribution<double>(0, 1), random)());
+	NSLog(@"========= random: %d", random());
+	/*
+	 2012-12-20 18:47:17.306 otest[90970:7803] ========= random: -1937831252
+	 2012-12-20 18:47:17.308 otest[90970:7803] ========= random: -1748719057
+	 2012-12-20 18:47:17.309 otest[90970:7803] ========= random: -1223252363
+	 2012-12-20 18:47:17.309 otest[90970:7803] ========= random: -668873536
+	 2012-12-20 18:47:17.310 otest[90970:7803] ========= random: -1706118333
+	 2012-12-20 18:47:17.311 otest[90970:7803] ========= random: -610118917
+	 */
 	STAssertEquals(0.0, juiz::Size().width(), @"");
 	STAssertEquals(0.0, juiz::Size().height(), @"");
 }
