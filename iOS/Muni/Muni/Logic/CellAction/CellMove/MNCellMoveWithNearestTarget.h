@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "MNCellAction.h"
 #import "MNCell.h"
-#import "MNCellScanningResult.h"
+#import "CellScanningResult.h"
 
 @interface MNCellMoveWithNearestTarget : MNCellAction {
 	BOOL (^_targetCondition)(id<MNCell> me, id<MNCell> other);

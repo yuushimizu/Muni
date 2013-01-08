@@ -8,7 +8,6 @@ namespace muni {
 	private:
 		juiz::Size size_;
 	public:
-		Field();
         explicit Field(const juiz::Size &size);
         const juiz::Size size() const;
 	};

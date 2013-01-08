@@ -1,12 +1,12 @@
 #ifndef __Muni__StandardEnvironment__
 #define __Muni__StandardEnvironment__
 
-#include "Environment.h"
-#include "Field.h"
-#include <vector>
-
+#import "Environment.h"
+#import "Field.h"
+#import <vector>
 #import "MNStandardCell.h"
 #import "MNSpatialIndex.h"
+#import "CellScanningResult.h"
 
 namespace muni {
 	class StandardEnvironment : public Environment {
@@ -28,7 +28,7 @@ namespace muni {
 		virtual const std::vector<id<MNCell> > cells() const;
 		virtual void send_frame();
 		virtual void add_cell(id<MNCell> cell);
-		virtual const std::vector<MNCellScanningResult *> cells_in_circle(const juiz::Point &center, const double radius, BOOL (^confition)(id<MNCell> other));
+		virtual const std::vector<muni::CellScanningResult> cells_in_circle(const juiz::Point &center, const double radius, BOOL (^confition)(id<MNCell> other));
 	};
 }
 

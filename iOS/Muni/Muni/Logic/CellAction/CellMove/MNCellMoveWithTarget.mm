@@ -4,10 +4,10 @@
 @implementation MNCellMoveWithTarget
 
 - (void)resetTargetWithCell:(id<MNCell>)cell Environment:(muni::Environment *)environment {
-	std::vector<MNCellScanningResult *> scanningResults = [cell scanCellsWithCondition:^(id<MNCell> candidate) {
+	std::vector<muni::CellScanningResult> scanningResults = [cell scanCellsWithCondition:^(id<MNCell> candidate) {
 		return _targetCondition(cell, candidate);
 	} withEnvironment:environment];
-	_target = scanningResults.size() > 0 ? scanningResults[0].cell : nil;
+	_target = scanningResults.size() > 0 ? scanningResults[0].cell() : nil;
 	if (_target) [self foundNewTarget:_target];
 }
 

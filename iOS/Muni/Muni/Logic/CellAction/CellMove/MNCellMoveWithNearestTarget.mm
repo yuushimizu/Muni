@@ -11,10 +11,10 @@
 }
 
 - (id<MNCell>)searchNearestTargetWithCell:(id<MNCell>)cell withEnvironment:(muni::Environment *)environment {
-	std::vector<MNCellScanningResult *> scanningResults = [cell scanCellsWithCondition:^(id<MNCell> candidate) {
+	std::vector<muni::CellScanningResult> scanningResults = [cell scanCellsWithCondition:^(id<MNCell> candidate) {
 		return _targetCondition(cell, candidate);
 	} withEnvironment:environment];
-	return scanningResults.size() > 0 ? scanningResults[0].cell : nil;
+	return scanningResults.size() > 0 ? scanningResults[0].cell() : nil;
 }
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withTarget:(id<MNCell>)target withEnvironment:(muni::Environment *)environment {

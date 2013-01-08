@@ -3,6 +3,7 @@
 #import "juiz.h"
 #import "CellFamily.h"
 #import "Environment.h"
+#import "CellScanningResult.h"
 
 #define kMNCellTypeCount 50
 
@@ -33,7 +34,7 @@
 - (void)moveTowards:(const juiz::Point &)point;
 - (void)rotateFor:(double)radian;
 - (void)rotateTowards:(const juiz::Point &)point;
-- (const std::vector<MNCellScanningResult *>)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(muni::Environment *)environment;
+- (const std::vector<muni::CellScanningResult>)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(muni::Environment *)environment;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;
 - (void)heal:(double)energy;

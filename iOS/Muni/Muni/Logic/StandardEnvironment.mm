@@ -23,7 +23,7 @@ namespace muni {
 	}
 	
 	void StandardEnvironment::add_cells_from_queue() {
-		for (id<MNCell> cell : this->added_cells_queue_) {
+		for (auto cell : this->added_cells_queue_) {
 			if (cells_.size() >= max_cell_count_) break;
 			const double cell_radius = cell.radius;
 			std::vector<id<MNCell> >::iterator iter;
@@ -34,16 +34,16 @@ namespace muni {
 		this->added_cells_queue_.clear();
 	}
 
-	const std::vector<MNCellScanningResult *> StandardEnvironment::cells_in_circle(const juiz::Point &center, const double radius, BOOL (^condition)(id<MNCell> other)) {
-		std::vector<MNCellScanningResult *> scanning_results;
+	const std::vector<muni::CellScanningResult> StandardEnvironment::cells_in_circle(const juiz::Point &center, const double radius, BOOL (^condition)(id<MNCell> other)) {
+		std::vector<muni::CellScanningResult> scanning_results;
 		for (id<MNCell> candidate in [this->spatial_index_ objectsForRect:CGRectMake(center.x() - radius, center.y() - radius, radius * 2, radius * 2)]) {
 			if (candidate.living) {
 				double distance_from_center = juiz::distance_of_point_interval(juiz::point_interval_of_points(center, candidate.center));
 				if (distance_from_center - candidate.radius <= radius && (condition == nil || condition(candidate))) {
 					double distance = distance_from_center - candidate.radius;
-					std::vector<MNCellScanningResult *>::iterator iter;
-					for (iter = scanning_results.begin(); iter != scanning_results.end() && (*iter).distance <= distance; ++iter);
-					scanning_results.insert(iter, [[MNCellScanningResult alloc] initWithCell:candidate withDistance: distance]);
+					std::vector<muni::CellScanningResult>::iterator iter;
+					for (iter = scanning_results.begin(); iter != scanning_results.end() && (*iter).distance() <= distance; ++iter);
+					scanning_results.insert(iter, muni::CellScanningResult(candidate, distance));
 				}
 			}
 		}
@@ -64,16 +64,16 @@ namespace muni {
 	}
 
 	void StandardEnvironment::apply_cells_dying() {
-		for (id<MNCell> dead_cell : this->cells_) {
+		for (auto dead_cell : this->cells_) {
 			if (!dead_cell.living) {
 				double total_heal_energy = dead_cell.maxEnergy * 0.5;
-				std::vector<MNCellScanningResult *> heal_target_scanning_results = this->cells_in_circle(dead_cell.center, dead_cell.radius * 3, ^(id<MNCell> cell){return (BOOL) (dead_cell != cell && [cell hostility:dead_cell]);});
+				std::vector<muni::CellScanningResult> heal_target_scanning_results = this->cells_in_circle(dead_cell.center, dead_cell.radius * 3, ^(id<MNCell> cell){return (BOOL) (dead_cell != cell && [cell hostility:dead_cell]);});
 				double total_distance = 0;
-				for (MNCellScanningResult *scanning_result : heal_target_scanning_results) {
-					total_distance += scanning_result.distance;
+				for (auto scanning_result : heal_target_scanning_results) {
+					total_distance += scanning_result.distance();
 				}
-				for (MNCellScanningResult *scanning_result : heal_target_scanning_results) {
-					[scanning_result.cell heal:total_heal_energy * MIN(scanning_result.distance / total_distance, 0.5)];
+				for (auto scanning_result : heal_target_scanning_results) {
+					[scanning_result.cell() heal:total_heal_energy * MIN(scanning_result.distance() / total_distance, 0.5)];
 				}
 			}
 		}
@@ -128,10 +128,10 @@ namespace muni {
 	
 	void StandardEnvironment::send_frame() {
 		this->remove_dead_cells();
-		for (id<MNCell> cell : this->cells_) [cell sendFrameWithEnvironment:this];
+		for (auto cell : this->cells_) [cell sendFrameWithEnvironment:this];
 		this->apply_cells_hitting();
 		this->apply_cells_dying();
-		for (id<MNCell> cell : this->cells_) {
+		for (auto cell : this->cells_) {
 			[(MNStandardCell *) cell realMove:this];
 			this->update_spatial_index_for(cell);
 		}

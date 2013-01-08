@@ -41,7 +41,7 @@ static int randomType() {
 	return 0.5 + MNRandomDouble(0, 2) * MNRandomDouble(0, 2);
 }
 
-- (const muni::CellFamily)randomFamily {
+- (muni::CellFamily)randomFamily {
 	return muni::CellFamily(MNRandomDouble(0, 1));
 }
 
@@ -360,7 +360,7 @@ static int randomType() {
 	return _energy > 0;
 }
 
-- (const std::vector<MNCellScanningResult *>)scanCellsWithCondition:(BOOL (^)(id<MNCell>))condition withEnvironment:(muni::Environment *)environment {
+- (const std::vector<muni::CellScanningResult>)scanCellsWithCondition:(BOOL (^)(id<MNCell>))condition withEnvironment:(muni::Environment *)environment {
 	return environment->cells_in_circle(_center, _sight + self.radius, condition);
 }
 

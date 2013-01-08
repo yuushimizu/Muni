@@ -2,12 +2,12 @@
 #define __Muni__Environment__
 
 #import <Foundation/Foundation.h>
-#include <vector>
-#include "juiz.h"
-#include "Field.h"
+#import <vector>
+#import "juiz.h"
+#import "Field.h"
+#import "CellScanningResult.h"
 
 @protocol MNCell;
-@class MNCellScanningResult;
 
 namespace muni {
 	class Environment {
@@ -16,7 +16,7 @@ namespace muni {
 		virtual const std::vector<id<MNCell> > cells() const = 0;
 		virtual void send_frame() = 0;
 		virtual void add_cell(id<MNCell> cell) = 0;
-		virtual const std::vector<MNCellScanningResult *> cells_in_circle(const juiz::Point &center, const double radius, BOOL (^confition)(id<MNCell> other)) = 0;
+		virtual const std::vector<CellScanningResult> cells_in_circle(const juiz::Point &center, const double radius, BOOL (^confition)(id<MNCell> other)) = 0;
 	};
 }
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.mm */; };
+		CA02DC7F15C261BA0070B1F5 /* CellScanningResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC7E15C261B90070B1F5 /* CellScanningResult.mm */; };
 		CA02DC8715C423D80070B1F5 /* MNCellAction.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC8615C423D80070B1F5 /* MNCellAction.mm */; };
 		CA02DC8E15C458B80070B1F5 /* MNCellActionMultiply.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC8D15C458B80070B1F5 /* MNCellActionMultiply.mm */; };
 		CA02DC9A15C47FE20070B1F5 /* MNCellMoveImmovable.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9215C47FE20070B1F5 /* MNCellMoveImmovable.mm */; };
@@ -143,8 +143,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellScanningResult.h; path = Logic/MNCellScanningResult.h; sourceTree = "<group>"; };
-		CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNCellScanningResult.mm; path = Logic/MNCellScanningResult.mm; sourceTree = "<group>"; };
+		CA02DC7D15C261B90070B1F5 /* CellScanningResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellScanningResult.h; path = Logic/CellScanningResult.h; sourceTree = "<group>"; };
+		CA02DC7E15C261B90070B1F5 /* CellScanningResult.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CellScanningResult.mm; path = Logic/CellScanningResult.mm; sourceTree = "<group>"; };
 		CA02DC8515C423D80070B1F5 /* MNCellAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNCellAction.h; path = Logic/CellAction/MNCellAction.h; sourceTree = "<group>"; };
 		CA02DC8615C423D80070B1F5 /* MNCellAction.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNCellAction.mm; path = Logic/CellAction/MNCellAction.mm; sourceTree = "<group>"; };
 		CA02DC8B15C44E8B0070B1F5 /* MNCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MNCell.h; path = Logic/MNCell.h; sourceTree = "<group>"; };
@@ -456,8 +456,8 @@
 				CAA99D8A15C1B4C3002B85D2 /* Environment.h */,
 				CAF4F98015C20D790018353B /* CellFamily.h */,
 				CAF4F98115C20D790018353B /* CellFamily.mm */,
-				CA02DC7D15C261B90070B1F5 /* MNCellScanningResult.h */,
-				CA02DC7E15C261B90070B1F5 /* MNCellScanningResult.mm */,
+				CA02DC7D15C261B90070B1F5 /* CellScanningResult.h */,
+				CA02DC7E15C261B90070B1F5 /* CellScanningResult.mm */,
 				CA02DC8B15C44E8B0070B1F5 /* MNCell.h */,
 			);
 			name = Logic;
@@ -839,7 +839,7 @@
 				CAA99D8915C1AFD1002B85D2 /* StandardEnvironment.mm in Sources */,
 				CAF4F96415C1BCE30018353B /* MNSpatialIndex.mm in Sources */,
 				CAF4F98215C20D7A0018353B /* CellFamily.mm in Sources */,
-				CA02DC7F15C261BA0070B1F5 /* MNCellScanningResult.mm in Sources */,
+				CA02DC7F15C261BA0070B1F5 /* CellScanningResult.mm in Sources */,
 				CA02DC8715C423D80070B1F5 /* MNCellAction.mm in Sources */,
 				CA02DC8E15C458B80070B1F5 /* MNCellActionMultiply.mm in Sources */,
 				CA2C3D3515CA5F21003E1299 /* MNCellMoveWithNearestTarget.mm in Sources */,
