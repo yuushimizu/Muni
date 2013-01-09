@@ -2,10 +2,10 @@
 
 namespace juiz {
 	namespace coordinate {
-		Size::Size() : width_(0), height_(0) {
+		Size::Size(const double width, const double height) : width_(width), height_(height) {
 		}
 		
-		Size::Size(const double width, const double height) : width_(width), height_(height) {
+		Size::Size() : Size(0, 0) {
 		}
 		
 		const double Size::width() const {

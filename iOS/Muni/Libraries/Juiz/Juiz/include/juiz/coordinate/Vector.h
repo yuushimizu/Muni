@@ -9,8 +9,8 @@ namespace juiz {
 			double direction_;
 			double magnitude_;
 		public:
-			Vector();
 			Vector(const double direction, const double magnitude);
+			Vector();
 			const double direction() const;
 			const double direction(const double direction);
 			const double magnitude() const;

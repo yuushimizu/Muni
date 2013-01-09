@@ -8,8 +8,8 @@ namespace juiz {
 			double x_;
 			double y_;
 		public:
-			Point();
 			Point(const double x, const double y);
+			Point();
 			const double x() const;
 			const double x(const double x);
 			const double y() const;

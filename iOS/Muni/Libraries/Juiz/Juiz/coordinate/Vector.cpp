@@ -4,10 +4,10 @@
 
 namespace juiz {
 	namespace coordinate {
-		Vector::Vector() : direction_(0), magnitude_(0) {
+		Vector::Vector(const double direction, const double magnitude) : direction_(direction), magnitude_(magnitude) {
 		}
 		
-		Vector::Vector(const double direction, const double magnitude) : direction_(direction), magnitude_(magnitude) {
+		Vector::Vector() : Vector(0, 0) {
 		}
 		
 		const double Vector::direction() const {

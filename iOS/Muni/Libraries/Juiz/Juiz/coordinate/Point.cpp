@@ -2,12 +2,12 @@
 
 namespace juiz {
 	namespace coordinate {
-		Point::Point() : x_(0), y_(0) {
-		}
-		
 		Point::Point(const double x, const double y) : x_(x), y_(y) {
 		}
 	
+		Point::Point() : Point(0, 0) {
+		}
+		
 		const double Point::x() const {
 			return this->x_;
 		}

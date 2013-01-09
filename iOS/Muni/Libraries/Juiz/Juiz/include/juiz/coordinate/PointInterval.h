@@ -9,8 +9,8 @@ namespace juiz {
 			double x_;
 			double y_;
 		public:
-			PointInterval();
 			PointInterval(const double x, const double y);
+			PointInterval();
 			const double x() const;
 			const double x(const double x);
 			const double y() const;

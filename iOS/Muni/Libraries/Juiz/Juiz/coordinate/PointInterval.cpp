@@ -3,10 +3,10 @@
 
 namespace juiz {
 	namespace coordinate {
-		PointInterval::PointInterval() : x_(0), y_(0) {
+		PointInterval::PointInterval(const double x, const double y) : x_(x), y_(y) {
 		}
 		
-		PointInterval::PointInterval(const double x, const double y) : x_(x), y_(y) {
+		PointInterval::PointInterval() : PointInterval(0, 0) {
 		}
 		
 		const double PointInterval::x() const {

@@ -8,8 +8,8 @@ namespace juiz {
 			double width_;
 			double height_;
 		public:
-			Size();
 			Size(const double width, const double height);
+			Size();
 			const double width() const;
 			const double width(const double width);
 			const double height() const;
