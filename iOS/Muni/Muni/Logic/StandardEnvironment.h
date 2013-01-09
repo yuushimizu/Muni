@@ -5,7 +5,7 @@
 #import "Field.h"
 #import <vector>
 #import "MNStandardCell.h"
-#import "MNSpatialIndex.h"
+#import "SpatialIndex.h"
 #import "CellScanningResult.h"
 
 namespace muni {
@@ -16,7 +16,7 @@ namespace muni {
 		const int max_cell_count_;
 		std::vector<id<MNCell> > added_cells_queue_;
 		const double incidence_;
-		MNSpatialIndex *spatial_index_;
+		muni::SpatialIndex<id<MNCell> > spatial_index_;
 		void update_spatial_index_for(id<MNCell> cell);
 		void add_cells_from_queue();
 		void remove_dead_cells();

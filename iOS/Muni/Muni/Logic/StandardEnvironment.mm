@@ -2,7 +2,7 @@
 #import "JZUtility.h"
 
 namespace muni {
-	StandardEnvironment::StandardEnvironment(const juiz::Size &size, const int max_cell_count) : field_(size), cells_(), max_cell_count_(max_cell_count), added_cells_queue_(), incidence_(0.07 * (size.width() * size.height()) / (480.0 * 320.0)), spatial_index_([[MNSpatialIndex alloc] initWithTotalSize:size withBlockCount:juiz::Size(16, 16)]) {
+	StandardEnvironment::StandardEnvironment(const juiz::Size &size, const int max_cell_count) : field_(size), cells_(), max_cell_count_(max_cell_count), added_cells_queue_(), incidence_(0.07 * (size.width() * size.height()) / (480.0 * 320.0)), spatial_index_(muni::spatial_index_from_total_size_and_block_count<id<MNCell> >(size, juiz::Size(16, 16))) {
 	}
 	
 	const Field StandardEnvironment::field() const {
@@ -15,7 +15,7 @@ namespace muni {
 	
 	void StandardEnvironment::update_spatial_index_for(id<MNCell> cell) {
 		const double radius = cell.radius;
-		[this->spatial_index_ addOrUpdateObject:cell withRect:CGRectMake(cell.center.x() - radius, cell.center.y() - radius, radius * 2, radius * 2)];
+		this->spatial_index_.add_or_update_object(cell, CGRectMake(cell.center.x() - radius, cell.center.y() - radius, radius * 2, radius * 2));
 	}
 	
 	void StandardEnvironment::add_cell(id<MNCell> cell) {
@@ -36,7 +36,7 @@ namespace muni {
 
 	const std::vector<muni::CellScanningResult> StandardEnvironment::cells_in_circle(const juiz::Point &center, const double radius, BOOL (^condition)(id<MNCell> other)) {
 		std::vector<muni::CellScanningResult> scanning_results;
-		for (id<MNCell> candidate in [this->spatial_index_ objectsForRect:CGRectMake(center.x() - radius, center.y() - radius, radius * 2, radius * 2)]) {
+		for (id<MNCell> candidate : this->spatial_index_.objects_for_rect(CGRectMake(center.x() - radius, center.y() - radius, radius * 2, radius * 2))) {
 			if (candidate.living) {
 				double distance_from_center = juiz::distance_of_point_interval(juiz::point_interval_of_points(center, candidate.center));
 				if (distance_from_center - candidate.radius <= radius && (condition == nil || condition(candidate))) {
@@ -55,7 +55,7 @@ namespace muni {
 		while (iter != this->cells_.end()) {
 			id<MNCell> cell = *iter;
 			if (!cell.living) {
-				[this->spatial_index_ removeObject:cell];
+				this->spatial_index_.remove_object(cell);
 				iter = this->cells_.erase(iter);
 			} else {
 				++iter;
@@ -80,9 +80,9 @@ namespace muni {
 	}
 
 	void StandardEnvironment::apply_cells_hitting() {
-		NSArray *collisions = [this->spatial_index_ collisions];
+		const std::vector<id<MNCell> > collisions = this->spatial_index_.collisions();
 		MNStandardCell *cell1 = nil;
-		for (MNStandardCell *cell in collisions) {
+		for (MNStandardCell *cell : collisions) {
 			if (cell1 == nil) {
 				cell1 = cell;
 				continue;
