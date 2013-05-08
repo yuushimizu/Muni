@@ -1,5 +1,5 @@
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface SizeTest : SenTestCase
+@interface UtilitiesTest : SenTestCase
 
 @end

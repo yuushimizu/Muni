@@ -161,17 +161,17 @@ static int randomType() {
 - (void)fixPositionWithEnvironment:(muni::Environment *)environment {
 	double radius = self.radius;
 	if (_center.x() < radius) {
-		_center.x(radius);
+		_center = juiz::Point(radius, _center.y());
 		_movingRadian = -_movingRadian;
 	} else if (_center.x() > environment->field().size().width() - radius) {
-		_center.x(environment->field().size().width() - radius);
+		_center = juiz::Point(environment->field().size().width() - radius, _center.y());
 		_movingRadian = -_movingRadian;
 	}
 	if (_center.y() < radius) {
-		_center.y(radius);
+		_center = juiz::Point(_center.x(), radius);
 		_movingRadian = -M_PI - _movingRadian;
 	} else if (_center.y() > environment->field().size().height() - radius) {
-		_center.y(environment->field().size().height() - radius);
+		_center = juiz::Point(_center.x(), environment->field().size().height() - radius);
 		_movingRadian = -M_PI - _movingRadian;
 	}
 }
@@ -184,15 +184,17 @@ static int randomType() {
 
 - (void)moveFor:(double)radian withForce:(double)force {
 	const juiz::Point pointMoved(_center.x() + ((sin(_movingRadian) * _movingSpeed) + (sin(radian) * force)), _center.y() + ((cos(_movingRadian) * _movingSpeed) + (cos(radian) * force)));
-	_movingSpeed = JZDistanceOfPoints(_center, pointMoved);
-	_movingRadian = JZRadianFromPoints(_center, pointMoved);
+	const juiz::Vector move_vector = juiz::vector(_center, pointMoved);
+	_movingSpeed = move_vector.magnitude();
+	_movingRadian = move_vector.direction().clockwise_angle_with_above();
 
 }
 
 - (void)moveFor:(double)radian withTargetSpeed:(double)targetSpeed {
 	const juiz::Point movingPoint = JZMovedPoint(_center, _movingRadian, _movingSpeed);
 	const juiz::Point targetPoint = JZMovedPoint(_center, radian, targetSpeed);
-	[self moveFor:JZRadianFromPoints(movingPoint, targetPoint) withForce:MIN(JZDistanceOfPoints(movingPoint, targetPoint), _speed * 0.2 * (1 - _density))];
+	const juiz::Vector move_vector = juiz::vector(movingPoint, targetPoint);
+	[self moveFor:move_vector.direction().clockwise_angle_with_above() withForce:MIN(move_vector.magnitude(), _speed * 0.2 * (1 - _density))];
 }
 
 - (void)moveFor:(double)radian {
@@ -213,8 +215,9 @@ static int randomType() {
 
 - (void)moveForFix:(double)radian distance:(double)distance {
 	const juiz::Point pointMoved(_center.x() + ((sin(_radianForFix) * _distanceForFix) + (sin(radian) * distance)), _center.y() + ((cos(_radianForFix) * _distanceForFix) + (cos(radian) * distance)));
-	_distanceForFix = JZDistanceOfPoints(_center, pointMoved);
-	_radianForFix = JZRadianFromPoints(_center, pointMoved);
+	const juiz::Vector vector_for_move = juiz::vector(_center, pointMoved);
+	_distanceForFix = vector_for_move.magnitude();
+	_radianForFix = vector_for_move.direction().clockwise_angle_with_above();
 }
 
 - (void)rotateFor:(double)radian {

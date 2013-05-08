@@ -1,6 +1,5 @@
 #import "juiz.h"
 
-const double JZDistanceOfPoints(const juiz::Point &point1, const juiz::Point &point2);
 const double JZRadianFromPoints(const juiz::Point &start, const juiz::Point &destination);
 const juiz::Point JZManhattanDiffFromRadianAndDistance(double radian, double distance);
 const double JZRadianFromManhattanDiff(const juiz::Point &manhattanDiff);

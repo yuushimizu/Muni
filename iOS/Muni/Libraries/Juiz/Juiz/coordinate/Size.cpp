@@ -12,16 +12,8 @@ namespace juiz {
 			return this->width_;
 		}
 		
-		const double Size::width(const double width) {
-			return this->width_ = width;
-		}
-		
 		const double Size::height() const {
 			return this->height_;
-		}
-		
-		const double Size::height(const double height) {
-			return this->height_ = height;
 		}
 		
 		const bool operator==(const Size &lhs, const Size &rhs) {

@@ -1,4 +1,5 @@
 #import "PointTest.h"
+#import "TestUtility.h"
 
 @implementation PointTest
 
@@ -17,26 +18,20 @@
 	STAssertEquals(1.9, juiz::Point(3.1, 1.9).y(), @"");
 }
 
-- (void)testSetX {
-	juiz::Point point1(10.5, 3.44);
-	STAssertEquals(10.5, point1.x(), @"");
-	point1.x(18.77);
-	STAssertEquals(18.77, point1.x(), @"");
-	juiz::Point point2(8, 1);
-	STAssertEquals(8.0, point2.x(), @"");
-	point2.x(0.0);
-	STAssertEquals(0.0, point2.x(), @"");
+- (void)testCopyConstructor {
+	const juiz::Point point1(10.6, 30.8);
+	const juiz::Point point2 = point1;
+	STAssertEquals(juiz::Point(10.6, 30.8), point2, @"");
+	const juiz::Point point3 = juiz::Point(8.7, 9.9);
+	STAssertEquals(juiz::Point(8.7, 9.9), point3, @"");
 }
 
-- (void)testSetY {
-	juiz::Point point1(10.5, 3.44);
-	STAssertEquals(3.44, point1.y(), @"");
-	point1.y(19.12);
-	STAssertEquals(19.12, point1.y(), @"");
-	juiz::Point point2(8, 1);
-	STAssertEquals(1.0, point2.y(), @"");
-	point2.y(0.0);
-	STAssertEquals(0.0, point2.y(), @"");
+- (void)testOperatorAssign {
+	juiz::Point point(5, 6);
+	point = juiz::Point(10, 40);
+	STAssertEquals(juiz::Point(10, 40), point, @"");
+	point = juiz::Point(93, 21);
+	STAssertEquals(juiz::Point(93, 21), point, @"");
 }
 
 - (void)testOperatorEqual {
@@ -55,22 +50,6 @@
 	STAssertTrue(juiz::Point(1, 2) != juiz::Point(2, 1), @"");
 	STAssertTrue(juiz::Point(30.5, 30.4) != juiz::Point(30.5, 19.1), @"");
 	STAssertTrue(juiz::Point(18.55, 21.32) != juiz::Point(18.2, 21.32), @"");
-}
-
-- (void)testCopy {
-	const juiz::Point point1(10.6, 30.8);
-	const juiz::Point point2 = point1;
-	STAssertEquals(juiz::Point(10.6, 30.8), point2, @"");
-	const juiz::Point point3 = juiz::Point(8.7, 9.9);
-	STAssertEquals(juiz::Point(8.7, 9.9), point3, @"");
-}
-
-- (void)testOperatorAssign {
-	juiz::Point point(5, 6);
-	point = juiz::Point(10, 40);
-	STAssertEquals(juiz::Point(10, 40), point, @"");
-	point = juiz::Point(93, 21);
-	STAssertEquals(juiz::Point(93, 21), point, @"");
 }
 
 @end

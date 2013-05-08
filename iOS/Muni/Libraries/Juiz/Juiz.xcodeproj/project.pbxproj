@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA6D70CC1676D99A00FEBFB6 /* CoordinateTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA6D70CB1676D99A00FEBFB6 /* CoordinateTest.mm */; };
 		CA6D70D01676E4BD00FEBFB6 /* TestUtility.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA6D70CF1676E4BD00FEBFB6 /* TestUtility.mm */; };
 		CA89370516645D23003E855C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA89370416645D23003E855C /* Foundation.framework */; };
 		CA89371416645D24003E855C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA89371316645D24003E855C /* SenTestingKit.framework */; };
@@ -15,17 +14,19 @@
 		CA89371716645D24003E855C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA89370416645D23003E855C /* Foundation.framework */; };
 		CA89371A16645D24003E855C /* libJuiz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA89370116645D23003E855C /* libJuiz.a */; };
 		CA89372016645D24003E855C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CA89371E16645D24003E855C /* InfoPlist.strings */; };
-		CA89372316645D24003E855C /* JuizTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CA89372216645D24003E855C /* JuizTests.m */; };
+		CA89372316645D24003E855C /* JuizTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA89372216645D24003E855C /* JuizTests.mm */; };
 		CA8937831664B484003E855C /* PointTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA8937821664B484003E855C /* PointTest.mm */; };
-		CA89378C1666C258003E855C /* PointIntervalTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA89378B1666C258003E855C /* PointIntervalTest.mm */; };
 		CA89378F1666CC63003E855C /* VectorTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA89378E1666CC63003E855C /* VectorTest.mm */; };
 		CA89379816681EC3003E855C /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379216681EC3003E855C /* Vector.cpp */; };
 		CA89379916681EC3003E855C /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379416681EC3003E855C /* Point.cpp */; };
-		CA89379A16681EC3003E855C /* PointInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379616681EC3003E855C /* PointInterval.cpp */; };
 		CA90EE9A1672028500D2AA99 /* coordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA90EE981672028500D2AA99 /* coordinate.cpp */; };
+		CA94E2F3171C75E10088B0EF /* CoordinateTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA94E2F2171C75E10088B0EF /* CoordinateTest.mm */; };
+		CA94E33A171D4B390088B0EF /* UtilitiesTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA94E339171D4B380088B0EF /* UtilitiesTest.mm */; };
+		CA9871D216A666EE009FC85A /* Direction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9871D116A666EE009FC85A /* Direction.cpp */; };
+		CA9871D516A7F436009FC85A /* utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9871D416A7F436009FC85A /* utilities.cpp */; };
+		CA9871D916AFEBA7009FC85A /* DirectionTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9871D816AFEBA7009FC85A /* DirectionTest.mm */; };
 		CACAD3DC167A4D8A00CB51FC /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379216681EC3003E855C /* Vector.cpp */; };
 		CACAD3DD167A4D8E00CB51FC /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379416681EC3003E855C /* Point.cpp */; };
-		CACAD3DE167A4D9100CB51FC /* PointInterval.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379616681EC3003E855C /* PointInterval.cpp */; };
 		CACAD3E4167A4E3400CB51FC /* include in Resources */ = {isa = PBXBuildFile; fileRef = CACAD3E3167A4E3400CB51FC /* include */; };
 		CACAD3E7167A4FD500CB51FC /* Size.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CACAD3E6167A4FD500CB51FC /* Size.cpp */; };
 		CACAD3EA167A4FF700CB51FC /* coordinate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CACAD3E9167A4FF700CB51FC /* coordinate.mm */; };
@@ -59,8 +60,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CA6D70CA1676D99A00FEBFB6 /* CoordinateTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateTest.h; sourceTree = "<group>"; };
-		CA6D70CB1676D99A00FEBFB6 /* CoordinateTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CoordinateTest.mm; sourceTree = "<group>"; };
 		CA6D70CE1676E4BD00FEBFB6 /* TestUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUtility.h; sourceTree = "<group>"; };
 		CA6D70CF1676E4BD00FEBFB6 /* TestUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestUtility.mm; sourceTree = "<group>"; };
 		CA89370116645D23003E855C /* libJuiz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJuiz.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,17 +71,22 @@
 		CA89371D16645D24003E855C /* JuizTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JuizTests-Info.plist"; sourceTree = "<group>"; };
 		CA89371F16645D24003E855C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CA89372116645D24003E855C /* JuizTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JuizTests.h; sourceTree = "<group>"; };
-		CA89372216645D24003E855C /* JuizTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JuizTests.m; sourceTree = "<group>"; };
+		CA89372216645D24003E855C /* JuizTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = JuizTests.mm; sourceTree = "<group>"; };
 		CA8937811664B483003E855C /* PointTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointTest.h; sourceTree = "<group>"; };
 		CA8937821664B484003E855C /* PointTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PointTest.mm; sourceTree = "<group>"; };
-		CA89378A1666C258003E855C /* PointIntervalTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointIntervalTest.h; sourceTree = "<group>"; };
-		CA89378B1666C258003E855C /* PointIntervalTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PointIntervalTest.mm; sourceTree = "<group>"; };
 		CA89378D1666CC63003E855C /* VectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorTest.h; sourceTree = "<group>"; };
 		CA89378E1666CC63003E855C /* VectorTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VectorTest.mm; sourceTree = "<group>"; };
 		CA89379216681EC3003E855C /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vector.cpp; path = coordinate/Vector.cpp; sourceTree = "<group>"; };
 		CA89379416681EC3003E855C /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Point.cpp; path = coordinate/Point.cpp; sourceTree = "<group>"; };
-		CA89379616681EC3003E855C /* PointInterval.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PointInterval.cpp; path = coordinate/PointInterval.cpp; sourceTree = "<group>"; };
 		CA90EE981672028500D2AA99 /* coordinate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coordinate.cpp; sourceTree = "<group>"; };
+		CA94E2F1171C75E10088B0EF /* CoordinateTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateTest.h; sourceTree = "<group>"; };
+		CA94E2F2171C75E10088B0EF /* CoordinateTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CoordinateTest.mm; sourceTree = "<group>"; };
+		CA94E338171D4B380088B0EF /* UtilitiesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilitiesTest.h; sourceTree = "<group>"; };
+		CA94E339171D4B380088B0EF /* UtilitiesTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UtilitiesTest.mm; sourceTree = "<group>"; };
+		CA9871D116A666EE009FC85A /* Direction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Direction.cpp; path = coordinate/Direction.cpp; sourceTree = "<group>"; };
+		CA9871D416A7F436009FC85A /* utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utilities.cpp; sourceTree = "<group>"; };
+		CA9871D716AFEBA7009FC85A /* DirectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionTest.h; sourceTree = "<group>"; };
+		CA9871D816AFEBA7009FC85A /* DirectionTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DirectionTest.mm; sourceTree = "<group>"; };
 		CACAD3E3167A4E3400CB51FC /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
 		CACAD3E6167A4FD500CB51FC /* Size.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Size.cpp; path = coordinate/Size.cpp; sourceTree = "<group>"; };
 		CACAD3E9167A4FF700CB51FC /* coordinate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = coordinate.mm; path = iOS/coordinate.mm; sourceTree = "<group>"; };
@@ -147,11 +151,11 @@
 		CA89370616645D23003E855C /* Juiz */ = {
 			isa = PBXGroup;
 			children = (
-				CACAD3E8167A4FEB00CB51FC /* iOS */,
-				CACAD3E3167A4E3400CB51FC /* include */,
 				CA89379116680773003E855C /* coordinate */,
-				CA89370716645D23003E855C /* Supporting Files */,
 				CA90EE981672028500D2AA99 /* coordinate.cpp */,
+				CACAD3E3167A4E3400CB51FC /* include */,
+				CACAD3E8167A4FEB00CB51FC /* iOS */,
+				CA89370716645D23003E855C /* Supporting Files */,
 			);
 			path = Juiz;
 			sourceTree = "<group>";
@@ -167,23 +171,25 @@
 		CA89371B16645D24003E855C /* JuizTests */ = {
 			isa = PBXGroup;
 			children = (
+				CA9871D716AFEBA7009FC85A /* DirectionTest.h */,
+				CA9871D816AFEBA7009FC85A /* DirectionTest.mm */,
 				CACAD3EB167A505800CB51FC /* iOSCoordinateTest.h */,
 				CACAD3EC167A505800CB51FC /* iOSCoordinateTest.mm */,
-				CACAD3ED167A505800CB51FC /* SizeTest.h */,
-				CACAD3EE167A505800CB51FC /* SizeTest.mm */,
 				CA89372116645D24003E855C /* JuizTests.h */,
-				CA89372216645D24003E855C /* JuizTests.m */,
-				CA89371C16645D24003E855C /* Supporting Files */,
+				CA89372216645D24003E855C /* JuizTests.mm */,
 				CA8937811664B483003E855C /* PointTest.h */,
 				CA8937821664B484003E855C /* PointTest.mm */,
-				CA89378A1666C258003E855C /* PointIntervalTest.h */,
-				CA89378B1666C258003E855C /* PointIntervalTest.mm */,
-				CA89378D1666CC63003E855C /* VectorTest.h */,
-				CA89378E1666CC63003E855C /* VectorTest.mm */,
-				CA6D70CA1676D99A00FEBFB6 /* CoordinateTest.h */,
-				CA6D70CB1676D99A00FEBFB6 /* CoordinateTest.mm */,
+				CACAD3ED167A505800CB51FC /* SizeTest.h */,
+				CACAD3EE167A505800CB51FC /* SizeTest.mm */,
+				CA89371C16645D24003E855C /* Supporting Files */,
 				CA6D70CE1676E4BD00FEBFB6 /* TestUtility.h */,
 				CA6D70CF1676E4BD00FEBFB6 /* TestUtility.mm */,
+				CA89378D1666CC63003E855C /* VectorTest.h */,
+				CA89378E1666CC63003E855C /* VectorTest.mm */,
+				CA94E2F1171C75E10088B0EF /* CoordinateTest.h */,
+				CA94E2F2171C75E10088B0EF /* CoordinateTest.mm */,
+				CA94E338171D4B380088B0EF /* UtilitiesTest.h */,
+				CA94E339171D4B380088B0EF /* UtilitiesTest.mm */,
 			);
 			path = JuizTests;
 			sourceTree = "<group>";
@@ -200,10 +206,11 @@
 		CA89379116680773003E855C /* coordinate */ = {
 			isa = PBXGroup;
 			children = (
-				CACAD3E6167A4FD500CB51FC /* Size.cpp */,
-				CA89379216681EC3003E855C /* Vector.cpp */,
+				CA9871D116A666EE009FC85A /* Direction.cpp */,
 				CA89379416681EC3003E855C /* Point.cpp */,
-				CA89379616681EC3003E855C /* PointInterval.cpp */,
+				CACAD3E6167A4FD500CB51FC /* Size.cpp */,
+				CA9871D416A7F436009FC85A /* utilities.cpp */,
+				CA89379216681EC3003E855C /* Vector.cpp */,
 			);
 			name = coordinate;
 			sourceTree = "<group>";
@@ -315,12 +322,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CACAD3DE167A4D9100CB51FC /* PointInterval.cpp in Sources */,
 				CACAD3DD167A4D8E00CB51FC /* Point.cpp in Sources */,
 				CACAD3DC167A4D8A00CB51FC /* Vector.cpp in Sources */,
 				CA90EE9A1672028500D2AA99 /* coordinate.cpp in Sources */,
 				CACAD3E7167A4FD500CB51FC /* Size.cpp in Sources */,
 				CACAD3EA167A4FF700CB51FC /* coordinate.mm in Sources */,
+				CA9871D216A666EE009FC85A /* Direction.cpp in Sources */,
+				CA9871D516A7F436009FC85A /* utilities.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,17 +339,17 @@
 				CACAD3F4167A508B00CB51FC /* coordinate.cpp in Sources */,
 				CACAD3F2167A508500CB51FC /* Size.cpp in Sources */,
 				CACAD3F1167A508100CB51FC /* coordinate.mm in Sources */,
-				CA89372316645D24003E855C /* JuizTests.m in Sources */,
+				CA89372316645D24003E855C /* JuizTests.mm in Sources */,
 				CA8937831664B484003E855C /* PointTest.mm in Sources */,
-				CA89378C1666C258003E855C /* PointIntervalTest.mm in Sources */,
 				CA89378F1666CC63003E855C /* VectorTest.mm in Sources */,
 				CA89379816681EC3003E855C /* Vector.cpp in Sources */,
 				CA89379916681EC3003E855C /* Point.cpp in Sources */,
-				CA89379A16681EC3003E855C /* PointInterval.cpp in Sources */,
-				CA6D70CC1676D99A00FEBFB6 /* CoordinateTest.mm in Sources */,
 				CA6D70D01676E4BD00FEBFB6 /* TestUtility.mm in Sources */,
 				CACAD3EF167A505900CB51FC /* iOSCoordinateTest.mm in Sources */,
 				CACAD3F0167A505900CB51FC /* SizeTest.mm in Sources */,
+				CA9871D916AFEBA7009FC85A /* DirectionTest.mm in Sources */,
+				CA94E2F3171C75E10088B0EF /* CoordinateTest.mm in Sources */,
+				CA94E33A171D4B390088B0EF /* UtilitiesTest.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

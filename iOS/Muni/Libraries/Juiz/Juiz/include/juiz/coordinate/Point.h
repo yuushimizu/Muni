@@ -11,13 +11,11 @@ namespace juiz {
 			Point(const double x, const double y);
 			Point();
 			const double x() const;
-			const double x(const double x);
 			const double y() const;
-			const double y(const double y);
 		};
 		const bool operator==(const Point &lhs, const Point &rhs);
 		const bool operator!=(const Point &lhs, const Point &rhs);
 	}
 }
 
-#endif /* defined(__Juiz__coordinate__Point__) */
+#endif

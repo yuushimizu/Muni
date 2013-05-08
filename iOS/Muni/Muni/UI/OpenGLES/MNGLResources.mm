@@ -50,10 +50,10 @@ static double maxLengthOfLineFromPointInPathArea(const juiz::Point &start, doubl
 	} else {
 		double xForMaxY = start.x() + angleSin * (angleCos > 0 ? kMNRandomCellTexturePathAreaMax - start.y() : start.y() - kMNRandomCellTexturePathAreaMin);
 		if ((angleCos > 0 && xForMaxY <= kMNRandomCellTexturePathAreaMax) || (angleCos < 0 && xForMaxY >= kMNRandomCellTexturePathAreaMin)) {
-			return JZDistanceOfPoints(start, juiz::Point(xForMaxY, angleCos > 0 ? kMNRandomCellTexturePathAreaMax : kMNRandomCellTexturePathAreaMin));
+			return juiz::vector(start, juiz::Point(xForMaxY, angleCos > 0 ? kMNRandomCellTexturePathAreaMax : kMNRandomCellTexturePathAreaMin)).magnitude();
 		} else {
 			double yForMaxX = start.y() + angleCos * (angleSin > 0 ? kMNRandomCellTexturePathAreaMax - start.x() : start.x() - kMNRandomCellTexturePathAreaMin);
-			return JZDistanceOfPoints(start, juiz::Point(angleSin > 0 ? kMNRandomCellTexturePathAreaMax : kMNRandomCellTexturePathAreaMin, yForMaxX));
+			return juiz::vector(start, juiz::Point(angleSin > 0 ? kMNRandomCellTexturePathAreaMax : kMNRandomCellTexturePathAreaMin, yForMaxX)).magnitude();
 		}
 	}
 }
@@ -86,7 +86,7 @@ static void addRandomPath(CGContextRef context) {
 		double angle = MNRandomRadian();
 		const juiz::Point point2 = JZMovedPoint(point1, angle, MNRandomDouble(0.1, 1) * maxLengthOfLineFromPointInPathArea(point1, angle));
 		const juiz::Point point3 = JZMovedPoint(point2, angle + M_PI_2, MNRandomDouble(0.1, 1) * MIN(maxLengthOfLineFromPointInPathArea(point1, angle + M_PI_2), maxLengthOfLineFromPointInPathArea(point2, angle + M_PI_2)));
-		const juiz::Point point4 = JZMovedPoint(point1, angle + M_PI_2, JZDistanceOfPoints(point2, point3));
+		const juiz::Point point4 = JZMovedPoint(point1, angle + M_PI_2, juiz::vector(point2, point3).magnitude());
 		CGContextMoveToPoint(context, point1.x(), point1.y());
 		CGContextAddLineToPoint(context, point2.x(), point2.y());
 		CGContextAddLineToPoint(context, point3.x(), point3.y());

@@ -38,7 +38,7 @@
 	_backgroundImageView.frame = self.view.frame;
 	[self.view addSubview:_backgroundImageView];
 	MNGLView *glView = [[MNGLView alloc] initWithFrame:self.view.frame];
-	_sceneDirector = [[MNSceneDirector alloc] initWithGLView:glView withSize:juiz::sizeFromCGSize(self.view.frame.size)];
+	_sceneDirector = [[MNSceneDirector alloc] initWithGLView:glView withSize:juiz::size(self.view.frame.size)];
 	[self.view addSubview:glView];
 	_menuView = [[MNMenuView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y , self.view.frame.size.width, self.view.frame.size.height) withDelegate:self];
 	[self.view addSubview:_menuView];

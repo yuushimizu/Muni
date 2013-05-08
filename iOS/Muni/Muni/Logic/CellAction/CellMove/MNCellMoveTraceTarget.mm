@@ -12,16 +12,16 @@
 }
 
 - (void)foundNewTarget:(id<MNCell>)target {
-	NSValue *firstPosition = [NSValue valueWithCGPoint:juiz::cgPointFromPoint(target.center)];
+	NSValue *firstPosition = [NSValue valueWithCGPoint:juiz::cgPoint(target.center)];
 	[_positionsOfTarget removeAllObjects];
 	for (int i = -1; i < _intervalFrames; ++i) [_positionsOfTarget addObject:firstPosition];
 }
 
 - (void)sendFrameWithCell:(id<MNCell>)cell withTarget:(id<MNCell>)target withEnvironment:(muni::Environment *)environment {
-	const juiz::Point nextPosition = juiz::pointFromCGPoint([[_positionsOfTarget objectAtIndex:0] CGPointValue]);
+	const juiz::Point nextPosition = juiz::point([[_positionsOfTarget objectAtIndex:0] CGPointValue]);
 	if (target.center != nextPosition) {
 		[_positionsOfTarget removeObjectAtIndex:_intervalFrames];
-		[_positionsOfTarget insertObject:[NSValue valueWithCGPoint:juiz::cgPointFromPoint(target.center)] atIndex:0];
+		[_positionsOfTarget insertObject:[NSValue valueWithCGPoint:juiz::cgPoint(target.center)] atIndex:0];
 		[cell rotateTowards:nextPosition];
 		[cell moveTowards:nextPosition];
 	}

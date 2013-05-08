@@ -21,7 +21,7 @@
 	if (_restIntervalFrames > 0) {
 		_restIntervalFrames -= 1;
 		[cell stop];
-	} else if (JZDistanceOfPoints(cell.center, _destination) <= cell.radius) {
+	} else if (juiz::vector(cell.center, _destination).magnitude() <= cell.radius) {
 		[self resetDestinationWithEnvironment:environment];
 		[cell stop];
 	} else {

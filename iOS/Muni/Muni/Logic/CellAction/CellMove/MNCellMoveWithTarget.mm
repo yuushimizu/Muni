@@ -28,7 +28,7 @@
 - (void)sendFrameWithCell:(id<MNCell>)cell withEnvironment:(muni::Environment *)environment {
 	if (!_target || !_target.living) {
 		[self resetTargetWithCell:cell Environment:environment];
-	} else if (JZDistanceOfPoints(cell.center, _target.center) - cell.radius - _target.radius > cell.sight) {
+	} else if (juiz::vector(cell.center, _target.center).magnitude() - cell.radius - _target.radius > cell.sight) {
 		[self resetTargetWithCell:cell Environment:environment];
 	}
 	if (_target) {

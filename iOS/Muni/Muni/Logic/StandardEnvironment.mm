@@ -38,7 +38,7 @@ namespace muni {
 		std::vector<muni::CellScanningResult> scanning_results;
 		for (id<MNCell> candidate : this->spatial_index_.objects_for_rect(CGRectMake(center.x() - radius, center.y() - radius, radius * 2, radius * 2))) {
 			if (candidate.living) {
-				double distance_from_center = juiz::distance_of_point_interval(juiz::point_interval_of_points(center, candidate.center));
+				double distance_from_center = juiz::vector(center, candidate.center).magnitude();
 				if (distance_from_center - candidate.radius <= radius && (condition == nil || condition(candidate))) {
 					double distance = distance_from_center - candidate.radius;
 					std::vector<muni::CellScanningResult>::iterator iter;
@@ -89,7 +89,7 @@ namespace muni {
 			}
 			MNStandardCell * cell2 = cell;
 			if (cell1.living && cell2.living) {
-				double distance = JZDistanceOfPoints(cell1.center, cell2.center);
+				double distance = juiz::vector(cell1.center, cell2.center).magnitude();
 				double piled_distance = cell1.radius + cell2.radius - distance;
 				if (piled_distance > 0) {
 					double radian = JZRadianFromPoints(cell1.center, cell2.center);

@@ -89,7 +89,7 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"") style:UIBarButtonSystemItemCancel target:self action:@selector(backButtonPressed)];
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", @"") style:(UIBarButtonItemStyle) UIBarButtonSystemItemCancel target:self action:@selector(backButtonPressed)];
 }
 
 - (void)viewDidUnload

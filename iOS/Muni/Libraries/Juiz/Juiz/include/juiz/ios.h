@@ -3,4 +3,4 @@
 
 #import "juiz/ios/coordinate.h"
 
-#endif /* defined(__Juiz__ios__) */
+#endif

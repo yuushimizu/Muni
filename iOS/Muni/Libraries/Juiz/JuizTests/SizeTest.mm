@@ -1,26 +1,9 @@
 #import "SizeTest.h"
-
-#include <random>
+#import "TestUtility.h"
 
 @implementation SizeTest
 
 - (void)testDefaultConstructor {
-	std::mt19937 random(0);
-	NSLog(@"========= random: %d", random());
-	NSLog(@"========= random: %d", random());
-	NSLog(@"========= random: %lf", std::bind(std::uniform_real_distribution<double>(0, 1), random)());
-	NSLog(@"========= random: %d", random());
-	NSLog(@"========= random: %d", random());
-	NSLog(@"========= random: %lf", std::bind(std::uniform_real_distribution<double>(0, 1), random)());
-	NSLog(@"========= random: %d", random());
-	/*
-	 2012-12-20 18:47:17.306 otest[90970:7803] ========= random: -1937831252
-	 2012-12-20 18:47:17.308 otest[90970:7803] ========= random: -1748719057
-	 2012-12-20 18:47:17.309 otest[90970:7803] ========= random: -1223252363
-	 2012-12-20 18:47:17.309 otest[90970:7803] ========= random: -668873536
-	 2012-12-20 18:47:17.310 otest[90970:7803] ========= random: -1706118333
-	 2012-12-20 18:47:17.311 otest[90970:7803] ========= random: -610118917
-	 */
 	STAssertEquals(0.0, juiz::Size().width(), @"");
 	STAssertEquals(0.0, juiz::Size().height(), @"");
 }
@@ -35,26 +18,20 @@
 	STAssertEquals(1.9, juiz::Size(3.1, 1.9).height(), @"");
 }
 
-- (void)testSetWidth {
-	juiz::Size size1(10.5, 3.44);
-	STAssertEquals(10.5, size1.width(), @"");
-	size1.width(18.77);
-	STAssertEquals(18.77, size1.width(), @"");
-	juiz::Size size2(8, 1);
-	STAssertEquals(8.0, size2.width(), @"");
-	size2.width(0.0);
-	STAssertEquals(0.0, size2.width(), @"");
+- (void)testCopyConstructor {
+	const juiz::Size Size1(10.6, 30.8);
+	const juiz::Size Size2 = Size1;
+	STAssertEquals(juiz::Size(10.6, 30.8), Size2, @"");
+	const juiz::Size Size3 = juiz::Size(8.7, 9.9);
+	STAssertEquals(juiz::Size(8.7, 9.9), Size3, @"");
 }
 
-- (void)testSetHeight {
-	juiz::Size size1(10.5, 3.44);
-	STAssertEquals(3.44, size1.height(), @"");
-	size1.height(19.12);
-	STAssertEquals(19.12, size1.height(), @"");
-	juiz::Size size2(8, 1);
-	STAssertEquals(1.0, size2.height(), @"");
-	size2.height(0.0);
-	STAssertEquals(0.0, size2.height(), @"");
+- (void)testOperatorAssign {
+	juiz::Size Size(5, 6);
+	Size = juiz::Size(10, 40);
+	STAssertEquals(juiz::Size(10, 40), Size, @"");
+	Size = juiz::Size(93, 21);
+	STAssertEquals(juiz::Size(93, 21), Size, @"");
 }
 
 - (void)testOperatorEqual {
@@ -73,22 +50,6 @@
 	STAssertTrue(juiz::Size(1, 2) != juiz::Size(2, 1), @"");
 	STAssertTrue(juiz::Size(30.5, 30.4) != juiz::Size(30.5, 19.1), @"");
 	STAssertTrue(juiz::Size(18.55, 21.32) != juiz::Size(18.2, 21.32), @"");
-}
-
-- (void)testCopy {
-	const juiz::Size Size1(10.6, 30.8);
-	const juiz::Size Size2 = Size1;
-	STAssertEquals(juiz::Size(10.6, 30.8), Size2, @"");
-	const juiz::Size Size3 = juiz::Size(8.7, 9.9);
-	STAssertEquals(juiz::Size(8.7, 9.9), Size3, @"");
-}
-
-- (void)testOperatorAssign {
-	juiz::Size Size(5, 6);
-	Size = juiz::Size(10, 40);
-	STAssertEquals(juiz::Size(10, 40), Size, @"");
-	Size = juiz::Size(93, 21);
-	STAssertEquals(juiz::Size(93, 21), Size, @"");
 }
 
 @end
