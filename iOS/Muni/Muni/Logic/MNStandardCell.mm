@@ -1,5 +1,20 @@
 #import "MNStandardCell.h"
 #import "JZUtility.h"
+#import "MNUtility.h"
+#import "CellActionMultiply.h"
+#import "CellActionMakeMoon.h"
+#import "CellActionMakeTracer.h"
+#import "CellMoveRandomWalk.h"
+#import "CellMoveFloat.h"
+#import "CellMoveImmovable.h"
+#import "CellMoveApproachTarget.h"
+#import "CellMoveEscape.h"
+#import "CellMoveApproachNearestTarget.h"
+#import "CellMoveTraceTarget.h"
+#import "CellMoveMoon.h"
+#import "CellActionConditional.h"
+#import <memory>
+#import <functional>
 
 #define kMNCellMinDensity 0.2
 #define kMNCellMaxDensity 0.9
@@ -45,61 +60,69 @@ static int randomType() {
 	return muni::CellFamily(MNRandomDouble(0, 1));
 }
 
-- (MNCellAction *(^)(id<MNCell>, muni::Environment *))randomStandaloneMoveSource {
+- (std::shared_ptr<muni::CellAction> (^)(id<MNCell>, muni::Environment *))randomStandaloneMoveSource {
 	int type = MNRandomInt(0, 100);
 	if (type < 50) {
 		int maxIntervalFrames = MNRandomInt(0, 100);
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveRandomWalk alloc] initWithMaxIntervalFrames:maxIntervalFrames withEnvironment:environment];
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveRandomWalk(maxIntervalFrames));
 		};
 	} else if (type < 75) {
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveFloat alloc] init];
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveFloat());
 		};
 	} else {
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveImmovable alloc] init];
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveImmovable());
 		};
 	}
 }
 
-- (MNCellAction *(^)(id<MNCell>, muni::Environment *))randomRelativeMoveSource:(MNCellAction *(^)(id<MNCell>, muni::Environment *))standaloneMoveSource {
-	BOOL (^targetCondition)(id<MNCell> me, id<MNCell> other);
+static bool targetConditionHostility(id<MNCell> me, id<MNCell> other) {
+	return me != other && [me hostility:other];
+}
+
+static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
+	return me != other && ![me hostility:other];
+}
+
+- (std::shared_ptr<muni::CellAction> (^)(id<MNCell>, muni::Environment *))randomRelativeMoveSource:(std::shared_ptr<muni::CellAction>(^)(id<MNCell>, muni::Environment *))standaloneMoveSource {
+	bool (*targetCondition)(id<MNCell> me, id<MNCell> other);
 	int type = MNRandomInt(0, 100);
 	if (type < 75) {
-		targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && [me hostility:other]);};
+		targetCondition = targetConditionHostility;
 	} else {
-		targetCondition = ^(id<MNCell> me, id<MNCell> other) {return (BOOL) (me != other && ![me hostility:other]);};
+		targetCondition = targetConditionNotHostility;
 	}
 	int decisionMoveWithTarget = MNRandomInt(0, 100);
 	if (decisionMoveWithTarget < 20) {
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveApproachTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment)];
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveApproachTarget<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment)));
 		};
 	} else if (decisionMoveWithTarget < 40) {
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveEscape alloc] initWithCell:cell withCondition:targetCondition withMoveWhenNotEscape:standaloneMoveSource(cell, environment)];
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveEscape<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment)));
 		};
 	} else if (decisionMoveWithTarget < 60) {
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveApproachNearestTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment)];
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveApproachNearestTarget<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment)));
 		};
 	} else if (decisionMoveWithTarget < 80) {
 		int intervalFrames = MNRandomInt(30, 150);
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment) withIntervalFrames:intervalFrames];
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveTraceTarget<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment), intervalFrames));
 		};
 	} else {
 		double distanceRate = MNRandomDouble(1, 4);
 		double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:targetCondition withMoveWithoutTarget:standaloneMoveSource(cell, environment) withDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease];
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveMoon<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment), distanceRate * cell.radius, radianIncrease));
 		};
 	}
 }
 
-- (MNCellAction *(^)(id<MNCell>, muni::Environment *))randomMoveSourceWithoutCondition {
-	MNCellAction *(^standaloneMoveSource)(id<MNCell>, muni::Environment *) = [self randomStandaloneMoveSource];
+- (std::shared_ptr<muni::CellAction> (^)(id<MNCell>, muni::Environment *))randomMoveSourceWithoutCondition {
+	std::shared_ptr<muni::CellAction> (^standaloneMoveSource)(id<MNCell>, muni::Environment *) = [self randomStandaloneMoveSource];
 	if (MNRandomInt(0, 100) < 10) {
 		return standaloneMoveSource;
 	} else {
@@ -107,17 +130,18 @@ static int randomType() {
 	}
 }
 
-- (MNCellAction *(^)(id<MNCell>, muni::Environment *))randomMoveSource {
-	MNCellAction *(^moveSourceWithoutCondition)(id<MNCell>, muni::Environment *) = [self randomMoveSourceWithoutCondition];
+- (std::shared_ptr<muni::CellAction> (^)(id<MNCell>, muni::Environment *))randomMoveSource {
+	std::shared_ptr<muni::CellAction> (^moveSourceWithoutCondition)(id<MNCell>, muni::Environment *) = [self randomMoveSourceWithoutCondition];
 	if (MNRandomInt(0, 100) < 75) {
 		return moveSourceWithoutCondition;
 	} else {
 		double energyBoundingRate = MNRandomDouble(0.3, 0.7);
-		MNCellAction *(^falseMoveSource)(id<MNCell>, muni::Environment *) = [self randomMoveSourceWithoutCondition];
+		auto condition = [&](id<MNCell> cell) -> bool {
+			return (cell.energy / cell.maxEnergy) < energyBoundingRate;
+		};
+		std::shared_ptr<muni::CellAction> (^falseMoveSource)(id<MNCell>, muni::Environment *) = [self randomMoveSourceWithoutCondition];
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellActionConditional alloc] initWithCondition:^(id<MNCell> cell) {
-				return (BOOL) ((cell.energy / cell.maxEnergy) < energyBoundingRate);
-			} withTrueAction:moveSourceWithoutCondition(cell, environment) withFalseAction:falseMoveSource(cell, environment)];
+			return std::shared_ptr<muni::CellAction>(new muni::CellActionConditional<typeof condition>(condition, moveSourceWithoutCondition(cell, environment), falseMoveSource(cell, environment)));
 		};
 	}
 }
@@ -128,7 +152,7 @@ static int randomType() {
 		int maxCount = MNRandomInt(1, 3) * MNRandomInt(1, 3) * MNRandomInt(1, 3) * MNRandomInt(1, 3);
 		double incidence = MNRandomDouble(0.005, 0.015) - ((double) _maxEnergy / 1000000);
 		[actionSources addObject:^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellActionMultiply alloc] initWithMaxCount:maxCount withIncidence:incidence];
+			return std::shared_ptr<muni::CellAction>(new muni::CellActionMultiply(maxCount, incidence));
 		}];
 	}
 	if (MNRandomInt(0, 100) < 10) {
@@ -137,25 +161,25 @@ static int randomType() {
 		int maxCount = MNRandomInt(1, 4) * MNRandomInt(1, 2);
 		double incidence = 0.002;
 		[actionSources addObject:^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellActionMakeMoon alloc] initWithDistance:distanceRate * cell.radius withRadianIncrease:radianIncrease withMaxCount:maxCount withIncidence:incidence];
+			return std::shared_ptr<muni::CellAction>(new muni::CellActionMakeMoon(distanceRate * cell.radius, radianIncrease, maxCount, incidence));
 		}];
 	}
 	if (MNRandomInt(0, 100) < 10) {
 		int intervalFrames = MNRandomInt(30, 450);
 		double incidence = 0.003;
 		[actionSources addObject:^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellActionMakeTracer alloc] initWithIntervalFrames:intervalFrames withIncidence:incidence];
+			return std::shared_ptr<muni::CellAction>(new muni::CellActionMakeTracer(intervalFrames, incidence));
 		}];
 	}
 	return actionSources;
 }
 
 - (void)resetActionsWithEnvironment:(muni::Environment *)environment {
-	NSMutableArray *actions = [NSMutableArray array];
-	for (MNCellAction *(^actionSource)(id<MNCell>, muni::Environment *environment) in _actionSources) {
-		[actions addObject:actionSource(self, environment)];
+	std::vector<std::shared_ptr<muni::CellAction>> actions;
+	for (std::shared_ptr<muni::CellAction> (^actionSource)(id<MNCell>, muni::Environment *environment) in _actionSources) {
+		actions.push_back(actionSource(self, environment));
 	}
-	_actions = actions;
+	_actions = std::move(actions);
 }
 
 - (void)fixPositionWithEnvironment:(muni::Environment *)environment {
@@ -313,12 +337,13 @@ static int randomType() {
 		_sight = parent.sight;
 		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius);
 		[self fixPositionWithEnvironment:environment];
-		MNCellAction *(^moveSourceWithoutTarget)(id<MNCell>, muni::Environment *) = [self randomMoveSource];
-		MNCellAction *(^moveSoure)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveTraceTarget alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:moveSourceWithoutTarget(cell, environment) withIntervalFrames:intervalFrames];
+		std::shared_ptr<muni::CellAction> (^moveSourceWithoutTarget)(id<MNCell>, muni::Environment *) = [self randomMoveSource];
+		std::shared_ptr<muni::CellAction> (^moveSoure)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
+			auto targetCondition = [&](id<MNCell> me, id<MNCell> other) -> bool {return other == parent;};
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveTraceTarget<typeof targetCondition>(targetCondition, moveSourceWithoutTarget(cell, environment), intervalFrames));
 		};
-		MNCellAction *(^makeTracerSource)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellActionMakeTracer alloc] initWithIntervalFrames:intervalFrames withIncidence:0.001];
+		std::shared_ptr<muni::CellAction> (^makeTracerSource)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
+			return std::shared_ptr<muni::CellAction>(new muni::CellActionMakeTracer(intervalFrames, 0.001));
 		};
 		_actionSources = [NSArray arrayWithObjects:moveSoure, makeTracerSource, nil];
 		[self resetActionsWithEnvironment:environment];
@@ -342,7 +367,8 @@ static int randomType() {
 		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius + distance + self.radius);
 		[self fixPositionWithEnvironment:environment];
 		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, muni::Environment *environment) {
-			return [[MNCellMoveMoon alloc] initWithCell:cell withCondition:^(id<MNCell> me, id<MNCell> other) {return (BOOL) (other == parent);} withMoveWithoutTarget:[[MNCellMoveFloat alloc] init] withDistance:distance withRadianIncrease:radianIncrease];
+			auto targetCondition = [&](id<MNCell> me, id<MNCell> other) -> bool {return other == parent;};
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveMoon<typeof targetCondition>(targetCondition, std::shared_ptr<muni::CellAction>(new muni::CellMoveFloat()), distance, radianIncrease));
 		}];
 		[self resetActionsWithEnvironment:environment];
 		_maxBeat = parent.maxBeat;
@@ -365,6 +391,10 @@ static int randomType() {
 
 - (const std::vector<muni::CellScanningResult>)scanCellsWithCondition:(BOOL (^)(id<MNCell>))condition withEnvironment:(muni::Environment *)environment {
 	return environment->cells_in_circle(_center, _sight + self.radius, condition);
+}
+
+- (BOOL)canSee:(id<MNCell>)other {
+	return juiz::vector(self.center, other.center).magnitude() - self.radius - other.radius <= self.sight;
 }
 
 - (BOOL)hostility:(id<MNCell>)other {
@@ -445,8 +475,8 @@ static int randomType() {
 	_lastMovedRadian = _movingRadian;
 	_lastMovedDistance = _movingSpeed;
 	[self decreaseEnergy:self.weight * 0.03];
-	if (self.living) for (MNCellAction *action in _actions) {
-		[action sendFrameWithCell:self withEnvironment:environment];
+	if (self.living) for (std::shared_ptr<muni::CellAction> action : _actions) {
+		action->send_frame(self, *environment);
 	}
 }
 

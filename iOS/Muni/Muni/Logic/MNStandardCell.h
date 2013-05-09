@@ -3,19 +3,8 @@
 #import "MNCell.h"
 #import "Environment.h"
 #import "CellFamily.h"
-#import "MNCellAction.h"
-#import "MNCellActionMultiply.h"
-#import "MNCellActionMakeMoon.h"
-#import "MNCellActionMakeTracer.h"
-#import "MNCellMoveRandomWalk.h"
-#import "MNCellMoveFloat.h"
-#import "MNCellMoveImmovable.h"
-#import "MNCellMoveApproachTarget.h"
-#import "MNCellMoveEscape.h"
-#import "MNCellMoveApproachNearestTarget.h"
-#import "MNCellMoveTraceTarget.h"
-#import "MNCellMoveMoon.h"
-#import "MNCellActionConditional.h"
+#import "CellAction.h"
+#import <vector>
 
 @interface MNStandardCell : NSObject<MNCell> {
 	int _type;
@@ -34,7 +23,7 @@
 	int _eventBits;
 	int _previousEventBits;
 	NSArray *_actionSources;
-	NSArray *_actions;
+	std::vector<std::shared_ptr<muni::CellAction>> _actions;
 	double _lastMovedRadian;
 	double _lastMovedDistance;
 	double _radianForFix;

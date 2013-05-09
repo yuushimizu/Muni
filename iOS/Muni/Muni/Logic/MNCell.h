@@ -35,6 +35,7 @@
 - (void)rotateFor:(double)radian;
 - (void)rotateTowards:(const juiz::Point &)point;
 - (const std::vector<muni::CellScanningResult>)scanCellsWithCondition:(BOOL (^)(id<MNCell> other))condition withEnvironment:(muni::Environment *)environment;
+- (BOOL)canSee:(id<MNCell>)other;
 - (BOOL)hostility:(id<MNCell>)other;
 - (void)damage:(double)damage;
 - (void)heal:(double)energy;
