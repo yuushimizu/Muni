@@ -5,16 +5,10 @@
 #import "MNCell.h"
 
 namespace muni {
-	template<typename TargetConditionFunction>
-	class CellMoveApproachNearestTarget : public CellMoveWithNearestTarget<TargetConditionFunction> {
+	class CellMoveApproachNearestTarget : public CellMoveWithNearestTarget {
 	public:
-		CellMoveApproachNearestTarget(TargetConditionFunction condition, std::shared_ptr<CellAction> action_without_target) : CellMoveWithNearestTarget<TargetConditionFunction>(condition, action_without_target) {
-		}
-		
-		virtual void send_frame(id<MNCell> cell, id<MNCell> target, Environment &environment) {
-			[cell rotateTowards:target.center];
-			[cell moveTowards:target.center];
-		}
+		CellMoveApproachNearestTarget(TargetConditionFunction condition, std::shared_ptr<CellAction> action_without_target);
+		virtual void send_frame(id<MNCell> cell, id<MNCell> target, Environment &environment);
 	};
 }
 

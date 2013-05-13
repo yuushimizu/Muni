@@ -97,26 +97,26 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 	int decisionMoveWithTarget = MNRandomInt(0, 100);
 	if (decisionMoveWithTarget < 20) {
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return std::shared_ptr<muni::CellAction>(new muni::CellMoveApproachTarget<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment)));
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveApproachTarget(targetCondition, standaloneMoveSource(cell, environment)));
 		};
 	} else if (decisionMoveWithTarget < 40) {
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return std::shared_ptr<muni::CellAction>(new muni::CellMoveEscape<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment)));
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveEscape(targetCondition, standaloneMoveSource(cell, environment)));
 		};
 	} else if (decisionMoveWithTarget < 60) {
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return std::shared_ptr<muni::CellAction>(new muni::CellMoveApproachNearestTarget<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment)));
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveApproachNearestTarget(targetCondition, standaloneMoveSource(cell, environment)));
 		};
 	} else if (decisionMoveWithTarget < 80) {
 		int intervalFrames = MNRandomInt(30, 150);
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return std::shared_ptr<muni::CellAction>(new muni::CellMoveTraceTarget<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment), intervalFrames));
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveTraceTarget(targetCondition, standaloneMoveSource(cell, environment), intervalFrames));
 		};
 	} else {
 		double distanceRate = MNRandomDouble(1, 4);
 		double radianIncrease = MNRandomDouble(3.0 * M_PI / 180.0, 12.0 * M_PI / 180.0) * (MNRandomBool() ? 1 : -1);
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return std::shared_ptr<muni::CellAction>(new muni::CellMoveMoon<typeof targetCondition>(targetCondition, standaloneMoveSource(cell, environment), distanceRate * cell.radius, radianIncrease));
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveMoon(targetCondition, standaloneMoveSource(cell, environment), distanceRate * cell.radius, radianIncrease));
 		};
 	}
 }
@@ -141,7 +141,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 		};
 		std::shared_ptr<muni::CellAction> (^falseMoveSource)(id<MNCell>, muni::Environment *) = [self randomMoveSourceWithoutCondition];
 		return ^(id<MNCell> cell, muni::Environment *environment) {
-			return std::shared_ptr<muni::CellAction>(new muni::CellActionConditional<typeof condition>(condition, moveSourceWithoutCondition(cell, environment), falseMoveSource(cell, environment)));
+			return std::shared_ptr<muni::CellAction>(new muni::CellActionConditional(condition, moveSourceWithoutCondition(cell, environment), falseMoveSource(cell, environment)));
 		};
 	}
 }
@@ -340,7 +340,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 		std::shared_ptr<muni::CellAction> (^moveSourceWithoutTarget)(id<MNCell>, muni::Environment *) = [self randomMoveSource];
 		std::shared_ptr<muni::CellAction> (^moveSoure)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
 			auto targetCondition = [&](id<MNCell> me, id<MNCell> other) -> bool {return other == parent;};
-			return std::shared_ptr<muni::CellAction>(new muni::CellMoveTraceTarget<typeof targetCondition>(targetCondition, moveSourceWithoutTarget(cell, environment), intervalFrames));
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveTraceTarget(targetCondition, moveSourceWithoutTarget(cell, environment), intervalFrames));
 		};
 		std::shared_ptr<muni::CellAction> (^makeTracerSource)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
 			return std::shared_ptr<muni::CellAction>(new muni::CellActionMakeTracer(intervalFrames, 0.001));
@@ -368,7 +368,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 		[self fixPositionWithEnvironment:environment];
 		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, muni::Environment *environment) {
 			auto targetCondition = [&](id<MNCell> me, id<MNCell> other) -> bool {return other == parent;};
-			return std::shared_ptr<muni::CellAction>(new muni::CellMoveMoon<typeof targetCondition>(targetCondition, std::shared_ptr<muni::CellAction>(new muni::CellMoveFloat()), distance, radianIncrease));
+			return std::shared_ptr<muni::CellAction>(new muni::CellMoveMoon(targetCondition, std::shared_ptr<muni::CellAction>(new muni::CellMoveFloat()), distance, radianIncrease));
 		}];
 		[self resetActionsWithEnvironment:environment];
 		_maxBeat = parent.maxBeat;
