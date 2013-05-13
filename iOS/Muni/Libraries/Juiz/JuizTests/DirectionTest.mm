@@ -111,14 +111,14 @@
 }
 
 - (void)testConstants {
-	STAssertEquals(juiz::direction::ABOVE, juiz::Direction(0), @"");
-	STAssertEquals(juiz::direction::RIGHT, juiz::Direction(M_PI_2), @"");
-	STAssertEquals(juiz::direction::BELOW, juiz::Direction(M_PI), @"");
-	STAssertEquals(juiz::direction::LEFT, juiz::Direction(M_PI + M_PI_2), @"");
-	AssertRoughlyEqual(juiz::direction::ABOVE, juiz::rotate_clockwise(juiz::direction::LEFT, M_PI_2), @"");
-	AssertRoughlyEqual(juiz::direction::RIGHT, juiz::rotate_clockwise(juiz::direction::ABOVE, M_PI_2), @"");
-	AssertRoughlyEqual(juiz::direction::BELOW, juiz::rotate_clockwise(juiz::direction::RIGHT, M_PI_2), @"");
-	AssertRoughlyEqual(juiz::direction::LEFT, juiz::rotate_clockwise(juiz::direction::BELOW, M_PI_2), @"");
+	STAssertEquals(juiz::directions::ABOVE, juiz::Direction(0), @"");
+	STAssertEquals(juiz::directions::RIGHT, juiz::Direction(M_PI_2), @"");
+	STAssertEquals(juiz::directions::BELOW, juiz::Direction(M_PI), @"");
+	STAssertEquals(juiz::directions::LEFT, juiz::Direction(M_PI + M_PI_2), @"");
+	AssertRoughlyEqual(juiz::directions::ABOVE, juiz::rotate_clockwise(juiz::directions::LEFT, M_PI_2), @"");
+	AssertRoughlyEqual(juiz::directions::RIGHT, juiz::rotate_clockwise(juiz::directions::ABOVE, M_PI_2), @"");
+	AssertRoughlyEqual(juiz::directions::BELOW, juiz::rotate_clockwise(juiz::directions::RIGHT, M_PI_2), @"");
+	AssertRoughlyEqual(juiz::directions::LEFT, juiz::rotate_clockwise(juiz::directions::BELOW, M_PI_2), @"");
 }
 
 @end

@@ -8,19 +8,27 @@ namespace juiz {
 		Size::Size() : Size(0, 0) {
 		}
 		
-		const double Size::width() const {
+		double Size::width() const {
 			return this->width_;
 		}
 		
-		const double Size::height() const {
+		void Size::width(const double width) {
+			this->width_ = width;
+		}
+		
+		double Size::height() const {
 			return this->height_;
 		}
 		
-		const bool operator==(const Size &lhs, const Size &rhs) {
+		void Size::height(const double height) {
+			this->height_ = height;
+		}
+		
+		bool operator==(const Size &lhs, const Size &rhs) {
 			return lhs.width() == rhs.width() && lhs.height() == rhs.height();
 		}
 		
-		const bool operator!=(const Size &lhs, const Size &rhs) {
+		bool operator!=(const Size &lhs, const Size &rhs) {
 			return !(lhs == rhs);
 		}
 	}

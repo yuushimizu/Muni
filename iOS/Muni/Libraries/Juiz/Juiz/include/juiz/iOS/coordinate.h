@@ -10,10 +10,10 @@ namespace juiz {
 	}
 	namespace ios {
 		namespace coordinate {
-			const CGPoint cgPoint(const juiz::coordinate::Point &point);
-			const juiz::coordinate::Point point(const CGPoint &cgPoint);
-			const CGSize cgSize(const juiz::coordinate::Size &siez);
-			const juiz::coordinate::Size size(const CGSize &cgSize);
+			CGPoint cgPoint(const juiz::coordinate::Point &point);
+			juiz::coordinate::Point point(const CGPoint &cgPoint);
+			CGSize cgSize(const juiz::coordinate::Size &siez);
+			juiz::coordinate::Size size(const CGSize &cgSize);
 		}
 	}
 }

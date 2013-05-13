@@ -4,7 +4,7 @@
 @implementation VectorTest
 
 - (void)testDefaultConstructor {
-	STAssertEquals(juiz::direction::ABOVE, juiz::Vector().direction(), @"");
+	STAssertEquals(juiz::directions::ABOVE, juiz::Vector().direction(), @"");
 	STAssertEquals(0.0, juiz::Vector().magnitude(), @"");
 }
 
@@ -64,7 +64,10 @@
 }
 
 - (void)testOperatorMinus {
-	
+	juiz::Vector vector1 = juiz::Vector(juiz::Direction(1.3), 80);
+	juiz::Vector vector2 = juiz::Vector(juiz::Direction(1.3), 20);
+	AssertRoughlyEqual(juiz::Vector(juiz::Direction(1.3), 60), vector1 - vector2, @"");
+	AssertRoughlyEqual(juiz::Vector(juiz::Direction(2.0), 30), juiz::Vector(juiz::Direction(2.0), 100) - juiz::Vector(juiz::Direction(2.0), 70), @"");
 }
 
 - (void)testOperatorMultiplication {

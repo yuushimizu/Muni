@@ -2,6 +2,8 @@
 #define __Juiz__coordinate__Vector__
 
 #include "juiz/coordinate/Direction.h"
+#include "juiz/coordinate/Point.h"
+#include <utility>
 
 namespace juiz {
 	namespace coordinate {
@@ -10,21 +12,27 @@ namespace juiz {
 			Direction direction_;
 			double magnitude_;
 		public:
-			Vector(const Direction direction, const double magnitude);
+			Vector(const Direction &direction, const double magnitude);
 			Vector();
-			const Direction direction() const;
-			const double magnitude() const;
+			Direction direction() const;
+			void direction(const Direction &direction);
+			double magnitude() const;
+			void magnitude(const double magnitude);
 		};
-		const bool operator ==(const Vector &lhs, const Vector &rhs);
-		const bool operator !=(const Vector &lhs, const Vector &rhs);
-		const Vector operator +(const Vector &vector);
-		const Vector operator +(const Vector &lhs, const Vector &rhs);
-		const Vector operator -(const Vector &vector);
-		const Vector operator -(const Vector &lhs, const Vector &rhs);
-		const Vector operator *(const Vector &lhs, const double &rhs);
-		const Vector vector(const double x, const double y);
-		const double x(const Vector &vector);
-		const double y(const Vector &vector);
+		bool operator ==(const Vector &lhs, const Vector &rhs);
+		bool operator !=(const Vector &lhs, const Vector &rhs);
+		Vector operator +(const Vector &vector);
+		Vector operator +(const Vector &lhs, const Vector &rhs);
+		Vector operator -(const Vector &vector);
+		Vector operator -(Vector &&vector);
+		template <typename LHS, typename RHS>
+		Vector operator -(LHS &&lhs, RHS &&rhs) {
+			return std::forward<LHS>(lhs) + -std::forward<RHS>(rhs);
+		}
+		Vector operator *(const Vector &lhs, const double rhs);
+		Vector operator *(Vector &&lhs, const double rhs);
+		double x(const Vector &vector);
+		double y(const Vector &vector);
 	}
 }
 

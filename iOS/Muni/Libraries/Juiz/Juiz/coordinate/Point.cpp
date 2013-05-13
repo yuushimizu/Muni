@@ -1,4 +1,5 @@
 #include "juiz/coordinate/Point.h"
+#include <math.h>
 
 namespace juiz {
 	namespace coordinate {
@@ -8,20 +9,32 @@ namespace juiz {
 		Point::Point() : Point(0, 0) {
 		}
 		
-		const double Point::x() const {
+		double Point::x() const {
 			return this->x_;
 		}
 		
-		const double Point::y() const {
+		void Point::x(const double x) {
+			this->x_ = x;
+		}
+		
+		double Point::y() const {
 			return this->y_;
 		}
 		
-		const bool operator==(const Point &lhs, const Point &rhs) {
+		void Point::y(const double y) {
+			this->y_ = y;
+		}
+		
+		bool operator==(const Point &lhs, const Point &rhs) {
 			return lhs.x() == rhs.x() && lhs.y() == rhs.y();
 		}
 		
-		const bool operator!=(const Point &lhs, const Point &rhs) {
+		bool operator!=(const Point &lhs, const Point &rhs) {
 			return !(lhs == rhs);
+		}
+		
+		double distance(const Point &start, const Point &end) {
+			return sqrt(pow(end.x() - start.x(), 2) + pow(end.y() - start.y(), 2));
 		}
 	}
 }

@@ -10,11 +10,14 @@ namespace juiz {
 		public:
 			Point(const double x, const double y);
 			Point();
-			const double x() const;
-			const double y() const;
+			double x() const;
+			void x(const double x);
+			double y() const;
+			void y(const double y);
 		};
-		const bool operator==(const Point &lhs, const Point &rhs);
-		const bool operator!=(const Point &lhs, const Point &rhs);
+		bool operator==(const Point &lhs, const Point &rhs);
+		bool operator!=(const Point &lhs, const Point &rhs);
+		double distance(const Point &start, const Point &end);
 	}
 }
 

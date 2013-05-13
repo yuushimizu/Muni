@@ -3,12 +3,22 @@
 
 namespace juiz {
 	namespace coordinate {
-		const Vector vector(const Point &start, const Point &end) {
-			return vector(end.x() - start.x(), end.y() - start.y());
+		Direction direction(const Point &start, const Point &end) {
+			return Direction(atan2(end.x() - start.x(), end.y() - start.y()));
 		}
 		
-		const Point add_vector(const Point &point, const Vector &vector) {
+		Vector vector(const Point &start, const Point &end) {
+			return Vector(direction(start, end), distance(start, end));
+		}
+
+		Point add_vector(const Point &point, const Vector &vector) {
 			return Point(point.x() + x(vector), point.y() + y(vector));
+		}
+		
+		Point add_vector(Point &&point, const Vector &vector) {
+			point.x(point.x() + x(vector));
+			point.y(point.y() + y(vector));
+			return point;
 		}
 	}
 }

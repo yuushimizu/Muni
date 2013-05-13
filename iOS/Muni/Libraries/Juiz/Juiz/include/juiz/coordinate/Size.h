@@ -10,11 +10,13 @@ namespace juiz {
 		public:
 			Size(const double width, const double height);
 			Size();
-			const double width() const;
-			const double height() const;
+			double width() const;
+			void width(const double width);
+			double height() const;
+			void height(const double height);
 		};
-		const bool operator==(const Size &lhs, const Size &rhs);
-		const bool operator!=(const Size &lhs, const Size &rhs);
+		bool operator==(const Size &lhs, const Size &rhs);
+		bool operator!=(const Size &lhs, const Size &rhs);
 	}
 }
 

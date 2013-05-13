@@ -1,4 +1,5 @@
 #include "juiz/coordinate/Direction.h"
+#include <utility>
 
 namespace juiz {
 	namespace coordinate {
@@ -15,43 +16,44 @@ namespace juiz {
 		Direction::Direction() : Direction(0) {
 		}
 		
-		const double Direction::clockwise_angle_with_above() const {
-			return clockwise_angle_with_above_;
+		double Direction::clockwise_angle_with_above() const {
+			return this->clockwise_angle_with_above_;
 		}
 		
-		const bool operator==(const Direction &lhs, const Direction &rhs) {
+		void Direction::clockwise_angle_with_above(const double clockwise_angle_with_above) {
+			this->clockwise_angle_with_above_ = clockwise_angle_with_above;
+		}
+		
+		bool operator==(const Direction &lhs, const Direction &rhs) {
 			return lhs.clockwise_angle_with_above() == rhs.clockwise_angle_with_above();
 		}
 		
-		const bool operator!=(const Direction &lhs, const Direction &rhs) {
+		bool operator!=(const Direction &lhs, const Direction &rhs) {
 			return !(lhs == rhs);
 		}
 		
-		const Direction rotate_clockwise(const Direction &direction, const double angle) {
+		Direction rotate_clockwise(const Direction &direction, const double angle) {
 			return Direction(direction.clockwise_angle_with_above() + angle);
 		}
 		
-		const Direction rotate_counterclockwise(const Direction &direction, const double angle) {
-			return rotate_clockwise(direction, -angle);
+		Direction rotate_clockwise(Direction &&direction, const double angle) {
+			direction.clockwise_angle_with_above(direction.clockwise_angle_with_above() + angle);
+			return direction;
 		}
 		
-		const Direction invert(const Direction &direction) {
-			return rotate_clockwise(direction, M_PI);
-		}
-		
-		const double clockwise_angle(const Direction &start, const Direction &end) {
+		double clockwise_angle(const Direction &start, const Direction &end) {
 			return fix_angle_range(end.clockwise_angle_with_above() - start.clockwise_angle_with_above());
 		}
 		
-		const double counterclockwise_angle(const Direction &start, const Direction &end) {
+		double counterclockwise_angle(const Direction &start, const Direction &end) {
 			return clockwise_angle(end, start);
 		}
 		
-		const bool clockwise_angle_is_small(const Direction &start, const Direction &end) {
+		bool clockwise_angle_is_small(const Direction &start, const Direction &end) {
 			return clockwise_angle(start, end) < M_PI;
 		}
 		
-		namespace direction {
+		namespace directions {
 			const Direction ABOVE(0);
 			const Direction RIGHT(M_PI_2);
 			const Direction BELOW(M_PI);

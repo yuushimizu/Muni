@@ -1,59 +1,71 @@
 #include "juiz/coordinate/Vector.h"
+#include "juiz/coordinate/Point.h"
+#include "juiz/coordinate/utilities.h"
 #include <math.h>
 
 namespace juiz {
 	namespace coordinate {
-		Vector::Vector(const Direction direction, const double magnitude) : direction_(direction), magnitude_(magnitude) {
+		Vector::Vector(const Direction &direction, const double magnitude) : direction_(direction), magnitude_(magnitude) {
 		}
 		
-		Vector::Vector() : Vector(direction::ABOVE, 0) {
+		Vector::Vector() : Vector(directions::ABOVE, 0) {
 		}
 		
-		const Direction Vector::direction() const {
+		Direction Vector::direction() const {
 			return this->direction_;
 		}
 		
-		const double Vector::magnitude() const {
+		void Vector::direction(const Direction &direction) {
+			this->direction_ = direction;
+		}
+		
+		double Vector::magnitude() const {
 			return this->magnitude_;
 		}
 		
-		const bool operator ==(const Vector &lhs, const Vector &rhs) {
+		void Vector::magnitude(const double magnitude) {
+			this->magnitude_ = magnitude;
+		}
+		
+		bool operator ==(const Vector &lhs, const Vector &rhs) {
 			return lhs.direction() == rhs.direction() && lhs.magnitude() == rhs.magnitude();
 		}
 		
-		const bool operator !=(const Vector &lhs, const Vector &rhs) {
+		bool operator !=(const Vector &lhs, const Vector &rhs) {
 			return !(lhs == rhs);
 		}
 		
-		const Vector operator +(const Vector &vector) {
+		Vector operator +(const Vector &vector) {
 			return vector;
 		}
 		
-		const Vector operator +(const Vector &lhs, const Vector &rhs) {
-			return vector(x(lhs) + x(rhs), y(lhs) + y(rhs));
+		Vector operator +(const Vector &lhs, const Vector &rhs) {
+			return vector(Point(0, 0), Point(x(lhs) + x(rhs), y(lhs) + y(rhs)));
 		}
 		
-		const Vector operator -(const Vector &vector) {
+		Vector operator -(const Vector &vector) {
 			return Vector(invert(vector.direction()), vector.magnitude());
 		}
 		
-		const Vector operator -(const Vector &lhs, const Vector &rhs) {
-			return lhs + -rhs;
+		Vector operator -(Vector &&vector) {
+			vector.direction(invert(vector.direction()));
+			return vector;
 		}
 		
-		const Vector operator *(const Vector &lhs, const double &rhs) {
+		Vector operator *(const Vector &lhs, const double rhs) {
 			return Vector(lhs.direction(), lhs.magnitude() * rhs);
 		}
 		
-		const Vector vector(const double x, const double y) {
-			return Vector(Direction(atan2(x, y)), sqrt(x * x + y * y));
+		Vector operator *(Vector &&lhs, const double rhs) {
+			lhs.magnitude(lhs.magnitude() * rhs);
+			return lhs;
 		}
-		
-		const double x(const Vector &vector) {
+
+		double x(const Vector &vector) {
 			return vector.magnitude() * sin(vector.direction().clockwise_angle_with_above());
 		}
 		
-		const double y(const Vector &vector) {
+		double y(const Vector &vector) {
 			return vector.magnitude() * cos(vector.direction().clockwise_angle_with_above());
 		}
 	}
