@@ -6,10 +6,6 @@ const juiz::Point JZMovedPointToDestination(const juiz::Point &start, const juiz
 	return juiz::add_vector(start, juiz::with_magnitude(vector, moveDistance));
 }
 
-const double JZDiagonalFromSize(const juiz::Size &size) {
-	return sqrt(size.width() * size.width() + size.height() * size.height());
-}
-
 const double JZInvertRadian(double radian) {
 	return radian < M_PI ? radian + M_PI : radian - M_PI;
 }

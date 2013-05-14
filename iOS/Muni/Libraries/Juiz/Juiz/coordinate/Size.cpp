@@ -1,4 +1,5 @@
 #include "juiz/coordinate/Size.h"
+#include <math.h>
 
 namespace juiz {
 	namespace coordinate {
@@ -48,6 +49,10 @@ namespace juiz {
 		Size with_height(Size &&size, const double height) {
 			size.height(height);
 			return size;
+		}
+		
+		double diagonal(const Size &size) {
+			return sqrt(pow(size.width(), 2) + pow(size.height(), 2));
 		}
 	}
 }

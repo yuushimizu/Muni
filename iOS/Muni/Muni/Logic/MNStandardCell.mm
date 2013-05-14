@@ -291,7 +291,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 		_speed = [self randomSpeed];
 		_angle = MNRandomRadian();
 		_rotationRadian  = MNRandomInt(0, 100) < 30 ? MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) + MNRandomDouble(-0.05, 0.05) : 0;
-		_sight = JZDiagonalFromSize(environment->field().size()) * MNRandomDouble(0.1, 0.5);
+		_sight = juiz::diagonal(environment->field().size()) * MNRandomDouble(0.1, 0.5);
 		_center = MNRandomPointInSize(environment->field().size());
 		[self fixPositionWithEnvironment:environment];
 		_actionSources = [self randomActionSources];

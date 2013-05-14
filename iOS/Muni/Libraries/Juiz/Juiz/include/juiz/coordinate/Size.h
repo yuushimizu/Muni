@@ -21,6 +21,7 @@ namespace juiz {
 		Size with_width(Size &&size, const double width);
 		Size with_height(const Size &size, const double height);
 		Size with_height(Size &&size, const double height);
+		double diagonal(const Size &size);
 	}
 }
 
