@@ -228,7 +228,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 }
 
 - (void)stop {
-	[self moveFor:JZInvertRadian(_movingRadian) withTargetSpeed:0];
+	[self moveFor:juiz::invert(juiz::Direction(_movingRadian)).clockwise_angle_with_above() withTargetSpeed:0];
 }
 
 - (void)moveTowards:(const juiz::Point &)point {
