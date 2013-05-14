@@ -10,15 +10,13 @@ namespace juiz {
 		Vector vector(const Point &start, const Point &end) {
 			return Vector(direction(start, end), distance(start, end));
 		}
-
+		
 		Point add_vector(const Point &point, const Vector &vector) {
 			return Point(point.x() + x(vector), point.y() + y(vector));
 		}
 		
 		Point add_vector(Point &&point, const Vector &vector) {
-			point.x(point.x() + x(vector));
-			point.y(point.y() + y(vector));
-			return point;
+			return with_y(with_x(std::move(point), point.x() + x(vector)), point.y() + y(vector));
 		}
 	}
 }

@@ -21,14 +21,18 @@ namespace juiz {
 		};
 		bool operator ==(const Vector &lhs, const Vector &rhs);
 		bool operator !=(const Vector &lhs, const Vector &rhs);
+		Vector with_direction(const Vector &vector, const Direction &direction);
+		Vector with_direction(Vector &&vector, const Direction &direction);
+		Vector with_magnitude(const Vector &vector, const double magnitude);
+		Vector with_magnitude(Vector &&vector, const double magnitude);
+		Vector invert(const Vector &vector);
+		Vector invert(Vector &&vector);
 		Vector operator +(const Vector &vector);
 		Vector operator +(const Vector &lhs, const Vector &rhs);
 		Vector operator -(const Vector &vector);
 		Vector operator -(Vector &&vector);
-		template <typename LHS, typename RHS>
-		Vector operator -(LHS &&lhs, RHS &&rhs) {
-			return std::forward<LHS>(lhs) + -std::forward<RHS>(rhs);
-		}
+		Vector operator -(const Vector &lhs, const Vector &rhs);
+		Vector operator -(const Vector &lhs, Vector &&rhs);
 		Vector operator *(const Vector &lhs, const double rhs);
 		Vector operator *(Vector &&lhs, const double rhs);
 		double x(const Vector &vector);

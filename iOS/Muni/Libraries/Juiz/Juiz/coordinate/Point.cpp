@@ -33,6 +33,24 @@ namespace juiz {
 			return !(lhs == rhs);
 		}
 		
+		Point with_x(const Point &point, const double x) {
+			return Point(x, point.y());
+		}
+		
+		Point with_x(Point &&point, const double x) {
+			point.x(x);
+			return point;
+		}
+		
+		Point with_y(const Point &point, const double y) {
+			return Point(point.x(), y);
+		}
+		
+		Point with_y(Point &&point, const double y) {
+			point.y(y);
+			return point;
+		}
+		
 		double distance(const Point &start, const Point &end) {
 			return sqrt(pow(end.x() - start.x(), 2) + pow(end.y() - start.y(), 2));
 		}

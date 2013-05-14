@@ -31,5 +31,23 @@ namespace juiz {
 		bool operator!=(const Size &lhs, const Size &rhs) {
 			return !(lhs == rhs);
 		}
+		
+		Size with_width(const Size &size, const double width) {
+			return Size(width, size.height());
+		}
+		
+		Size with_width(Size &&size, const double width) {
+			size.width(width);
+			return size;
+		}
+		
+		Size with_height(const Size &size, const double height) {
+			return Size(size.width(), height);
+		}
+		
+		Size with_height(Size &&size, const double height) {
+			size.height(height);
+			return size;
+		}
 	}
 }

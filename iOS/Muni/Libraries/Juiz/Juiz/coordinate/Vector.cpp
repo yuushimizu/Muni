@@ -2,6 +2,7 @@
 #include "juiz/coordinate/Point.h"
 #include "juiz/coordinate/utilities.h"
 #include <math.h>
+#include <utility>
 
 namespace juiz {
 	namespace coordinate {
@@ -35,6 +36,32 @@ namespace juiz {
 			return !(lhs == rhs);
 		}
 		
+		Vector with_direction(const Vector &vector, const Direction &direction) {
+			return Vector(direction, vector.magnitude());
+		}
+		
+		Vector with_direction(Vector &&vector, const Direction &direction) {
+			vector.direction(direction);
+			return vector;
+		}
+		
+		Vector with_magnitude(const Vector &vector, const double magnitude) {
+			return Vector(vector.direction(), magnitude);
+		}
+		
+		Vector with_magnitude(Vector &&vector, const double magnitude) {
+			vector.magnitude(magnitude);
+			return vector;
+		}
+		
+		Vector invert(const Vector &vector) {
+			return with_direction(vector, invert(vector.direction()));
+		}
+		
+		Vector invert(Vector &&vector) {
+			return with_direction(std::move(vector), invert(vector.direction()));
+		}
+		
 		Vector operator +(const Vector &vector) {
 			return vector;
 		}
@@ -44,21 +71,27 @@ namespace juiz {
 		}
 		
 		Vector operator -(const Vector &vector) {
-			return Vector(invert(vector.direction()), vector.magnitude());
+			return invert(vector);
 		}
 		
 		Vector operator -(Vector &&vector) {
-			vector.direction(invert(vector.direction()));
-			return vector;
+			return invert(std::move(vector));
+		}
+		
+		Vector operator -(const Vector &lhs, const Vector &rhs) {
+			return lhs + -rhs;
+		}
+		
+		Vector operator -(const Vector &lhs, Vector &&rhs) {
+			return lhs + -std::move(rhs);
 		}
 		
 		Vector operator *(const Vector &lhs, const double rhs) {
-			return Vector(lhs.direction(), lhs.magnitude() * rhs);
+			return with_magnitude(lhs, lhs.magnitude() * rhs);
 		}
 		
 		Vector operator *(Vector &&lhs, const double rhs) {
-			lhs.magnitude(lhs.magnitude() * rhs);
-			return lhs;
+			return with_magnitude(std::move(lhs), lhs.magnitude() * rhs);
 		}
 
 		double x(const Vector &vector) {

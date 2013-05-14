@@ -19,3 +19,7 @@ const juiz::Point MNRandomPointInSize(const juiz::Size &size) {
 const double MNRandomRadian(void) {
 	return MNRandomDouble(0, M_PI * 2);
 }
+
+const juiz::Direction MNRandomDirection(void) {
+	return juiz::Direction(MNRandomRadian());
+}

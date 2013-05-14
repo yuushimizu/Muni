@@ -32,13 +32,32 @@ namespace juiz {
 			return !(lhs == rhs);
 		}
 		
-		Direction rotate_clockwise(const Direction &direction, const double angle) {
-			return Direction(direction.clockwise_angle_with_above() + angle);
+		Direction with_clockwise_angle_with_above(const Direction &direction, const double clockwise_angle_with_above) {
+			return Direction(clockwise_angle_with_above);
 		}
 		
-		Direction rotate_clockwise(Direction &&direction, const double angle) {
-			direction.clockwise_angle_with_above(direction.clockwise_angle_with_above() + angle);
+		Direction with_clockwise_angle_with_above(Direction &&direction, const double clockwise_angle_with_above) {
+			direction.clockwise_angle_with_above(clockwise_angle_with_above);
 			return direction;
+		}
+		
+		Direction rotate_clockwise(const Direction &direction, const double angle) {
+			return with_clockwise_angle_with_above(direction, direction.clockwise_angle_with_above() + angle);
+		}
+		Direction rotate_clockwise(Direction &&direction, const double angle) {
+			return with_clockwise_angle_with_above(std::move(direction), direction.clockwise_angle_with_above() + angle);
+		}
+		Direction rotate_counterclockwise(const Direction &direction, const double angle) {
+			return rotate_clockwise(direction, -angle);
+		}
+		Direction rotate_counterclockwise(Direction &&direction, const double angle) {
+			return rotate_clockwise(std::move(direction), -angle);
+		}
+		Direction invert(const Direction &direction) {
+			return rotate_clockwise(direction, M_PI);
+		}
+		Direction invert(Direction &&direction) {
+			return rotate_clockwise(std::move(direction), M_PI);
 		}
 		
 		double clockwise_angle(const Direction &start, const Direction &end) {

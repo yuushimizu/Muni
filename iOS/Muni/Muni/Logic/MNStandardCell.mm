@@ -201,7 +201,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 }
 
 - (void)realMove:(muni::Environment *)environment {
-	_center = JZMovedPoint(JZMovedPoint(_center, _radianForFix, _distanceForFix), _movingRadian, _movingSpeed);
+	_center = juiz::add_vector(juiz::add_vector(_center, juiz::Vector(juiz::Direction(_radianForFix), _distanceForFix)), juiz::Vector(juiz::Direction(_movingRadian), _movingSpeed));
 	_distanceForFix = 0;
 	[self fixPositionWithEnvironment:environment];
 }
@@ -215,9 +215,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 }
 
 - (void)moveFor:(double)radian withTargetSpeed:(double)targetSpeed {
-	const juiz::Point movingPoint = JZMovedPoint(_center, _movingRadian, _movingSpeed);
-	const juiz::Point targetPoint = JZMovedPoint(_center, radian, targetSpeed);
-	const juiz::Vector move_vector = juiz::vector(movingPoint, targetPoint);
+	const juiz::Vector move_vector = juiz::vector(juiz::add_vector(_center, juiz::Vector(juiz::Direction(_movingRadian), _movingSpeed)), juiz::add_vector(_center, juiz::Vector(juiz::Direction(radian), targetSpeed)));
 	[self moveFor:move_vector.direction().clockwise_angle_with_above() withForce:MIN(move_vector.magnitude(), _speed * 0.2 * (1 - _density))];
 }
 
@@ -234,7 +232,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 }
 
 - (void)moveTowards:(const juiz::Point &)point {
-	[self moveFor:JZRadianFromPoints(_center, point)];
+	[self moveFor:juiz::direction(_center, point).clockwise_angle_with_above()];
 }
 
 - (void)moveForFix:(double)radian distance:(double)distance {
@@ -268,7 +266,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 }
 
 - (void)rotateTowards:(const juiz::Point &)point {
-	[self rotateFor:JZRadianFromPoints(_center, point)];
+	[self rotateFor:juiz::direction(_center, point).clockwise_angle_with_above()];
 }
 
 - (id)init {
@@ -314,7 +312,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 		_angle = other.angle;
 		_rotationRadian = other.rotationRadian;
 		_sight = other.sight * MNRandomDouble(0.9, 1.1);
-		_center = JZMovedPoint(other.center, MNRandomRadian(), other.radius);
+		_center = juiz::add_vector(other.center, juiz::Vector(MNRandomDirection(), other.radius));
 		[self fixPositionWithEnvironment:environment];
 		_actionSources = other.actionSources;
 		[self resetActionsWithEnvironment:environment];
@@ -335,7 +333,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 		_angle = parent.angle;
 		_rotationRadian = parent.rotationRadian;
 		_sight = parent.sight;
-		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius);
+		_center = juiz::add_vector(parent.center, juiz::Vector(MNRandomDirection(), parent.radius));
 		[self fixPositionWithEnvironment:environment];
 		std::shared_ptr<muni::CellAction> (^moveSourceWithoutTarget)(id<MNCell>, muni::Environment *) = [self randomMoveSource];
 		std::shared_ptr<muni::CellAction> (^moveSoure)(id<MNCell>, muni::Environment *) = ^(id<MNCell> cell, muni::Environment *environment) {
@@ -364,7 +362,7 @@ static bool targetConditionNotHostility(id<MNCell> me, id<MNCell> other) {
 		_angle = parent.angle;
 		_rotationRadian = parent.rotationRadian;
 		_sight = parent.sight + distance;
-		_center = JZMovedPoint(parent.center, MNRandomRadian(), parent.radius + distance + self.radius);
+		_center = juiz::add_vector(parent.center, juiz::Vector(MNRandomDirection(), parent.radius + distance + self.radius));
 		[self fixPositionWithEnvironment:environment];
 		_actionSources = [NSArray arrayWithObject:^(id<MNCell> cell, muni::Environment *environment) {
 			auto targetCondition = [&](id<MNCell> me, id<MNCell> other) -> bool {return other == parent;};

@@ -93,13 +93,13 @@ namespace muni {
 				double distance = juiz::vector(cell1.center, cell2.center).magnitude();
 				double piled_distance = cell1.radius + cell2.radius - distance;
 				if (piled_distance > 0) {
-					double radian = JZRadianFromPoints(cell1.center, cell2.center);
-					double inverted_radian = JZInvertRadian(radian);
+					const juiz::Direction direction = juiz::direction(cell1.center, cell2.center);
+					const juiz::Direction inverted_direction = juiz::invert(direction);
 					double weight1 = cell1.weight;
 					double weight2 = cell2.weight;
 					if ([cell1 hostility:cell2]) {
-						[cell1 moveForFix:inverted_radian distance:piled_distance / 2 * (weight2 / (weight1 + weight2))];
-						[cell2 moveForFix:radian distance:piled_distance / 2 * (weight1 / (weight2 + weight1))];
+						[cell1 moveForFix:inverted_direction.clockwise_angle_with_above() distance:piled_distance / 2 * (weight2 / (weight1 + weight2))];
+						[cell2 moveForFix:direction.clockwise_angle_with_above() distance:piled_distance / 2 * (weight1 / (weight2 + weight1))];
 						double total_knockback_distance = MIN(piled_distance / 2, 5);
 						double min_knockback_distance = total_knockback_distance * 0.1;
 						double rest_knockback_distance = total_knockback_distance - min_knockback_distance * 2;
@@ -107,19 +107,19 @@ namespace muni {
 						double density2 = cell2.density;
 						if (![cell1 eventOccurredPrevious:kMNCellEventDamaged]) {
 							double knockback1 = min_knockback_distance + (rest_knockback_distance * (density2	/ (density1 + density2)));
-							[cell1 moveFor:inverted_radian withForce:knockback1];
+							[cell1 moveFor:inverted_direction.clockwise_angle_with_above() withForce:knockback1];
 							double damage = knockback1 * 50;
 							[cell1 damage:damage];
 						}
 						if (![cell2 eventOccurredPrevious:kMNCellEventDamaged]) {
 							double knockback2 = min_knockback_distance + (rest_knockback_distance * (density1 / (density2 + density1)));
-							[cell2 moveFor:radian withForce:knockback2];
+							[cell2 moveFor:direction.clockwise_angle_with_above() withForce:knockback2];
 							double damage = knockback2 * 50;
 							[cell2 damage:damage];
 						}
 					} else {
-						[cell1 moveForFix:inverted_radian distance:piled_distance * (weight2 / (weight1 + weight2))];
-						[cell2 moveForFix:radian distance:piled_distance * (weight1 / (weight2 + weight1))];
+						[cell1 moveForFix:inverted_direction.clockwise_angle_with_above() distance:piled_distance * (weight2 / (weight1 + weight2))];
+						[cell2 moveForFix:direction.clockwise_angle_with_above() distance:piled_distance * (weight1 / (weight2 + weight1))];
 					}
 				}
 			}

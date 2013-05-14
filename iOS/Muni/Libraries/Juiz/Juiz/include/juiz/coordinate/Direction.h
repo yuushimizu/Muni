@@ -17,16 +17,14 @@ namespace juiz {
 		};
 		bool operator==(const Direction &lhs, const Direction &rhs);
 		bool operator!=(const Direction &lhs, const Direction &rhs);
+		Direction with_clockwise_angle_with_above(const Direction &direction, const double clockwise_angle_with_above);
+		Direction with_clockwise_angle_with_above(Direction &&direction, const double clockwise_angle_with_above);
 		Direction rotate_clockwise(const Direction &direction, const double angle);
 		Direction rotate_clockwise(Direction &&direction, const double angle);
-		template <typename T>
-		Direction rotate_counterclockwise(T &&direction, const double angle) {
-			return rotate_clockwise(std::forward<T>(direction), -angle);
-		}
-		template <typename T>
-		Direction invert(T &&direction) {
-			return rotate_clockwise(std::forward<T>(direction), M_PI);
-		}
+		Direction rotate_counterclockwise(const Direction &direction, const double angle);
+		Direction rotate_counterclockwise(Direction &&direction, const double angle);
+		Direction invert(const Direction &direction);
+		Direction invert(Direction &&direction);
 		double clockwise_angle(const Direction &start, const Direction &end);
 		double counterclockwise_angle(const Direction &start, const Direction &end);
 		bool clockwise_angle_is_small(const Direction &start, const Direction &end);

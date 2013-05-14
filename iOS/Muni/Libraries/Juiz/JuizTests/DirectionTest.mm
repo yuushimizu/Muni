@@ -75,6 +75,12 @@
 	AssertRoughlyEqual(juiz::Direction(1.3 + M_PI), juiz::invert(juiz::Direction(1.3)), @"");
 	AssertRoughlyEqual(juiz::Direction(M_PI), juiz::invert(juiz::Direction(0)), @"");
 	AssertRoughlyEqual(juiz::Direction(0), juiz::invert(juiz::Direction(M_PI)), @"");
+	juiz::Direction direction1(1.4);
+	AssertRoughlyEqual(juiz::Direction(1.4 + M_PI), juiz::invert(direction1), @"");
+	juiz::Direction direction2(0);
+	AssertRoughlyEqual(juiz::Direction(M_PI), juiz::invert(direction2), @"");
+	juiz::Direction direction3(M_PI);
+	AssertRoughlyEqual(juiz::Direction(0), juiz::invert(direction3), @"");
 }
 
 - (void)testClockwiseAngle {

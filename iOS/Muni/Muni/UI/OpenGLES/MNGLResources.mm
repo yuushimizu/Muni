@@ -40,9 +40,9 @@ static void setupContext(CGContextRef context) {
 	CGContextSetRGBFillColor(context, fillColor, fillColor, fillColor, 1);
 }
 
-static double maxLengthOfLineFromPointInPathArea(const juiz::Point &start, double angle) {
-	double angleSin = sin(angle);
-	double angleCos = cos(angle);
+static double maxLengthOfLineFromPointInPathArea(const juiz::Point &start, const juiz::Direction &direction) {
+	double angleSin = sin(direction.clockwise_angle_with_above());
+	double angleCos = cos(direction.clockwise_angle_with_above());
 	if (angleSin == 0) {
 		return angleCos > 0 ? kMNRandomCellTexturePathAreaMax - start.y() : start.y() - kMNRandomCellTexturePathAreaMin;
 	} else if (angleCos == 0) {
@@ -83,10 +83,13 @@ static void addRandomPath(CGContextRef context) {
 		CGContextAddArc(context, x, y, radius, startRadian, endRadian, 0);
 	} else if (type == 1) { // rect with angle
 		const juiz::Point point1(MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax), MNRandomDouble(kMNRandomCellTexturePathAreaMin, kMNRandomCellTexturePathAreaMax));
-		double angle = MNRandomRadian();
-		const juiz::Point point2 = JZMovedPoint(point1, angle, MNRandomDouble(0.1, 1) * maxLengthOfLineFromPointInPathArea(point1, angle));
-		const juiz::Point point3 = JZMovedPoint(point2, angle + M_PI_2, MNRandomDouble(0.1, 1) * MIN(maxLengthOfLineFromPointInPathArea(point1, angle + M_PI_2), maxLengthOfLineFromPointInPathArea(point2, angle + M_PI_2)));
-		const juiz::Point point4 = JZMovedPoint(point1, angle + M_PI_2, juiz::vector(point2, point3).magnitude());
+		juiz::Direction direction = juiz::Direction(MNRandomRadian());
+		const juiz::Point point2 = juiz::add_vector(point1, juiz::Vector(direction, MNRandomDouble(0.1, 1) * maxLengthOfLineFromPointInPathArea(point1, direction)));
+		juiz::Direction orthogonalDirection = juiz::rotate_clockwise(direction, M_PI_2);
+		const juiz::Point point3 = juiz::add_vector(point2, juiz::Vector(orthogonalDirection, MNRandomDouble(0.1, 1) * MIN(maxLengthOfLineFromPointInPathArea(point1, orthogonalDirection), maxLengthOfLineFromPointInPathArea(point2, orthogonalDirection))));
+		const juiz::Point point4 = juiz::add_vector(point1, juiz::with_direction(juiz::vector(point2, point3), orthogonalDirection));
+//		const juiz::Point point3 = JZMovedPoint(point2, angle + M_PI_2, MNRandomDouble(0.1, 1) * MIN(maxLengthOfLineFromPointInPathArea(point1, angle + M_PI_2), maxLengthOfLineFromPointInPathArea(point2, angle + M_PI_2)));
+//		const juiz::Point point4 = JZMovedPoint(point1, angle + M_PI_2, juiz::vector(point2, point3).magnitude());
 		CGContextMoveToPoint(context, point1.x(), point1.y());
 		CGContextAddLineToPoint(context, point2.x(), point2.y());
 		CGContextAddLineToPoint(context, point3.x(), point3.y());
