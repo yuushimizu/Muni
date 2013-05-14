@@ -25,6 +25,10 @@ namespace juiz {
 		Vector with_direction(Vector &&vector, const Direction &direction);
 		Vector with_magnitude(const Vector &vector, const double magnitude);
 		Vector with_magnitude(Vector &&vector, const double magnitude);
+		Vector rotate_clockwise(const Vector &vector, const double angle);
+		Vector rotate_clockwise(Vector &&vector, const double angle);
+		Vector rotate_counterclockwise(const Vector &vector, const double angle);
+		Vector rotate_counterclockwise(Vector &&vector, const double angle);
 		Vector invert(const Vector &vector);
 		Vector invert(Vector &&vector);
 		Vector operator +(const Vector &vector);

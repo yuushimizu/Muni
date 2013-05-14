@@ -18,10 +18,10 @@ static void setTriangleStripVerticesFromRectWithRotation(GLfloat *vertices, CGRe
 	const double top = rect.origin.y;
 	const double bottom = top + rect.size.height;
 	const juiz::Point center(left + rect.size.width / 2, top + rect.size.height / 2);
-	const juiz::Point leftTop = JZRotatedPoint(juiz::Point(left, top), center, radian);
-	const juiz::Point leftBottom = JZRotatedPoint(juiz::Point(left, bottom), center, radian);
-	const juiz::Point rightTop = JZRotatedPoint(juiz::Point(right, top), center, radian);
-	const juiz::Point rightBottom = JZRotatedPoint(juiz::Point(right, bottom), center, radian);
+	const juiz::Point leftTop = juiz::rotate_clockwise(juiz::Point(left, top), center, radian);
+	const juiz::Point leftBottom = juiz::rotate_clockwise(juiz::Point(left, bottom), center, radian);
+	const juiz::Point rightTop = juiz::rotate_clockwise(juiz::Point(right, top), center, radian);
+	const juiz::Point rightBottom = juiz::rotate_clockwise(juiz::Point(right, bottom), center, radian);
 	vertices[0] = leftTop.x(); vertices[1] = leftTop.y();
 	vertices[2] = leftBottom.x(); vertices[3] = leftBottom.y();
 	vertices[4] = rightTop.x(); vertices[5] = rightTop.y();

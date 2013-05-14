@@ -36,6 +36,22 @@ namespace juiz {
 			return !(lhs == rhs);
 		}
 		
+		Vector rotate_clockwise(const Vector &vector, const double angle) {
+			return with_direction(vector, rotate_clockwise(vector.direction(), angle));
+		}
+		
+		Vector rotate_clockwise(Vector &&vector, const double angle) {
+			return with_direction(std::move(vector), rotate_clockwise(vector.direction(), angle));
+		}
+		
+		Vector rotate_counterclockwise(const Vector &vector, const double angle) {
+			return rotate_clockwise(vector, -angle);
+		}
+		
+		Vector rotate_counterclockwise(Vector &&vector, const double angle) {
+			return rotate_clockwise(std::move(vector), -angle);
+		}
+		
 		Vector with_direction(const Vector &vector, const Direction &direction) {
 			return Vector(direction, vector.magnitude());
 		}
