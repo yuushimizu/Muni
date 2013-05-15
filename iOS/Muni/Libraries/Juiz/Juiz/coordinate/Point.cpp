@@ -55,8 +55,14 @@ namespace juiz {
 			return Point(point.x() + x(vector), point.y() + y(vector));
 		}
 		
+		Point move_to(const Point &start, const Point &destination, const double max_distance) {
+			const Vector vector_to_destination = vector(start, destination);
+			if (vector_to_destination.magnitude() <= max_distance) return destination;
+			return add_vector(start, vector_to_destination.magnitude(max_distance));
+		}
+		
 		double distance(const Point &start, const Point &end) {
 			return sqrt(pow(end.x() - start.x(), 2) + pow(end.y() - start.y(), 2));
-		}		
+		}
 	}
 }

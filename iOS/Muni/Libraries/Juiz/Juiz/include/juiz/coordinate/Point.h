@@ -22,6 +22,7 @@ namespace juiz {
 		Point rotate_counterclockwise(const Point &point, const Point &origin, const double angle);
 		Point invert(const Point &point, const Point &origin);
 		Point add_vector(const Point &point, const Vector &vector);
+		Point move_to(const Point &start, const Point &destination, const double max_distance);
 		double distance(const Point &start, const Point &end);
 	}
 }

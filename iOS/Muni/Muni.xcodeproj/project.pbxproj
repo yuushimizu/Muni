@@ -16,7 +16,6 @@
 		CA02DC9F15C481DC0070B1F5 /* CellMoveImmovable.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9215C47FE20070B1F5 /* CellMoveImmovable.mm */; };
 		CA02DCA015C481DF0070B1F5 /* CellMoveFloat.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9415C47FE20070B1F5 /* CellMoveFloat.mm */; };
 		CA02DCA115C481E30070B1F5 /* CellMoveRandomWalk.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA02DC9615C47FE20070B1F5 /* CellMoveRandomWalk.mm */; };
-		CA6579EC15F7C05D00C4351A /* JZUtility.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA6579EB15F7C05D00C4351A /* JZUtility.mm */; };
 		CA69105F174148CF00BAE086 /* CellMoveWithTarget.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA69105E174148CF00BAE086 /* CellMoveWithTarget.mm */; };
 		CA6910611741498600BAE086 /* CellMoveApproachNearestTarget.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA6910601741498500BAE086 /* CellMoveApproachNearestTarget.mm */; };
 		CA691063174149DA00BAE086 /* CellMoveApproachTarget.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA691062174149D900BAE086 /* CellMoveApproachTarget.mm */; };
@@ -156,8 +155,6 @@
 		CA2C3D3315CA5F20003E1299 /* CellMoveWithNearestTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellMoveWithNearestTarget.h; path = Logic/CellAction/CellMove/CellMoveWithNearestTarget.h; sourceTree = "<group>"; };
 		CA2C3D3915CA6544003E1299 /* CellMoveEscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellMoveEscape.h; path = Logic/CellAction/CellMove/CellMoveEscape.h; sourceTree = "<group>"; };
 		CA2C3D3F15CA6943003E1299 /* CellMoveMoon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellMoveMoon.h; path = Logic/CellAction/CellMove/CellMoveMoon.h; sourceTree = "<group>"; };
-		CA6579EA15F7C05D00C4351A /* JZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JZUtility.h; path = Juiz/Utility/JZUtility.h; sourceTree = "<group>"; };
-		CA6579EB15F7C05D00C4351A /* JZUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = JZUtility.mm; path = Juiz/Utility/JZUtility.mm; sourceTree = "<group>"; };
 		CA69105E174148CF00BAE086 /* CellMoveWithTarget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CellMoveWithTarget.mm; path = Logic/CellAction/CellMove/CellMoveWithTarget.mm; sourceTree = "<group>"; };
 		CA6910601741498500BAE086 /* CellMoveApproachNearestTarget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CellMoveApproachNearestTarget.mm; path = Logic/CellAction/CellMove/CellMoveApproachNearestTarget.mm; sourceTree = "<group>"; };
 		CA691062174149D900BAE086 /* CellMoveApproachTarget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CellMoveApproachTarget.mm; path = Logic/CellAction/CellMove/CellMoveApproachTarget.mm; sourceTree = "<group>"; };
@@ -329,15 +326,6 @@
 			name = CellAction;
 			sourceTree = "<group>";
 		};
-		CA6579E915F7C03D00C4351A /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				CA6579EA15F7C05D00C4351A /* JZUtility.h */,
-				CA6579EB15F7C05D00C4351A /* JZUtility.mm */,
-			);
-			name = Utility;
-			sourceTree = "<group>";
-		};
 		CA8BF7AD15BC8B2800B7B572 = {
 			isa = PBXGroup;
 			children = (
@@ -461,7 +449,6 @@
 		CA8BF80B15BC93D500B7B572 /* Juiz */ = {
 			isa = PBXGroup;
 			children = (
-				CA6579E915F7C03D00C4351A /* Utility */,
 				CAF14AC115BC9B45000AD7A8 /* Scene */,
 				CA8BF80C15BC93E800B7B572 /* OpenGLES */,
 			);
@@ -834,7 +821,6 @@
 				CA02DC8E15C458B80070B1F5 /* CellActionMultiply.mm in Sources */,
 				CAF27A6615CA84C400CC6E19 /* CellActionMakeMoon.mm in Sources */,
 				CAF27A6D15D0615800CC6E19 /* CellActionMakeTracer.mm in Sources */,
-				CA6579EC15F7C05D00C4351A /* JZUtility.mm in Sources */,
 				CABD557C1603338700023742 /* MNMenuView.mm in Sources */,
 				CABD559F1607313100023742 /* MNChangeBackgroundViewController.mm in Sources */,
 				CA7F4CD7160E99DC000C75B0 /* MNResetScene.mm in Sources */,
