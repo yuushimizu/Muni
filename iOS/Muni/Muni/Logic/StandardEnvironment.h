@@ -3,14 +3,16 @@
 
 #import "Environment.h"
 #import "Field.h"
-#import <vector>
 #import "MNStandardCell.h"
 #import "SpatialIndex.h"
 #import "CellScanningResult.h"
+#import <vector>
+#import <random>
 
 namespace muni {
 	class StandardEnvironment : public Environment {
 	private:
+		std::mt19937 random_;
 		const Field field_;
 		std::vector<id<MNCell> > cells_;
 		const int max_cell_count_;
@@ -24,6 +26,7 @@ namespace muni {
 		void apply_cells_hitting();
 	public:
 		StandardEnvironment(const juiz::Size &size, const int max_cell_count);
+		virtual int random_int(const int min, const int limit);
 		virtual const Field field() const;
 		virtual const std::vector<id<MNCell> > cells() const;
 		virtual void send_frame();

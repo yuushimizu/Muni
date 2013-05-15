@@ -25,6 +25,7 @@
 		CA9871D216A666EE009FC85A /* Direction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9871D116A666EE009FC85A /* Direction.cpp */; };
 		CA9871D516A7F436009FC85A /* utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9871D416A7F436009FC85A /* utilities.cpp */; };
 		CA9871D916AFEBA7009FC85A /* DirectionTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9871D816AFEBA7009FC85A /* DirectionTest.mm */; };
+		CAA25E87174396A000F9AD4D /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAA25E86174396A000F9AD4D /* random.cpp */; };
 		CACAD3DC167A4D8A00CB51FC /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379216681EC3003E855C /* Vector.cpp */; };
 		CACAD3DD167A4D8E00CB51FC /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA89379416681EC3003E855C /* Point.cpp */; };
 		CACAD3E4167A4E3400CB51FC /* include in Resources */ = {isa = PBXBuildFile; fileRef = CACAD3E3167A4E3400CB51FC /* include */; };
@@ -87,6 +88,7 @@
 		CA9871D416A7F436009FC85A /* utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utilities.cpp; sourceTree = "<group>"; };
 		CA9871D716AFEBA7009FC85A /* DirectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionTest.h; sourceTree = "<group>"; };
 		CA9871D816AFEBA7009FC85A /* DirectionTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DirectionTest.mm; sourceTree = "<group>"; };
+		CAA25E86174396A000F9AD4D /* random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random.cpp; sourceTree = "<group>"; };
 		CACAD3E3167A4E3400CB51FC /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
 		CACAD3E6167A4FD500CB51FC /* Size.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Size.cpp; path = coordinate/Size.cpp; sourceTree = "<group>"; };
 		CACAD3E9167A4FF700CB51FC /* coordinate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = coordinate.mm; path = iOS/coordinate.mm; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			children = (
 				CA89379116680773003E855C /* coordinate */,
 				CA90EE981672028500D2AA99 /* coordinate.cpp */,
+				CAA25E86174396A000F9AD4D /* random.cpp */,
 				CACAD3E3167A4E3400CB51FC /* include */,
 				CACAD3E8167A4FEB00CB51FC /* iOS */,
 				CA89370716645D23003E855C /* Supporting Files */,
@@ -329,6 +332,7 @@
 				CACAD3EA167A4FF700CB51FC /* coordinate.mm in Sources */,
 				CA9871D216A666EE009FC85A /* Direction.cpp in Sources */,
 				CA9871D516A7F436009FC85A /* utilities.cpp in Sources */,
+				CAA25E87174396A000F9AD4D /* random.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

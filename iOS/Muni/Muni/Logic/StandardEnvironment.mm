@@ -1,9 +1,12 @@
 #include "StandardEnvironment.h"
-#import "JZUtility.h"
 #import "MNUtility.h"
 
 namespace muni {
-	StandardEnvironment::StandardEnvironment(const juiz::Size &size, const int max_cell_count) : field_(size), cells_(), max_cell_count_(max_cell_count), added_cells_queue_(), incidence_(0.07 * (size.width() * size.height()) / (480.0 * 320.0)), spatial_index_(muni::spatial_index_from_total_size_and_block_count<id<MNCell> >(size, juiz::Size(16, 16))) {
+	StandardEnvironment::StandardEnvironment(const juiz::Size &size, const int max_cell_count) : random_(time(nullptr)), field_(size), cells_(), max_cell_count_(max_cell_count), added_cells_queue_(), incidence_(0.07 * (size.width() * size.height()) / (480.0 * 320.0)), spatial_index_(muni::spatial_index_from_total_size_and_block_count<id<MNCell> >(size, juiz::Size(16, 16))) {
+	}
+	
+	int StandardEnvironment::random_int(const int min, const int limit) {
+		return juiz::next_int(random_, min, limit);
 	}
 	
 	const Field StandardEnvironment::field() const {

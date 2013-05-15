@@ -1,5 +1,4 @@
 #import "MNGLResources.h"
-#import "JZUtility.h"
 #import "MNUtility.h"
 
 #define kMNRandomCellTexturePathAreaSize 256

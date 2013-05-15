@@ -12,6 +12,7 @@
 namespace muni {
 	class Environment {
 	public:
+		virtual int random_int(const int min, const int limit) = 0;
 		virtual const Field field() const = 0;
 		virtual const std::vector<id<MNCell> > cells() const = 0;
 		virtual void send_frame() = 0;

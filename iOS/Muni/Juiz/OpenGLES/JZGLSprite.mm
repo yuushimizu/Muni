@@ -1,5 +1,5 @@
 #import "JZGLSprite.h"
-#import "JZUtility.h"
+#import "juiz.h"
 
 static void setTriangleStripVerticesFromRect(GLfloat *vertices, CGRect rect) {
 	const double left = rect.origin.x;
