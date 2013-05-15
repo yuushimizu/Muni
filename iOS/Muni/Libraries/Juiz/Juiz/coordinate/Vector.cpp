@@ -16,16 +16,20 @@ namespace juiz {
 			return this->direction_;
 		}
 		
-		void Vector::direction(const Direction &direction) {
-			this->direction_ = direction;
+		Vector Vector::direction(const Direction &direction) const {
+			Vector newVector(*this);
+			newVector.direction_ = direction;
+			return newVector;
 		}
 		
 		double Vector::magnitude() const {
 			return this->magnitude_;
 		}
 		
-		void Vector::magnitude(const double magnitude) {
-			this->magnitude_ = magnitude;
+		Vector Vector::magnitude(const double magnitude) const {
+			Vector newVector(*this);
+			newVector.magnitude_ = magnitude;
+			return newVector;
 		}
 		
 		bool operator ==(const Vector &lhs, const Vector &rhs) {
@@ -34,48 +38,6 @@ namespace juiz {
 		
 		bool operator !=(const Vector &lhs, const Vector &rhs) {
 			return !(lhs == rhs);
-		}
-		
-		Vector rotate_clockwise(const Vector &vector, const double angle) {
-			return with_direction(vector, rotate_clockwise(vector.direction(), angle));
-		}
-		
-		Vector rotate_clockwise(Vector &&vector, const double angle) {
-			return with_direction(std::move(vector), rotate_clockwise(vector.direction(), angle));
-		}
-		
-		Vector rotate_counterclockwise(const Vector &vector, const double angle) {
-			return rotate_clockwise(vector, -angle);
-		}
-		
-		Vector rotate_counterclockwise(Vector &&vector, const double angle) {
-			return rotate_clockwise(std::move(vector), -angle);
-		}
-		
-		Vector with_direction(const Vector &vector, const Direction &direction) {
-			return Vector(direction, vector.magnitude());
-		}
-		
-		Vector with_direction(Vector &&vector, const Direction &direction) {
-			vector.direction(direction);
-			return vector;
-		}
-		
-		Vector with_magnitude(const Vector &vector, const double magnitude) {
-			return Vector(vector.direction(), magnitude);
-		}
-		
-		Vector with_magnitude(Vector &&vector, const double magnitude) {
-			vector.magnitude(magnitude);
-			return vector;
-		}
-		
-		Vector invert(const Vector &vector) {
-			return with_direction(vector, invert(vector.direction()));
-		}
-		
-		Vector invert(Vector &&vector) {
-			return with_direction(std::move(vector), invert(vector.direction()));
 		}
 		
 		Vector operator +(const Vector &vector) {
@@ -90,24 +52,24 @@ namespace juiz {
 			return invert(vector);
 		}
 		
-		Vector operator -(Vector &&vector) {
-			return invert(std::move(vector));
-		}
-		
 		Vector operator -(const Vector &lhs, const Vector &rhs) {
 			return lhs + -rhs;
 		}
 		
-		Vector operator -(const Vector &lhs, Vector &&rhs) {
-			return lhs + -std::move(rhs);
-		}
-		
 		Vector operator *(const Vector &lhs, const double rhs) {
-			return with_magnitude(lhs, lhs.magnitude() * rhs);
+			return lhs.magnitude(lhs.magnitude() * rhs);
 		}
 		
-		Vector operator *(Vector &&lhs, const double rhs) {
-			return with_magnitude(std::move(lhs), lhs.magnitude() * rhs);
+		Vector rotate_clockwise(const Vector &vector, const double angle) {
+			return vector.direction(rotate_clockwise(vector.direction(), angle));
+		}
+		
+		Vector rotate_counterclockwise(const Vector &vector, const double angle) {
+			return vector.direction(rotate_counterclockwise(vector.direction(), angle));
+		}
+		
+		Vector invert(const Vector &vector) {
+			return vector.direction(invert(vector.direction()));
 		}
 
 		double x(const Vector &vector) {

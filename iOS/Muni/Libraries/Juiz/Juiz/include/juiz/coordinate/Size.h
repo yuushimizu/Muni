@@ -11,16 +11,12 @@ namespace juiz {
 			Size(const double width, const double height);
 			Size();
 			double width() const;
-			void width(const double width);
+			Size width(const double width) const;
 			double height() const;
-			void height(const double height);
+			Size height(const double height) const;
 		};
 		bool operator==(const Size &lhs, const Size &rhs);
 		bool operator!=(const Size &lhs, const Size &rhs);
-		Size with_width(const Size &size, const double width);
-		Size with_width(Size &&size, const double width);
-		Size with_height(const Size &size, const double height);
-		Size with_height(Size &&size, const double height);
 		double diagonal(const Size &size);
 	}
 }

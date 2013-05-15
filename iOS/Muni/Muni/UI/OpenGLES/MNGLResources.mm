@@ -87,9 +87,7 @@ static void addRandomPath(CGContextRef context) {
 		const juiz::Point point2 = juiz::add_vector(point1, juiz::Vector(direction, MNRandomDouble(0.1, 1) * maxLengthOfLineFromPointInPathArea(point1, direction)));
 		juiz::Direction orthogonalDirection = juiz::rotate_clockwise(direction, M_PI_2);
 		const juiz::Point point3 = juiz::add_vector(point2, juiz::Vector(orthogonalDirection, MNRandomDouble(0.1, 1) * MIN(maxLengthOfLineFromPointInPathArea(point1, orthogonalDirection), maxLengthOfLineFromPointInPathArea(point2, orthogonalDirection))));
-		const juiz::Point point4 = juiz::add_vector(point1, juiz::with_direction(juiz::vector(point2, point3), orthogonalDirection));
-//		const juiz::Point point3 = JZMovedPoint(point2, angle + M_PI_2, MNRandomDouble(0.1, 1) * MIN(maxLengthOfLineFromPointInPathArea(point1, angle + M_PI_2), maxLengthOfLineFromPointInPathArea(point2, angle + M_PI_2)));
-//		const juiz::Point point4 = JZMovedPoint(point1, angle + M_PI_2, juiz::vector(point2, point3).magnitude());
+		const juiz::Point point4 = juiz::add_vector(point1, juiz::vector(point2, point3).direction(orthogonalDirection));
 		CGContextMoveToPoint(context, point1.x(), point1.y());
 		CGContextAddLineToPoint(context, point2.x(), point2.y());
 		CGContextAddLineToPoint(context, point3.x(), point3.y());

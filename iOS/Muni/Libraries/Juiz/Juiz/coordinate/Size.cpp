@@ -13,16 +13,20 @@ namespace juiz {
 			return this->width_;
 		}
 		
-		void Size::width(const double width) {
-			this->width_ = width;
+		Size Size::width(const double width) const {
+			Size newSize(*this);
+			newSize.width_ = width;
+			return newSize;
 		}
 		
 		double Size::height() const {
 			return this->height_;
 		}
 		
-		void Size::height(const double height) {
-			this->height_ = height;
+		Size Size::height(const double height) const {
+			Size newSize(*this);
+			newSize.height_ = height;
+			return newSize;
 		}
 		
 		bool operator==(const Size &lhs, const Size &rhs) {
@@ -31,24 +35,6 @@ namespace juiz {
 		
 		bool operator!=(const Size &lhs, const Size &rhs) {
 			return !(lhs == rhs);
-		}
-		
-		Size with_width(const Size &size, const double width) {
-			return Size(width, size.height());
-		}
-		
-		Size with_width(Size &&size, const double width) {
-			size.width(width);
-			return size;
-		}
-		
-		Size with_height(const Size &size, const double height) {
-			return Size(size.width(), height);
-		}
-		
-		Size with_height(Size &&size, const double height) {
-			size.height(height);
-			return size;
 		}
 		
 		double diagonal(const Size &size) {

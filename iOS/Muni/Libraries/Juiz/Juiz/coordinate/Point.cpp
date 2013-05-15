@@ -1,4 +1,6 @@
 #include "juiz/coordinate/Point.h"
+#include "juiz/coordinate/Vector.h"
+#include "juiz/coordinate/utilities.h"
 #include <math.h>
 
 namespace juiz {
@@ -13,16 +15,20 @@ namespace juiz {
 			return this->x_;
 		}
 		
-		void Point::x(const double x) {
-			this->x_ = x;
+		Point Point::x(const double x) const {
+			Point newPoint(*this);
+			newPoint.x_ = x;
+			return newPoint;
 		}
 		
 		double Point::y() const {
 			return this->y_;
 		}
 		
-		void Point::y(const double y) {
-			this->y_ = y;
+		Point Point::y(const double y) const {
+			Point newPoint(*this);
+			newPoint.y_ = y;
+			return newPoint;
 		}
 		
 		bool operator==(const Point &lhs, const Point &rhs) {
@@ -33,26 +39,24 @@ namespace juiz {
 			return !(lhs == rhs);
 		}
 		
-		Point with_x(const Point &point, const double x) {
-			return Point(x, point.y());
+		Point rotate_clockwise(const Point &point, const Point &origin, const double angle) {
+			return add_vector(origin, rotate_clockwise(vector(origin, point), angle));
 		}
 		
-		Point with_x(Point &&point, const double x) {
-			point.x(x);
-			return point;
+		Point rotate_counterclockwise(const Point &point, const Point &origin, const double angle) {
+			return rotate_clockwise(point, origin, -angle);
 		}
 		
-		Point with_y(const Point &point, const double y) {
-			return Point(point.x(), y);
+		Point invert(const Point &point, const Point &origin) {
+			return Point(invert(point.x(), origin.x()), invert(point.y(), origin.y()));
 		}
-		
-		Point with_y(Point &&point, const double y) {
-			point.y(y);
-			return point;
+
+		Point add_vector(const Point &point, const Vector &vector) {
+			return Point(point.x() + x(vector), point.y() + y(vector));
 		}
 		
 		double distance(const Point &start, const Point &end) {
 			return sqrt(pow(end.x() - start.x(), 2) + pow(end.y() - start.y(), 2));
-		}
+		}		
 	}
 }

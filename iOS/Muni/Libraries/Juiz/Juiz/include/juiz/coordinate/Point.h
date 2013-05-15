@@ -3,6 +3,7 @@
 
 namespace juiz {
 	namespace coordinate {
+		class Vector;
 		class Point {
 		private:
 			double x_;
@@ -11,16 +12,16 @@ namespace juiz {
 			Point(const double x, const double y);
 			Point();
 			double x() const;
-			void x(const double x);
+			Point x(const double x) const;
 			double y() const;
-			void y(const double y);
+			Point y(const double y) const;
 		};
 		bool operator==(const Point &lhs, const Point &rhs);
 		bool operator!=(const Point &lhs, const Point &rhs);
-		Point with_x(const Point &point, const double x);
-		Point with_x(Point &&point, const double x);
-		Point with_y(const Point &point, const double y);
-		Point with_y(Point &&point, const double y);
+		Point rotate_clockwise(const Point &point, const Point &origin, const double angle);
+		Point rotate_counterclockwise(const Point &point, const Point &origin, const double angle);
+		Point invert(const Point &point, const Point &origin);
+		Point add_vector(const Point &point, const Vector &vector);
 		double distance(const Point &start, const Point &end);
 	}
 }
